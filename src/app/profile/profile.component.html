@@ -1,0 +1,274 @@
+<!-- <app-header></app-header> -->
+<!-- class="container box-shadow container-fluid" -->
+<div class="p-3" > 
+  <div   class="d-flex justify-content-center">
+      <button class="btn btn-primary "  routerLink="/dashboard"> <i class="fa fa-arrow-circle-o-left mt-1 fs-25" aria-hidden="true"></i>  Back to Home </button>
+  </div>
+  <!-- style="background-image: linear-gradient(45deg,rgb(0, 255, 55),rgb(255, 255, 255),rgb(0, 238, 255));" -->
+  <div class="wrapper " >
+    <!-- Page-Container -->
+    <div class="container ">
+      <div class="row " style="overflow-x:hidden">
+        <div class="col-12" style="padding: 1cm 2cm;">
+          <div class="card-box">
+            <div class="row m-t-20">
+              <div class="col-12" >
+                <tabset class="tabset tapAlignment " [vertical]="true" type="pills">
+                  <tab customClass="nav-purplelink" heading="My Profile">
+                    <div class="col-md-8 mb-4 ">
+                      <div class="card p-3">
+                        <div class="d-flex flex-column align-items-center text-center">
+                          <img [src]="currentUserDetails.userimagepath ? currentUserDetails.userimagepath : defaultImg "
+                            alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="150">
+                          <div class="mt-3">
+                            <h4>{{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}</h4>
+                            <p class="text-info mb-1">Manager</p>
+                            <p class="text-muted font-size-sm">{{currentUserDetails.addressDetailId}}</p>
+                          </div>
+                        </div>
+                        <div class="card-body ">
+                          <div class="row ">
+                            <div class="col-sm-6">
+                              <h6 class="mb-0 text-center">Title</h6>
+                            </div>
+                            <div class="col-sm-6 text-success">
+                              Manager
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <h6 class="mb-0 text-center">Name</h6>
+                            </div>
+                            <div class="col-sm-6 text-primary">
+                              {{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row ">
+                            <div class="col-sm-6">
+                              <h6 class="mb-0 text-center">Email</h6>
+                            </div>
+                            <div class="col-sm-6 text-primary">
+                              {{currentUserDetails.email}}
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <h6 class="mb-0 text-center">Date Of Birth</h6>
+                            </div>
+                            <div class="col-sm-6 text-primary">
+                              {{currentUserDetails.dob}}
+  
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row ">
+                            <div class="col-sm-6">
+                              <h6 class="mb-0 text-center">Gender</h6>
+                            </div>
+                            <div *ngIf=" currentUserDetails.gender!=null" class="col-sm-6 text-primary">
+                              {{currentUserDetails.gender}}
+                            </div>
+                            <div *ngIf=" currentUserDetails.gender==null" class="col-sm-6 text-primary">
+                              N/A
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </tab>
+                  <tab heading="Edit Profile">
+                    <div class="col-md-8 mb-3">
+                      <form [formGroup]="editForm" (ngSubmit)="editFunction(editForm.value)">
+                        <div class="card p-3">
+                          <div class="d-flex flex-column align-items-center text-center">
+                            <img [src]="currentUserDetails.userimagepath ? currentUserDetails.userimagepath :defaultImg"
+                              alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="150">
+                            <input style="display:none" type="file" name="logofile" id="logo" multiple
+                              accept="image/x-png, image/gif, image/jpeg" class="required form-control"
+                              (change)="fileUpload($event)" required>
+  
+                            <div class="mt-3">
+                              <h4>{{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}</h4>
+                              <a href=""> <label for="logo" class="badge badge-info">Change photo </label></a>
+                            </div>
+                          </div>
+                          <div class="card-body p-3 ">
+                            <div class="row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0">Title</h6>
+                              </div>
+                              <div class="col-sm-8 text-secondary">
+                                <input type="text" name="name" class="form-control" value="Manager">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0">First Name</h6>
+                              </div>
+                              <div class="col-sm-8 text-secondary">
+                                <input type="text" formControlName="firstName" name="fname" class="form-control"
+                                  [(ngModel)]="currentUserDetails.firstName" value="{{currentUserDetails.firstName}}">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0">Last Name</h6>
+                              </div>
+                              <div class="col-sm-8 text-secondary">
+                                <input type="text" formControlName="lastName" name="lname" class="form-control"
+                                  [(ngModel)]="currentUserDetails.lastName" value="{{currentUserDetails.lastName}}">
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0">Email</h6>
+                              </div>
+                              <div class="col-sm-8 text-secondary">
+                                <input type="text" formControlName="email" name="email" class="form-control"
+                                  [(ngModel)]="currentUserDetails.email" value="{{currentUserDetails.email}}">
+                              </div>
+                            </div>
+                            <div class="dx-field row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0 ">Date of birth</h6>
+                              </div>
+                              <div class="col-sm-8">
+                                <input type="date" formControlName="dob" class="form-control" id="start" name="trip-start"
+                                  [(ngModel)]="currentUserDetails.dob" value="{{currentUserDetails.dob}" [min]="minDate"
+                                  [max]="currentDate" required>
+                              </div>
+                            </div>
+                            <div class="row mb-3">
+                              <div class="col-sm-4">
+                                <h6 class="mb-0">Gender</h6>
+                              </div>
+                              <div class="col-8">
+                                <select class="form-select form-control " name="gender" formControlName="gender"
+                                  aria-label="Default select example" placeholder="Choose Gender"
+                                  [(ngModel)]="currentUserDetails.gender">
+                                  <option value="" selected>Choose</option>
+                                  <option value="male">Male</option>
+                                  <option value="female">FeMale</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="text-center">
+                              <button class="btn btn-primary" type="submit" [disabled]="editForm.invalid"> Save
+                                Changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </tab>
+                  <tab heading="Change Password ">
+                    <div class="col-md-8 mb-3 ">
+                      <div class="card p-3  ">
+                        <div class="changepwd">
+                          <form action="changepwd" #changepwd="ngForm"
+                            (ngSubmit)="changePasswordFunction(changepwd.form.value,changepwd)">
+                            <div class="mb-3 row">
+                              <div class="float-end col-6 ml-3 mt-2 ">
+                                <label class="form-label" for="password-input">Current Password <span
+                                    class="text-danger">*</span></label>
+                              </div>
+                              <div class="position-relative auth-pass-inputgroup mb-1 col-8 ml-5 w-100 mt-2">
+                                <input type="text" class="form-control pe-5" placeholder="Current password" #newPwd
+                                  [(ngModel)]="changePassword.currentPwd" (focusout)="checkCurrentPwt(changePassword.currentPwd)" name="currentPwd" id="input" required>
+                                  <span *ngIf="currentPwdStatus!=''" [ngClass]=" currentPwdStatus=='Success' ? 'text-info' : 'text-danger' " > {{currentPwdStatus}}</span>
+                              </div>
+                            </div>
+                            <div class="mb-3 row">
+                              <div class="float-end col-6 ml-3 mt-2 ">
+                                <label class="form-label" for="password-input">New Password <span
+                                    class="text-danger">*</span></label>
+                              </div>
+                              <div class="position-relative auth-pass-inputgroup tooltip2 mb-1 col-8 ml-5 w-100 mt-2">
+                                <input type="password" class="form-control pe-5" placeholder="New password" #newPwd
+                                  [(ngModel)]="changePassword.newPwd" name="newPwd" minlength="8" maxlength="32"
+                                  id="newPwd" required placement="top" (keyup)="onKey1($event)" (focusout)="checkValidation()"
+                                  (focus)="focus($event,'show')" (blur)="outfocus($event,'show')">
+                                  <span class="eyeIconCss"><i class="fa fa-eye" id="eyeOne" aria-hidden="true" (click)="toggleShowFunction('newPwd','eyeOne')"></i></span>
+                                <!-- <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
+                                  type="button" (click)="toggleShow($event,'showeye1','input1')">
+                                  <i class="ri-eye-fill align-middle" id="showeye1"></i>
+                                </button> -->
+                                <span class="tooltiptext2" id="show">
+                                  <em *ngIf="!passkey3" class="fa fa-times reqf new"></em><em *ngIf="passkey3"
+                                    class="fa reqf fa-check req1"></em> Must be <strong>8 to 32 characters
+                                    long </strong> <br>
+                                  <em *ngIf="!passkey1" class="fa fa-times reqf new"></em><em *ngIf="passkey1"
+                                    class="fa reqf fa-check req1"></em> Must have <strong>1 uppercase
+                                    letter</strong> <br>
+                                  <em *ngIf="!passkey" class="fa fa-times reqf new"></em><em *ngIf="passkey"
+                                    class="fa reqf fa-check req1"></em> Must have <strong>1 lowercase
+                                    letter</strong> <br>
+                                  <em *ngIf="!passkey2" class="fa fa-times reqf new"></em><em *ngIf="passkey2"
+                                    class="fa reqf fa-check req1"></em> Must have <strong>1 number
+                                  </strong><br>
+                                  <em *ngIf="!passkey4" class="fa fa-times reqf new"></em><em *ngIf="passkey4"
+                                    class="fa reqf fa-check req1"></em> Must have <strong>at least 1 special character
+                                    like !,@,$,#,% </strong>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="mb-3 row">
+                              <div class="float-end col-6 ml-3 mt-2 ">
+                                <label class="form-label" for="password-input">Confirm Password <span
+                                    class="text-danger">*</span></label>
+                              </div>
+                              <div class="position-relative auth-pass-inputgroup  mb-3 col-8 ml-5 w-100 mt-2">
+                                <input type="password" class="form-control pe-5" placeholder="Confirm password"
+                                  #confirmPwd [(ngModel)]="changePassword.confirmPwd" name="ConfirmPwd" id="confirmPwd" required>
+                                  <span class="eyeIconCss"><i class="fa fa-eye" id="eyeTwo" aria-hidden="true" (click)="toggleShowFunction('confirmPwd','eyeTwo')"></i></span>
+                                <!-- <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
+                                  type="button" (click)="toggleShow($event,'showeye2','input2')"><i
+                                    class="ri-eye-fill align-middle" id="showeye2"></i></button> -->
+                              </div>
+                              <span class="text-danger" *ngIf="errorMessage!=''">{{errorMessage}}</span>
+                              <span class=" text-danger" *ngIf="newConfirm">New password and confirm password should be
+                                same ! </span>
+                            </div>
+                            <div class="mt-3 text-center " style="margin-left: -3cm;">
+                              <button class=" btn btn-primary btn-md w-25" type="submit"
+                                [disabled]="changepwd.invalid || errorMessage!=''  ">Change</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </tab>
+                  <tab customClass="nav-purplelink" heading="My Documents">
+                    <div class="col-md-8 mb-4 ">
+                      <div class="card p-3">
+                        <carousel>
+                          <slide>
+                            <img [src]="'data:image/png;base64,'+currentUserDetails.adharDetails.imagePath" alt="first slide" style="display: block; width: 100%;">
+                            <div class="carousel-caption d-none d-md-block">
+                              <h3 class="text-warning">Adhar Image</h3>
+                            </div>
+                          </slide>
+                          <slide>
+                            <img [src]="'data:image/png;base64,'+currentUserDetails.panDetails.imagePath" alt="second slide" style="display: block; width: 100%;">
+                            <div class="carousel-caption d-none d-md-block">
+                              <h3 class="text-warning">Pan Image</h3>
+                            </div>
+                          </slide>
+                        </carousel>
+                      </div>
+                    </div>
+                  </tab>
+                </tabset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <app-footer></app-footer> -->

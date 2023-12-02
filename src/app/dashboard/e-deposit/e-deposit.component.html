@@ -1,0 +1,42 @@
+
+<div class="row col-12 p-2">
+    <div id="navigation" class="col-2 d-flex justify-content-center designOne" style="overflow-x: auto;">
+      <!-- Navigation Menu-->
+      <ul class="navigation-menu " style="list-style-type: none;">
+        <li class="" style="cursor: pointer;" routerLinkActive="active" routerLink="file-upload" >
+          <a >
+            <h6>File Upload</h6>
+          </a>
+        </li>
+         <hr>
+        <li class=" " style="cursor: pointer;" routerLinkActive="active" routerLink="rgbToHex" >
+          <div >
+            <h6>RGB TO HEX converter</h6>
+          </div>
+        </li>
+        <hr>
+        <li class=" " style="cursor: pointer;" routerLinkActive="active" routerLink="m-passbook" >
+          <div>
+            <h6>mPassbook </h6>
+          </div>
+        </li>
+        <hr>
+        <li class=" " style="cursor: pointer;" routerLinkActive="active" routerLink="view-download" >
+          <div>
+            <h6>View/download Statement </h6>
+          </div>
+        </li>
+        <hr>
+        <li class=" " style="cursor: pointer;" routerLinkActive="active" routerLink="e-statement" >
+          <div>
+            <h6>e-Statement Subscription </h6>
+          </div>
+        </li>
+        <hr>
+      </ul>
+      <!-- End navigation menu  -->
+    </div>
+    <div class="col-10">
+       <router-outlet></router-outlet>
+    </div>
+  </div>

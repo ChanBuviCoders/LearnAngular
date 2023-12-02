@@ -1,0 +1,140 @@
+<div>
+    <button type="button" class="btn btn-primary addButton" (click)="openPopUp(addCustomer)">AddCustomer</button>
+    <div class="p-3" style="overflow-x: auto;">
+        <dx-data-grid id="gridContainer" [dataSource]="customerList" [remoteOperations]="false"
+            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true"
+            (onContentReady)="contentReady($event)">
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+            <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+            <dxi-column dataField="SerialNumber" dataType="string" alignment="center" caption="#" >
+            </dxi-column>
+            <dxi-column dataField="firstName" dataType="number" alignment="center" caption="First Name"
+                format="currency"></dxi-column>
+            <dxi-column dataField="lastName" dataType="number" alignment="center" caption="Last Name" format="percent"
+                [allowGrouping]="false" cssClass="bullet"></dxi-column>
+            <dxi-column dataField="loanAmount" dataType="string" alignment="center" caption="Loan Amount" format="currency"></dxi-column>
+            <dxi-column dataField="loanType" dataType="string" alignment="center" caption="Loan Type"></dxi-column>
+            <dxi-column dataField="startDate" dataType="string" alignment="center" caption="Start Date"></dxi-column>
+            <dxi-column dataField="endDate" dataType="string" alignment="center" caption="End Date "></dxi-column>
+            <dxi-column cellTemplate="action" alignment="center" caption="Action"></dxi-column>
+            <div *dxTemplate="let data of 'action';let Z =index">
+                <div class="align-items-center">
+                    <a href="javascript:void(0)" title="Send SMS" style="font-size: x-large; color: dimgrey;" (click)="sendSms(data.data)"
+                        class="ml-3 text-danger">
+                        <!-- <i class="fa-solid fa-sms"></i> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7 1.3 3 4.1 4.8 7.3 4.8 66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128.2 304H116c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h12.3c6 0 10.4-3.5 10.4-6.6 0-1.3-.8-2.7-2.1-3.8l-21.9-18.8c-8.5-7.2-13.3-17.5-13.3-28.1 0-21.3 19-38.6 42.4-38.6H156c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8h-12.3c-6 0-10.4 3.5-10.4 6.6 0 1.3.8 2.7 2.1 3.8l21.9 18.8c8.5 7.2 13.3 17.5 13.3 28.1.1 21.3-19 38.6-42.4 38.6zm191.8-8c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-68.2l-24.8 55.8c-2.9 5.9-11.4 5.9-14.3 0L224 227.8V296c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8V192c0-8.8 7.2-16 16-16h16c6.1 0 11.6 3.4 14.3 8.8l17.7 35.4 17.7-35.4c2.7-5.4 8.3-8.8 14.3-8.8h16c8.8 0 16 7.2 16 16v104zm48.3 8H356c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h12.3c6 0 10.4-3.5 10.4-6.6 0-1.3-.8-2.7-2.1-3.8l-21.9-18.8c-8.5-7.2-13.3-17.5-13.3-28.1 0-21.3 19-38.6 42.4-38.6H396c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8h-12.3c-6 0-10.4 3.5-10.4 6.6 0 1.3.8 2.7 2.1 3.8l21.9 18.8c8.5 7.2 13.3 17.5 13.3 28.1.1 21.3-18.9 38.6-42.3 38.6z"/></svg>
+                    </a>
+                    <a href="javascript:void(0)" class="ml-3" title="Edit" style="font-size: x-large;color: dimgrey;" (click)="editFunction(data.data,addCustomer)"><i
+                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)" title="Delete" style="font-size: x-large; color: dimgrey;" (click)="deleteCustomer(data.data)"
+                        class="ml-3 text-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </dx-data-grid>
+    </div>
+</div>
+
+<ng-template #addCustomer>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Customer</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <form action="" [formGroup]="addCustomerForm" (ngSubmit)="addCustomerFunction(addCustomerForm.value)">
+    <div class="modal-body">
+        <div class="p-3">
+            <div class="row ">
+                <label for="fName"> First Name <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" formControlName="firstName" id="fName" (cut)="$event.preventDefault()" (copy)="$event.preventDefault()" (paste)="$event.preventDefault()">
+            </div>
+            <div class="row mt-2">
+                <label for="lName"> Last Name <span class="text-danger">*</span> </label>
+                <input class="form-control" type="text" formControlName="lastName" id="lName">
+            </div>
+            <div class="row mt-2">
+                <label for="lAmount"> Loan Amount <span class="text-danger">*</span> </label>
+                <input class="form-control" min="10000" max="1000000" OnlyNumber="true" type="text"
+                    formControlName="loanAmount" id=lAmount>
+            </div>
+            <div class="row mt-2">
+                <label for="ltype"> Loan Type <span class="text-danger">*</span> </label>
+                <select class="form-control"  formControlName="loanType" name="ltype" id="ltype">
+                    <option value="null" hidden>Select</option>
+                    <option value="Daily">Daily</option>
+                    <option value="weekly">weekly</option>
+                    <option value="Monthly">Monthly</option>
+                </select>
+            </div>
+            <div class="row mt-2">
+                <label for="mNumber"> Mobile Number <span class="text-danger">*</span></label>
+                <input class="form-control" OnlyNumber="true" minlength="10" maxlength="10" type="text"
+                    formControlName="mobileNumber" id="mNumber">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" type="submit" [disabled]="addCustomerForm.invalid || addCustomerForm.pristine">{{type}} Customer</button>
+        <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>
+    </div>
+    </form>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <form  [formGroup]="testForm" (ngSubmit)="submitFunction(testForm.value)" action="">
+    <div class="text-center mt-2">
+        <label for="date"> Date :</label>
+        <input class="ml-1" formControlName="date" type="date" [(ngModel)]="date">
+    </div>
+    <div class="text-center">
+        <label for="time"> time : </label>
+        <select class="ml-1" aria-placeholder="HH"  formControlName="HH" name="hours" id="hours" [(ngModel)]="hr">
+            <option value="0"  selected>0</option>
+            <option *ngFor="let data of hours" value="{{data}}"> {{data}}</option>
+        </select >
+        <select  class="ml-1" aria-placeholder="min" formControlName="mm"  name="min" id="min" [(ngModel)]="minute">
+            <option value="0"  selected>0 </option>
+            <option *ngFor="let data of min" value="{{data}}">{{data}}</option>
+        </select >
+        <select  class="ml-1" aria-placeholder="sec" formControlName="sec"  name="sec" id="sec" [(ngModel)]="seconds">
+            <option   value="0" selected>0 </option>
+            <option *ngFor="let data of min" value="{{data}}">{{data}}</option>
+        </select >
+    </div>
+    <div class="text-center">
+         <button class="btn btn-primary" type="submit"  >Set</button>
+         <button class="btn btn-secondary ml-1" (click)="testForm.reset()" type="button">Reset</button>
+    </div>
+</form> -->

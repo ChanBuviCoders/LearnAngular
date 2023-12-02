@@ -1,0 +1,16 @@
+<div class="p-4 row d-flex justify-content-center designOne">
+  <div style="width: 80%;">
+    <canvas baseChart
+    [chartType]="'bar'"
+    [legend]="true"
+    [datasets]="chartData"
+    [labels]="chartLabels"
+    [options]="chartOptions"
+    (chartHover)="onChartHover($event)"
+    (chartClick)="onChartClick($event)"
+    >
+    </canvas>
+    <button class="btn btn-primary" style="margin-left: 45%;" (click)="newDataPoint([10,11,8], 'November')">Add data point</button>
+  </div>
+  
+</div>

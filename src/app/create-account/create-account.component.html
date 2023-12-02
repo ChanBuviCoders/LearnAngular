@@ -1,0 +1,228 @@
+<div *ngIf="createAccount">
+    <form class="{{variable1}}-{{variable2}}" [formGroup]="createActForm"
+      (ngSubmit)="createActFunction(createActForm.value)">
+      <div class="row" style="margin-left: 1cm;margin-top: 1rem; margin-right: 1cm;">
+        <div class="col-md-6 verticalLine">
+          <h2>Personal Details</h2>
+          <hr>
+          <div>
+            <label for="fName"> Name <span style="color: red;">*</span>(same as ID proof)</label>
+          </div>
+  
+          <div class="row">
+  
+            <div class="col-md-6 form-group">
+              <label for="fName"> First Name <span style="color: red;">*</span></label>
+              <input type="fName" formControlName="firstName" class="form-control" id="fName" aria-describedby="fName"
+                aria-placeholder="first name" required>
+  
+            </div>
+  
+            <div class="col-md-6 form-group">
+              <label for="fName"> Last Name <span style="color: red;">*</span></label>
+              <input type="lName" formControlName="lastName" class="form-control" id="lName" aria-describedby="lName"
+                aria-placeholder="last name" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Date Of Birth<span style="color: red;">*</span></label>
+              <input type="date" formControlName="dob" class="form-control" id="start" name="trip-start" [value]="date"
+                min="1922-01-01" [max]="currentDate" required>
+            </div>
+            <div class="col-md-6 form-group">
+  
+              <label for="exampleInputPassword1">Gender<span style="color: red;">*</span></label> <br>
+              <div class="row">
+                <div class="col-md-6 d-flex" style="text-align: center;">
+                  <input class="form-control h-75 w-50" type="radio" formControlName="gender" id="male" name="gender" value="male" required>
+                  <label for="male" >Male</label>
+                </div>
+  
+                <div class="col-md-6 d-flex">
+                  <input class="form-control h-75 w-50" type="radio" formControlName="gender" id="female" name="gender" value="female" required>
+                  <label for="female" >Female</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="fatherName">Father's Name<span style="color: red;">*</span></label>
+              <input type="text" formControlName="fatherName" class="form-control" id="fatherName"
+                aria-describedby="fatherName" required>
+            </div>
+            <div class="col-md-6 form-group">
+  
+              <label for="exampleInputPassword1">Marital Status<span style="color: red;">*</span></label> <br>
+              <select class="form-control" id="exampleFormControlSelect1" formControlName="marriedStatus" required>
+                <option value="null"hidden>None</option>
+                <option>Married</option>
+                <option>Unmarried</option>
+                <option>Single</option>
+                <option>Divorced</option>
+  
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Annual Income<span style="color: red;">*</span></label>
+              <input id="income" formControlName="annualIncome" name="income" type="text" maxlength="10" size="6"
+                autocomplete="off" class="required form-control" required="true" OnlyNumber="true">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputPassword1">Education Details<span style="color: red;">*</span></label>
+              <select class="form-control" formControlName="qualification" id="exampleFormControlSelect1" required>
+                <option value="null"hidden>None</option>
+                <option>10th and blow</option>
+                <option>+2 and blow</option>
+                <option>Under graduate (UG)</option>
+                <option>Post graduate (PG)</option>
+  
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Permanant Account Number <span style="color: red;">*</span></label>
+              <input id="income" formControlName="pan" name="pan" type="text" [ngModel]="pan"
+                (ngModelChange)="pan= $event.toUpperCase()" minlength="10" maxlength="10" size="6" autocomplete="off"
+                class="required form-control" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="Occupation">Occupation<span style="color: red;">*</span></label>
+              <select class="form-control" formControlName="occupation" id="Occupation" required>
+                <option value="null"hidden>None</option>
+                <option>student</option>
+                <option>business</option>
+                <option>self employee</option>
+                <option>employee</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2>Contact Details</h2>
+          <hr>
+          <div class="row" style="margin-top: 1.3cm;">
+  
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Mobile Number<span style="color: red;">*</span></label>
+              <input OnlyNumber minlength="10" type="text" formControlName="mobileNumber" required="true" maxlength="10"
+                OnlyNumber="true" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputPassword1">Alternate Mobile Number (optional)</label>
+              <input OnlyNumber minlength="10" type="text" formControlName="altMobileNumber" maxlength="10"
+                OnlyNumber="true" class="form-control" id="exampleInputPassword1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Email address<span style="color: red;">*</span></label>
+              <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputPassword1">Aadhaar Number<span style="color: red;">*</span></label>
+              <input OnlyNumber type="text" formControlName="adharNumber" class="form-control" maxlength="12"
+                id="exampleInputPassword1" placeholder="    XXXX    XXXX    XXXX" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Upload Aadhaar <span style="color: red;">*</span></label>
+              <input type="file" valu="adhar" formControlName="adharfile" accept=".jpg, .jpeg, .png"
+                (change)="fileuploadsingle($event)" class="form-control" id="adhar" aria-describedby="emailHelp" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputPassword1">Upload Pan<span style="color: red;">*</span></label>
+              <input type="file" formControlName="panfile" value="pan" accept=".jpg, .jpeg, .png"
+                (change)="fileuploadsingle($event)" class="form-control" id="pan" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">State<span style="color: red;">*</span></label>
+              <input type="text" formControlName="state" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputPassword1">City<span style="color: red;">*</span></label>
+              <input type="text" formControlName="city" class="form-control" id="exampleInputPassword1" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Zip Code<span style="color: red;">*</span></label>
+              <input OnlyNumber maxlength="6" type="text" formControlName="zipcode" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="exampleInputEmail1">Address<span style="color: red;">*</span></label>
+              <textarea style="height: 37px" name="address" formControlName="address" id="address" class="form-control"
+                required></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="margin-left: 1cm;margin-top: 1rem; margin-right: 1cm;">
+       <div class="col-12 ">
+        <h3>Login Credentials</h3>
+        <hr>
+          <div class="row">
+            <div class="col-4 row form-group pt-2" >
+              <label class="col-5 pl-5 pt-1" for="userId"><strong>User Id</strong><span style="color: red;"> *</span></label>
+              <input type="text" placeholder="Create User Id"  formControlName="userId"
+                class="form-control col-7" id="userId" aria-describedby="emailHelp" required>
+            </div>
+            <div class="col-4 row form-group pt-2">
+              <label class="col-5 pl-5 pt-1" for="password"><strong>Password</strong><span style="color: red;"> *</span></label>
+              <input type="text" placeholder="Create password"  formControlName="password"
+                class="form-control col-7" id="password" required>
+            </div>
+            <div class="col-4 d-flex  justify-content-center" style="align-items:center ;">
+              <button (click)="formvalidation()" class="btn btn-primary w-50" type="submit" [disabled]="createActForm.invalid">Submit</button>
+              <button (click)="createActForm.reset()"class="btn btn-secondary ml-5 w-50" type="button" >Reset</button>
+            </div>
+          </div>
+       </div>
+      </div>
+  
+    </form>
+    <hr>
+    <div>
+      <div style="margin-left: 1cm;">
+        <h4>Note <span style="color:lime;">*</span></h4>
+        <p style="margin-left: 1cm;">
+          After submiting the form your details will verified by bank manager within 2 days .
+          After verification we will send message to your registered <span style="color:green;">Email Address</span> here
+          you will see verification status
+        </p>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!createAccount" style="display: flex; justify-content:center ;margin-top: 13%;">
+    <form class="{{variable1}}-{{variable2}} ml-3" [formGroup]="loginCredForm"
+      (ngSubmit)="saveLoginCred(loginCredForm.value)">
+      <div class="col-12 card">
+        <div class="col-md-6 form-group" style="padding-top: 17px;">
+          <label for="userId">User Id<span style="color: red;">*</span></label>
+          <input type="text" placeholder="Create User Id" style="width: 10cm;" formControlName="userId"
+            class="form-control" id="userId" aria-describedby="emailHelp" required>
+        </div>
+        <div class="col-md-6 form-group">
+          <label for="password">Password<span style="color: red;">*</span></label>
+          <input type="text" placeholder="Create password" style="width: 10cm;" formControlName="password"
+            class="form-control" id="password" required>
+        </div>
+        <div style="display: flex;justify-content: center;margin-bottom:10px ;">
+          <button [disabled]="loginCredForm.invalid" type="submit" class="btn btn-success">Create</button>
+        </div>
+      </div>
+  
+    </form>
+  </div>
+  

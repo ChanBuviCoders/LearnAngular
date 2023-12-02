@@ -1,0 +1,97 @@
+<div style="position: fixed;width: 100%;z-index: 111;">
+  <!-- end container -->
+  <div class="topbar-main">
+    <div class="container-fluid" style="background-color: gold;">
+      <!-- LOGO -->
+      <div class="topbar-left">
+        <a href="javascript:void(0);" class="logo m-t-10">
+        </a>
+      </div>
+      <a href="javascript:void(0);" class="logo">
+      </a>
+      <nav class="navbar-custom " style="background-color: transparent">
+        <a href="javascript:void(0);" class="logo"></a>
+        <ul class="header-nav header-nav-profile float-right m-t-10">
+          <li class="dropdown list-inline-item dropdown notification-list">
+            <a href="javascript:void(0);" data-toggle="dropdown"
+              class="dropdown-toggle ink-reaction waves-effect waves-light nav-user">
+              <img src="../../../assets/imgs/profile.png" alt="" class="rounded-circle prof1">
+              <span class="profile-info text-black m-l-5" style="margin-bottom: 1rem;">
+                <span style="font-size: larger;font-weight: 500;">{{currentUserDetails.firstName}}&nbsp;{{currentUserDetails.lastName}}</span><br>
+                <span>Bank Manager</span>
+              </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="Preview"
+              x-placement="bottom-end"
+              style="position: absolute; transform: translate3d(35px, 64px, 0px); top:10px; left: 0px; will-change: transform;">
+              <div class="dropdown-item noti-title">
+                <h6 class="text-overflow">
+                  <small style="color:#fff">{{currentUserDetails.firstName}}&nbsp;{{currentUserDetails.lastName}}</small>
+                </h6>
+              </div>
+
+              <!-- item-->
+              <a href="javascript:void(0);" class="dropdown-item notify-item" routerLink="/profile" style="color: black; font-weight: 500;">
+                <span>Profile</span>
+              </a>
+              <a href="javascript:void(0);" class="dropdown-item notify-item" (click)="logout()" style="color: black;font-weight: 500;">
+                <em class="zmdi zmdi-power"></em>
+                <span>Logout</span>
+              </a>
+            </div>
+          </li>
+          <!--end .dropdown -->
+        </ul>
+      </nav>
+    </div>
+    <!-- end container -->
+  </div>
+  <!-- end topbar-main -->
+
+  <div  style="background-color: #086496;" >
+        <!-- Navigation Menu-->
+        <ul class="d-flex justify-content-around" style="list-style-type: none;" >
+          <li class="" routerLinkActive="active" routerLink="/dashboard/myAct">
+            <a href="javascript:void(0);"      >
+              <h6 > My Accounts</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/fundTrs">
+            <a href="javascript:void(0);"     >
+              <h6 >Fund Transfer</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/e-deposit">
+            <a href="javascript:void(0);">
+              <h6 >E-Deposite</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/billpayment">
+            <a href="javascript:void(0);">
+              <h6 >Bill payments</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/topup-recharge">
+            <a href="javascript:void(0);">
+              <h6 >Top Up & Recharge</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/manageCards">
+            <a href="javascript:void(0);">
+              <h6 >Manage Cards</h6>
+            </a>
+          </li>
+          <li class="" routerLinkActive="active" routerLink="/dashboard/services">
+            <a href="javascript:void(0);">
+              <h6 >Service</h6>
+            </a>
+          </li>
+          <li class=""routerLinkActive="active" routerLink="/dashboard/requests">
+            <a href="javascript:void(0);">
+              <h6 > Requests</h6>
+            </a>
+          </li>
+        </ul>
+        <!-- End navigation menu  -->
+      </div>
+</div>

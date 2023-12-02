@@ -1,0 +1,22 @@
+<div class="designOne" [ngStyle]="{'background-color':hexValue.hexValue}" style="height: 100vh;"> 
+    <form #hexForm="ngForm" (ngSubmit)="onSubmit(hexForm.value)" style="background-color: azure;border-radius: 5px;" >
+        <div class="d-flex justify-content-center p-4" >
+            <div class="p-2 d-contents">
+                <label for="red">Red</label>
+                <input class="ml-2" type="number" ngModel  (ngModelChange)="onSubmit(hexForm.value)" name="red" id="red" maxlength="3" required OnlyNumber>
+            </div>
+            <div class="p-2 d-contents">
+                <label for="green">Green</label>
+                <input class="ml-2" type="number" ngModel (ngModelChange)="onSubmit(hexForm.value)"  name="green" id="green" maxlength="3" required OnlyNumber>
+            </div>
+            <div class="p-2">
+                <label for="blue">Blue</label>
+                <input class="ml-2"type="number" ngModel (ngModelChange)="onSubmit(hexForm.value)" name="blue" id="blue" maxlength="3" required OnlyNumber >
+            </div>
+        </div>
+        <div class="d-flex justify-content-center p-4">
+            <input class="ml-2" type="submit" value="Get Hex Color Code" [disabled]="hexForm.invalid" name="blue" maxlength="3" OnlyNumber >
+        </div>
+    </form>
+</div>
+
