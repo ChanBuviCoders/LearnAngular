@@ -117,7 +117,7 @@ export class CreateAccountComponent implements OnInit {
     };
 
     this.userservice.createUser(this.createActObj).subscribe((response) => {
-      if (response.Status == "Success") {
+      if (response.status == true) {
         this.toaster.success(response.Message);
         this.createActForm.reset();
         // this.createAccount = false;
@@ -125,13 +125,13 @@ export class CreateAccountComponent implements OnInit {
         this.variable1= "will";
         this.variable2= "validate";
       } else {
-        this.toaster.error  (response.Message);
+        this.toaster.error(response.message);
       }
     });
   } 
   saveLoginCred(value) {
     this.userservice.saveLoginCred(value).subscribe((data) => {
-      if (data.status == "Success") {
+      if (data.status == true) {
         this.toaster.success(data.message);
         this.router.navigateByUrl("login");
       } else {

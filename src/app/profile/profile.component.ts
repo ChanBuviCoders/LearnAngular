@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
     };
 
     this.userService.updateUserProfile(editObj).subscribe(data=>{
-        if(data.status=="Success")
+        if(data.status==true)
         {
           this.toastr.success(data.message)
         }
@@ -118,7 +118,7 @@ export class ProfileComponent implements OnInit {
                   "password":value.newPwd
                   }
       this.userService.changePassword(payLoad).subscribe(data=>{
-        if(data.status=="Success")
+        if(data.status==true)
         {
            this.toastr.info(data.message)
            form.resetForm();
@@ -146,7 +146,7 @@ export class ProfileComponent implements OnInit {
         "password":currentPassword
       }
       this.userService.checkCurrentPassword(payLoad).subscribe(data=>{
-          if(data.status=="Success")
+          if(data.status==true)
           {
              this.currentPwdStatus=data.message
           }

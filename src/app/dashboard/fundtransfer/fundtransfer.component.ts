@@ -64,7 +64,7 @@ export class FundtransferComponent implements OnInit {
        if(this.type=="Add")
        {
         this.userService.addCustomer(formValue).subscribe(res=>{
-          if(res.status=="Success")
+          if(res.status==true)
           {
             this.toastr.success(res.message)
             this.modalRef.hide()
@@ -79,7 +79,7 @@ export class FundtransferComponent implements OnInit {
        else{
          formValue.customerId=this.editCustomerDetails.customerId
         this.userService.updateCustomer(formValue).subscribe(res=>{
-          if(res.status=="Success")
+          if(res.status==true)
           {
             this.toastr.success(res.message)
             this.modalRef.hide()
@@ -123,7 +123,7 @@ export class FundtransferComponent implements OnInit {
   {  
     let payLoad = {customerId:values.customerId}
     this.userService.deleteCustomer(payLoad).subscribe(res=>{
-      if(res.status=="Success")
+      if(res.status==true)
       {
         this.toastr.success(res.message)
         this.getallCustomerList();

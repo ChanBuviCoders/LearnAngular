@@ -38,7 +38,7 @@ export class FileUploadComponent implements OnInit {
       formData.append("file", event.target.files[i]);
     }
      this.userService.fileUpload(formData).subscribe(data=>{
-       if(data.status=="Success")
+       if(data.status==true)
        {
          this.toaster.success(data.message)
        }
@@ -61,7 +61,7 @@ export class FileUploadComponent implements OnInit {
   deleteFile(fileDetails)
   {
     this.userService.deleteFileDetails(fileDetails).subscribe(data=>{
-      if(data.status=="Success")
+      if(data.status==true)
       {
         this.toaster.success(data.message)
       }

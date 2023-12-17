@@ -71,13 +71,12 @@ export class LoginComponent implements OnInit {
       let payload={ userId:data.userId,password:data.password}
       this.userService.authSession(payload).subscribe(response=>{
            let data =response
-           if(data.Status=="login successfully")
+           if(data.status==true)
            {
-            // this.toastr.success(data.Status)
             this.jwtService.saveToken(data.token)
             this.router.navigate(['dashboard'])
            }else{
-            this.errorMsg=data.Status
+            this.errorMsg=data.message
            }
        })
      }
