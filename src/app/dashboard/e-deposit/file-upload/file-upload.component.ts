@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { userAccount } from 'src/app/models/getsession.model';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,28 +13,28 @@ export class FileUploadComponent implements OnInit {
 
   constructor(private userService : UserService,private toaster:ToastrService) { }
 
-  currentUserDetails:any
+  currentUserDetails:userAccount;
   ngOnInit(): void {
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data;});
-    this.getUploadedFileDetails(this.currentUserDetails.clientId)
+    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
+    this.getUploadedFileDetails(this.currentUserDetails.userAccountId)
   }
   
   fileList:any=[]
   getUploadedFileDetails(clientId)
   {
-    this.userService.getUploadedFileDetails(clientId).subscribe(data=>{this.fileList=data})
+    this.userService.getUploadedFileDetails(clientId).subscribe(data=>{this.fileList=data.data})
   }
 
   fileUpload(event)
   { 
     var formDetails ={ 
-                      'uploadedBy':this.currentUserDetails.clientId,
+                      'uploadedBy':this.currentUserDetails.userAccountId,
                       'fullName':this.currentUserDetails.firstName +''+ this.currentUserDetails.lastName
                      }
      
      const formData=new FormData();
      formData.append('uploadedBy',this.currentUserDetails.firstName + this.currentUserDetails.lastName)
-     formData.append('clientId',this.currentUserDetails.clientId)
+     formData.append('userAccountId',this.currentUserDetails.userAccountId.toString())
      for (var i = 0; i < event.target.files.length; i++) { 
       formData.append("file", event.target.files[i]);
     }
@@ -45,7 +46,7 @@ export class FileUploadComponent implements OnInit {
        else{
         this.toaster.info(data.message +" "+"these files already exist")
        }
-      this.getUploadedFileDetails(this.currentUserDetails.clientId)
+      this.getUploadedFileDetails(this.currentUserDetails.userAccountId)
      })
      event.target.value=''
   } 
@@ -68,7 +69,7 @@ export class FileUploadComponent implements OnInit {
       else{
        this.toaster.info(data.message)
       }
-     this.getUploadedFileDetails(this.currentUserDetails.clientId)
+     this.getUploadedFileDetails(this.currentUserDetails.userAccountId)
     })
   }
 }

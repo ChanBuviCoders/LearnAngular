@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,HostListener,OnDestroy } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { UserService } from './services/user.service';
 import {Location} from '@angular/common';
 import { filter } from 'rxjs/operators';
+import { JwtService } from './services/jwt.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,11 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'learning';
   previousUrl:String
   currentUrl:string
-  constructor(private router:Router,private userService:UserService,private location:Location){
+  constructor(private router:Router,private userService:UserService,private location:Location,private jwtService:JwtService){
     // -------------------back restriction --------------------->
     window.onpopstate = function (event:any) {history.go(2);};
     // this.location.onUrlChange(x => this.urlChange(x));
@@ -40,4 +42,12 @@ preventDefaultUrlFunction(){
     };
   });
   }
+
+  @HostListener("window:onbeforeunload",["$event"])
+  clearLocalStorage()
+  {
+    console.log("--------------------called ----------------")
+    // localStorage.clear()
+  }
+
 }

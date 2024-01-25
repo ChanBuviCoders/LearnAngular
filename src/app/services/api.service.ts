@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators/catchError';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class httpService {
 
   constructor(  private http: HttpClient,private jwtService: JwtService ) {
     
@@ -57,14 +57,15 @@ export class ApiService {
       'Accept': 'application/json'
     };
     if (this.jwtService.getToken()) {
-      headersConfig['Authorization'] = `${this.jwtService.getToken()}`;
+      headersConfig['Authorization'] =this.jwtService.getToken();
     }
+    console.log('-----header------',headersConfig);
     return new HttpHeaders(headersConfig);
   }
   private setSHeaders(): HttpHeaders  {
     const headersConfig:any = {};
     if (this.jwtService.getToken()) {
-      headersConfig['Authorization'] = `${this.jwtService.getToken()}`;
+      headersConfig['Authorization'] =this.jwtService.getToken();
     }
     return new HttpHeaders(headersConfig);
   }
@@ -75,8 +76,7 @@ export class ApiService {
 
   testpost(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
-    `${environment.api_url}${path}`,
-    JSON.stringify(body),
+    `${environment.api_url}${path}`,body,
     { headers: this.setHeaders() }).pipe(catchError(this.formatErrors))
     
 }
@@ -93,7 +93,7 @@ postMultipartWithForm(path: string, body: any ): Observable<any> {
       //.set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
       .set('Accept','application/json')
-      .set('Authorization', `bearer ${this.jwtService.getToken()}`);
+      .set('Authorization', `${this.jwtService.getToken()}`);
 
     return { headers: _gettoken };
    }

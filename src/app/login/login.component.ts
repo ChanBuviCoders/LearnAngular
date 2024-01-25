@@ -68,15 +68,19 @@ export class LoginComponent implements OnInit {
     
      if(data.capcha==this.capchaDeatils.value)
      {
-      let payload={ userId:data.userId,password:data.password}
+      let payload={ userName:data.userId,password:data.password}
       this.userService.authSession(payload).subscribe(response=>{
-           let data =response
-           if(data.status==true)
+           if(response.status==true)
            {
-            this.jwtService.saveToken(data.token)
-            this.router.navigate(['dashboard'])
+            this.jwtService.saveToken(response.token)
+            this.userService.getSession().subscribe(responce=>{
+              if(responce.status==true)
+              {
+                this.router.navigate(['dashboard'])
+              }
+            })
            }else{
-            this.errorMsg=data.message
+            this.errorMsg=response.message
            }
        })
      }

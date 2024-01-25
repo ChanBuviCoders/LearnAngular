@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
 import * as $ from "jquery";
+import { userAccount } from '../models/getsession.model';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,7 @@ export class ProfileComponent implements OnInit {
   filter: FormGroup;
   mode: any;
   date: any;
-  currentUserDetails: any;
+  currentUserDetails: userAccount;
   defaultImg: any = "./assets/images/user.webp";
   currentDate:any
   minDate:any
@@ -40,7 +41,7 @@ export class ProfileComponent implements OnInit {
       gender: ["", Validators.required],
       email: ["",Validators.required]
     });
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data;});
+    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
   } 
 
   createDate(days, months, years) {
@@ -58,7 +59,7 @@ export class ProfileComponent implements OnInit {
       gender: data.gender,
       firstName: data.firstName,
       lastName: data.lastName,
-      clientInfoId:this.currentUserDetails.clientInfoId
+      userAccountId:this.currentUserDetails.userAccountId
     };
 
     this.userService.updateUserProfile(editObj).subscribe(data=>{
@@ -114,7 +115,7 @@ export class ProfileComponent implements OnInit {
     if (this.changePassword.newPwd === this.changePassword.confirmPwd) {
       this.newConfirm = false;
       let payLoad={
-                  "clientId":this.currentUserDetails.clientInfoId,
+                  "userAccountId":this.currentUserDetails.userAccountId,
                   "password":value.newPwd
                   }
       this.userService.changePassword(payLoad).subscribe(data=>{
@@ -122,8 +123,8 @@ export class ProfileComponent implements OnInit {
         {
            this.toastr.info(data.message)
            form.resetForm();
-           this.userService.clearLocalStorage()
-           this.router.navigateByUrl('/login')
+          //  this.userService.clearLocalStorage()
+          //  this.router.navigateByUrl('/login')
         }
         else{
            this.toastr.error(data.message)
@@ -142,7 +143,7 @@ export class ProfileComponent implements OnInit {
     if(currentPassword!='')
     {
       let payLoad={
-        "clientId":this.currentUserDetails.clientInfoId,
+        "userAccountId":this.currentUserDetails.userAccountId,
         "password":currentPassword
       }
       this.userService.checkCurrentPassword(payLoad).subscribe(data=>{

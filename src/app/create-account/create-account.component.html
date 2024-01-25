@@ -86,7 +86,7 @@
           <div class="row">
             <div class="col-md-6 form-group">
               <label for="exampleInputEmail1">Permanant Account Number <span style="color: red;">*</span></label>
-              <input id="income" formControlName="pan" name="pan" type="text" [ngModel]="pan"
+              <input id="income" formControlName="panNumber" name="pan" type="text" [ngModel]="pan"
                 (ngModelChange)="pan= $event.toUpperCase()" minlength="10" maxlength="10" size="6" autocomplete="off"
                 class="required form-control" required>
             </div>
@@ -174,7 +174,7 @@
           <div class="row">
             <div class="col-4 row form-group pt-2" >
               <label class="col-5 pl-5 pt-1" for="userId"><strong>User Id</strong><span style="color: red;"> *</span></label>
-              <input type="text" placeholder="Create User Id"  formControlName="userId"
+              <input type="text" placeholder="Create User Id"  formControlName="userName"
                 class="form-control col-7" id="userId" aria-describedby="emailHelp" required>
             </div>
             <div class="col-4 row form-group pt-2">
@@ -210,7 +210,7 @@
       <div class="col-12 card">
         <div class="col-md-6 form-group" style="padding-top: 17px;">
           <label for="userId">User Id<span style="color: red;">*</span></label>
-          <input type="text" placeholder="Create User Id" style="width: 10cm;" formControlName="userId"
+          <input type="text" placeholder="Create User Id" style="width: 10cm;" formControlName="userName"
             class="form-control" id="userId" aria-describedby="emailHelp" required>
         </div>
         <div class="col-md-6 form-group">

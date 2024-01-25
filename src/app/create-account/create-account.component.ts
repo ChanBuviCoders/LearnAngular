@@ -21,18 +21,17 @@ export class CreateAccountComponent implements OnInit {
     private toaster: ToastrService,
     private router: Router,
     private datepipe: DatePipe
-  ) {}
+  ) { }
 
   createAccount: boolean = true;
-  currentDate:any
+  currentDate: any
   ngOnInit(): void {
-    this.date=new Date();
-    this.currentDate =this.datepipe.transform(this.date, 'yyyy-MM-dd');
+    this.date = new Date();
+    this.currentDate = this.datepipe.transform(this.date, 'yyyy-MM-dd');
     this.formBuildFunction()
-   
+
   }
-  formBuildFunction()
-  {
+  formBuildFunction() {
     this.createActForm = this.fb.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
@@ -42,7 +41,7 @@ export class CreateAccountComponent implements OnInit {
       marriedStatus: [null, Validators.required],
       annualIncome: ["", Validators.required],
       qualification: [null, Validators.required],
-      pan: ["", Validators.required],
+      panNumber: ["", Validators.required],
       occupation: [null, Validators.required],
       mobileNumber: ["", Validators.required],
       altMobileNumber: ["", Validators.required],
@@ -54,19 +53,19 @@ export class CreateAccountComponent implements OnInit {
       city: ["", Validators.required],
       zipcode: ["", Validators.required],
       address: ["", Validators.required],
-      userId: ["", Validators.required],
+      userName: ["", Validators.required],
       password: ["", Validators.required],
     });
     this.loginCredForm = this.fb.group({
-      userId: ["", Validators.required],
+      userName: ["", Validators.required],
       password: ["", Validators.required],
     });
   }
 
   date: any;
-  
 
-  genderValue(data) {}
+
+  genderValue(data) { }
   resetForm() {
     this.createActForm.reset();
   }
@@ -81,54 +80,27 @@ export class CreateAccountComponent implements OnInit {
     this.variable1 = "was";
     this.variable2 = "validated";
   }
-  datas: any;
-  createActObj: any = {};
-  createActFunction(data) {
-    this.datas = data;
-    this.createActObj = {
-      firstName: this.datas.firstName,
-      lastName: this.datas.lastName,
-      dob: this.datas.dob,
-      gender: this.datas.gender,
-      fatherName: this.datas.fatherName,
-      marriedStatus: this.datas.marriedStatus,
-      annualIncome: Number(this.datas.annualIncome),
-      qualification: this.datas.qualification,
-      occupation: this.datas.occupation,
-      mobileNumber: Number(this.datas.mobileNumber),
-      altMobileNumber: Number(this.datas.altMobileNumber),
-      email: this.datas.email,
-      state: this.datas.state,
-      city: this.datas.city,
-      zipcode: this.datas.zipcode,
-      address: this.datas.address,
-      adharDetails: {
-        "adharNumber": this.datas.adharNumber,
-        "imagePath": this.adharfilejson.fileEncode,
-      },
-      panDetails: {
-        "panNumber": this.datas.pan,
-        "imagePath": this.panfilejson.fileEncode,
-      },
-      loginCred:{
-        "userId":this.datas.userId,
-        "password":this.datas.password
-      }
-    };
+  createActFunction(createActForm) {
 
-    this.userservice.createUser(this.createActObj).subscribe((response) => {
+    createActForm.annualIncome= Number(createActForm.annualIncome);
+    createActForm.mobileNumber= Number(createActForm.mobileNumber);
+    createActForm.altMobileNumber= Number(createActForm.altMobileNumber);
+    createActForm.panImagePath=this.panfilejson.fileEncode;
+    createActForm.adharImagePath=this.adharfilejson.fileEncode;
+    createActForm.isActive=0;
+    this.userservice.createUser(createActForm).subscribe((response) => {
       if (response.status == true) {
-        this.toaster.success(response.Message);
+        this.toaster.success(response.message);
         this.createActForm.reset();
         // this.createAccount = false;
         this.router.navigateByUrl("login");
-        this.variable1= "will";
-        this.variable2= "validate";
+        this.variable1 = "will";
+        this.variable2 = "validate";
       } else {
         this.toaster.error(response.message);
       }
     });
-  } 
+  }
   saveLoginCred(value) {
     this.userservice.saveLoginCred(value).subscribe((data) => {
       if (data.status == true) {

@@ -18,12 +18,12 @@
                     <div class="col-md-8 mb-4 ">
                       <div class="card p-3">
                         <div class="d-flex flex-column align-items-center text-center">
-                          <img [src]="currentUserDetails.userimagepath ? currentUserDetails.userimagepath : defaultImg "
+                          <img [src]="defaultImg"
                             alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="150">
                           <div class="mt-3">
                             <h4>{{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}</h4>
                             <p class="text-info mb-1">Manager</p>
-                            <p class="text-muted font-size-sm">{{currentUserDetails.addressDetailId}}</p>
+                            <!-- <p class="text-muted font-size-sm">{{currentUserDetails.addressDetailId}}</p> -->
                           </div>
                         </div>
                         <div class="card-body ">
@@ -84,7 +84,7 @@
                       <form [formGroup]="editForm" (ngSubmit)="editFunction(editForm.value)">
                         <div class="card p-3">
                           <div class="d-flex flex-column align-items-center text-center">
-                            <img [src]="currentUserDetails.userimagepath ? currentUserDetails.userimagepath :defaultImg"
+                            <img [src]="defaultImg"
                               alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="150">
                             <input style="display:none" type="file" name="logofile" id="logo" multiple
                               accept="image/x-png, image/gif, image/jpeg" class="required form-control"
@@ -156,7 +156,7 @@
                               </div>
                             </div>
                             <div class="text-center">
-                              <button class="btn btn-primary" type="submit" [disabled]="editForm.invalid"> Save
+                              <button class="btn btn-primary" type="submit" [disabled]="editForm.invalid || editForm.pristine"> Save
                                 Changes</button>
                             </div>
                           </div>
@@ -176,7 +176,7 @@
                                     class="text-danger">*</span></label>
                               </div>
                               <div class="position-relative auth-pass-inputgroup mb-1 col-8 ml-5 w-100 mt-2">
-                                <input type="text" class="form-control pe-5" placeholder="Current password" #newPwd
+                                <input type="password" class="form-control pe-5" placeholder="Current password" #newPwd
                                   [(ngModel)]="changePassword.currentPwd" (focusout)="checkCurrentPwt(changePassword.currentPwd)" name="currentPwd" id="input" required>
                                   <span *ngIf="currentPwdStatus!=''" [ngClass]=" currentPwdStatus=='Success' ? 'text-info' : 'text-danger' " > {{currentPwdStatus}}</span>
                               </div>
@@ -246,13 +246,13 @@
                       <div class="card p-3">
                         <carousel>
                           <slide>
-                            <img [src]="'data:image/png;base64,'+currentUserDetails.adharDetails.imagePath" alt="first slide" style="display: block; width: 100%;">
+                            <img [src]="'data:image/png;base64,'+currentUserDetails.adharImagePath" alt="first slide" style="display: block; width: 100%;">
                             <div class="carousel-caption d-none d-md-block">
                               <h3 class="text-warning">Adhar Image</h3>
                             </div>
                           </slide>
                           <slide>
-                            <img [src]="'data:image/png;base64,'+currentUserDetails.panDetails.imagePath" alt="second slide" style="display: block; width: 100%;">
+                            <img [src]="'data:image/png;base64,'+currentUserDetails.panImagePath" alt="second slide" style="display: block; width: 100%;">
                             <div class="carousel-caption d-none d-md-block">
                               <h3 class="text-warning">Pan Image</h3>
                             </div>

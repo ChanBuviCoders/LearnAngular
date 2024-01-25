@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { directivesModules } from '../directives/directives.modules';
 
 
-
 @NgModule({
   declarations: [
     CreateAccountComponent,

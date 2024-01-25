@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { userAccount } from 'src/app/models/getsession.model';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -11,11 +12,11 @@ export class EStatementSubscriptionComponent implements OnInit {
 
   constructor(private userService:UserService) { }
 
-  currentUserDetails:any={}
+  currentUserDetails:userAccount;
   ngOnInit(): void {
 
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data;});
-    this.getChartDetails(this.currentUserDetails.clientId)
+    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
+    this.getChartDetails(this.currentUserDetails.userAccountId)
   }
 
   /* **************** charts data********************** */

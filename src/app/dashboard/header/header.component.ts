@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { userAccount } from 'src/app/models/getsession.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class HeaderComponent implements OnInit {
 
   constructor( private router:Router,private userService:UserService) { }
 
-  currentUserDetails:any={}
+  currentUserDetails:userAccount;
   ngOnInit(): void {
     this.userService.currentuserSubject.subscribe(data=>{
-      this.currentUserDetails=data
+      this.currentUserDetails=data.data
      })
   }
 

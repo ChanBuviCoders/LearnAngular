@@ -111,7 +111,7 @@ export class FundtransferComponent implements OnInit {
   getallCustomerList()
   { let payLoad={clientId:this.currentUserDetails.clientId}
     this.userService.getAllCustomerList(payLoad).subscribe(data=>{
-      this.customerList=data
+      this.customerList=data.data
       var count =0;
       this.customerList.forEach(data=>{
         data.SerialNumber=++count;
