@@ -59,7 +59,6 @@ export class httpService {
     if (this.jwtService.getToken()) {
       headersConfig['Authorization'] =this.jwtService.getToken();
     }
-    console.log('-----header------',headersConfig);
     return new HttpHeaders(headersConfig);
   }
   private setSHeaders(): HttpHeaders  {

@@ -10,24 +10,28 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor( private router:Router,private userService:UserService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
-  currentUserDetails:userAccount;
+  currentUserDetails: userAccount;
   ngOnInit(): void {
-    this.userService.currentuserSubject.subscribe(data=>{
-      this.currentUserDetails=data.data
-     })
+    this.userService.currentuserSubject.subscribe(data => {
+      this.currentUserDetails = data.data
+    })
   }
 
 
-  logout()
-  {
-    this.router.navigate(['/login'])
-    this.userService.clearLocalStorage()
-  }     
+  logout() {
+    let payload = { "userAccountId": this.currentUserDetails.userAccountId };
+    this.userService.logout(payload).subscribe(data => {
+      if (data.status) {
+        this.router.navigate(['/login'])
+        this.userService.clearLocalStorage()
+      }
+    })
+  }
 
 
- 
+
 }
 
 

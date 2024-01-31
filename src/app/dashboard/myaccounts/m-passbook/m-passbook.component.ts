@@ -58,10 +58,9 @@ newDataPoint(dataArr = [100, 100, 100], label) {
 
 getChartDetails(clientId)
 { 
-  console.log('-------------------------varla da dei');
-  this.userService.getChartDetails(clientId,2).subscribe(data=>{
-    this.chartData=data.chartData
-    this.chartLabels=data.chartLabels
+  this.userService.getChartDetails(clientId,1).subscribe(data=>{
+    this.chartData=data.data.chartData
+    this.chartLabels=data.data.chartLabels
   })
 }
 

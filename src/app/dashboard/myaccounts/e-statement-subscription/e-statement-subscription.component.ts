@@ -10,13 +10,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EStatementSubscriptionComponent implements OnInit {
 
-  constructor(private userService:UserService) { }
+  constructor(private userService: UserService) { }
 
-  currentUserDetails:userAccount;
+  currentUserDetails: userAccount;
+  dataType: number = 1
   ngOnInit(): void {
 
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
-    this.getChartDetails(this.currentUserDetails.userAccountId)
+    this.userService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
+    this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
   }
 
   /* **************** charts data********************** */
@@ -34,33 +35,33 @@ export class EStatementSubscriptionComponent implements OnInit {
       label: 'Account C'
     }
   ];
-/* **************** charts label********************** */
-  chartLabels = ['January','February','March','April'];
+  /* **************** charts label********************** */
+  chartLabels = ['January', 'February', 'March', 'April'];
   chartOptions = { responsive: true };
-/* **************** charts events********************** */ 
-onChartHover = ($event: any) => {
-  window.console.log('onChartHover', $event);
-};
+  /* **************** charts events********************** */
+  onChartHover = ($event: any) => {
+    window.console.log('onChartHover', $event);
+  };
 
-onChartClick = ($event: any) => {
-  window.console.log('onChartClick', $event);
-};
+  onChartClick = ($event: any) => {
+    window.console.log('onChartClick', $event);
+  };
 
-/* **************** Updating Datasets Dynamically********************** */
-newDataPoint(dataArr = [100, 100, 100], label) {
-  this.chartData.forEach((dataset, index) => {
-    this.chartData[index] = Object.assign({}, this.chartData[index], {
-      data: [...this.chartData[index].data, dataArr[index]]
+  /* **************** Updating Datasets Dynamically********************** */
+  newDataPoint(dataArr = [100, 100, 100], label) {
+    this.chartData.forEach((dataset, index) => {
+      this.chartData[index] = Object.assign({}, this.chartData[index], {
+        data: [...this.chartData[index].data, dataArr[index]]
+      });
     });
-  });
 
-  this.chartLabels = [...this.chartLabels, label];
-}
-getChartDetails(clientId)
-{ 
-  this.userService.getChartDetails(clientId,2).subscribe(data=>{
-    this.chartData=data.chartData
-    this.chartLabels=data.chartLabels
-  })
-}
+    this.chartLabels = [...this.chartLabels, label];
   }
+  getChartDetails(clientId, dataType) {
+    this.dataType = dataType == 1 ? 2 : 1
+    this.userService.getChartDetails(clientId, dataType).subscribe(data => {
+      this.chartData = data.data.chartData
+      this.chartLabels = data.data.chartLabels
+    })
+  }
+}

@@ -251,3 +251,6 @@ a {
     box-shadow: 0px 0px 16px 0px white;
     border-radius: 8px;
 }
+.prof1{
+    overflow-x: auto;
+}

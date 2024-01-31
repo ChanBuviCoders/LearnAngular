@@ -1,32 +1,35 @@
-<div class="p-4  designOne" >
-     <div class=" d-flex justify-content-center" >
-         <input class="form-control" multiple type="file" name="fileUpload" (change)="fileUpload($event)" accept=".pdf,.png,image/png">
-     </div>
-     <div class="row mt-3 p-3" >
-         <table style="width: 100%;">
-             <thead style="background-color: aquamarine;">
-              <th>S.NO</th>
-              <th>FIle Name</th>
-              <th>Uploaded By</th>
-              <th>File Type</th>
-              <th>Action</th>
-             </thead>
-             <tbody>
+<div class="p-4  designOne">
+    <div class=" d-flex justify-content-center">
+        <input class="form-control" multiple type="file" name="fileUpload" (change)="fileUpload($event)"
+            accept=".pdf,.png,image/png">
+    </div>
+    <div class="row mt-3 p-3">
+        <table style="width: 100%;">
+            <thead style="background-color: aquamarine;">
+                <th>S.NO</th>
+                <th>FIle Name</th>
+                <th>Uploaded By</th>
+                <th>File Type</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
                 <tr *ngFor="let fileData of fileList;let i = index">
-                  <td>{{i+1}}</td>
-                  <td>{{fileData.fileName}}</td>
-                  <td>{{fileData.uploadedBy}}</td>
-                  <td>{{fileData.fileType}}</td>
-                  <td>
-                    <a href="javascript:void(0)" title="view" style="font-size: x-large;color: dimgrey;" (click)="downloadFile(fileData,true)"><i
-                        class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="javascript:void(0)" title="Download" style="font-size: x-large;color: dimgrey;" (click)="downloadFile(fileData,false)"><i
-                        class=" ml-3 fa fa-download" aria-hidden="true"></i></a>
-                    <a href="javascript:void(0)" title="Delete" style="font-size: x-large; color: dimgrey;" (click)="deleteFile(fileData)"
-                        class="ml-3 text-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <td>{{i+1}}</td>
+                    <td>{{fileData.fileName}}</td>
+                    <td>{{fileData.uploadedBy}}</td>
+                    <td>{{fileData.fileType}}</td>
+                    <td>
+                        <a href="javascript:void(0)" title="view" style="font-size: x-large;color: dimgrey;"
+                            (click)="downloadFile(fileData,true)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" title="Download" style="font-size: x-large;color: dimgrey;"
+                            (click)="downloadFile(fileData,false)"><i class=" ml-3 fa fa-download"
+                                aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" title="Delete" style="font-size: x-large; color: dimgrey;"
+                            (click)="deleteFile(fileData)" class="ml-3 text-danger"><i class="fa fa-trash"
+                                aria-hidden="true"></i></a>
                     </td>
                 </tr>
-             </tbody>
-         </table>
-     </div>
+            </tbody>
+        </table>
+    </div>
 </div>

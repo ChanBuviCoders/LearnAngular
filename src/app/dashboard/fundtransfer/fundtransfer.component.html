@@ -20,6 +20,8 @@
             <dxi-column cellTemplate="action" alignment="center" caption="Action"></dxi-column>
             <div *dxTemplate="let data of 'action';let Z =index">
                 <div class="align-items-center">
+                    <a href="javascript:void(0)" title="view" style="font-size: x-large;color: dimgrey;"
+                    (click)="viewDetails(data)"><i class="fa fa-eye" aria-hidden="true"></i></a>
                     <a href="javascript:void(0)" title="Send SMS" style="font-size: x-large; color: dimgrey;" (click)="sendSms(data.data)"
                         class="ml-3 text-danger">
                         <!-- <i class="fa-solid fa-sms"></i> -->
@@ -65,6 +67,14 @@
                     <option value="Daily">Daily</option>
                     <option value="weekly">weekly</option>
                     <option value="Monthly">Monthly</option>
+                </select>
+            </div>
+            <div class="row mt-2">
+                <label for="gender"> Gender <span class="text-danger">*</span> </label>
+                <select class="form-control"  formControlName="gender" name="gender" id="gender">
+                    <option value="null" hidden>Select</option>
+                    <option value="Male">Male</option>
+                    <option value="FeMale">FeMale</option>
                 </select>
             </div>
             <div class="row mt-2">

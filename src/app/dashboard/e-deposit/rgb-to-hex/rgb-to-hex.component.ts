@@ -9,15 +9,16 @@ import { UserService } from 'src/app/services/user.service';
 export class RgbToHexComponent implements OnInit {
 
 
-  constructor(private userService:UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
   }
-  hexValue:any={}
-  onSubmit(value)
-  {
-      var rgbValue=[Number(value.red),Number(value.green),Number(value.blue)]
-      this.userService.rgbToHexColor(rgbValue).subscribe(data=>{this.hexValue=data})
+  hexValue: any = {}
+  onSubmit(hexForm) {
+     
+    var rgbValue: any = null;
+    rgbValue = [Number(hexForm.value.red), Number(hexForm.value.green), Number(hexForm.value.blue)]
+    this.userService.rgbToHexColor(rgbValue).subscribe(data => { this.hexValue = data })
 
   }
 }

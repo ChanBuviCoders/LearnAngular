@@ -12,10 +12,11 @@ export class ViewDownloadStatementComponent implements OnInit {
   constructor(private userService:UserService) { }
 
   currentUserDetails:userAccount;
+  dataType:number=1;
   ngOnInit(): void {
-
+    
     this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
-    this.getChartDetails(this.currentUserDetails.userAccountId)
+    this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
   }
   
  
@@ -56,12 +57,13 @@ newDataPoint(dataArr = [100, 100, 100], label) {
 
   this.chartLabels = [...this.chartLabels, label];
 }
-getChartDetails(clientId)
+
+getChartDetails(clientId,dataType)
 { 
-  console.log('-------------------------varla da dei');
-  this.userService.getChartDetails(clientId,2).subscribe(data=>{
-    this.chartData=data.chartData
-    this.chartLabels=data.chartLabels
+  this.dataType = dataType==1 ? 2 : 1
+  this.userService.getChartDetails(clientId,dataType).subscribe(data=>{
+    this.chartData=data.data.chartData
+    this.chartLabels=data.data.chartLabels
   })
 }
 }

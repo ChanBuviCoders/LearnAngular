@@ -16,16 +16,17 @@
             <a href="javascript:void(0);" data-toggle="dropdown"
               class="dropdown-toggle ink-reaction waves-effect waves-light nav-user">
               <img src="../../../assets/imgs/profile.png" alt="" class="rounded-circle prof1">
-              <span class="profile-info text-black m-l-5" style="margin-bottom: 1rem;">
-                <span style="font-size: larger;font-weight: 500;">{{currentUserDetails.firstName}}&nbsp;{{currentUserDetails.lastName}}</span><br>
-                <span>Bank Manager</span>
+              <span class="profile-info text-black m-l-5" >
+                <span style="font-size: medium;font-weight: 500;">{{currentUserDetails.firstName}}&nbsp;{{currentUserDetails.lastName}}</span><br>
+                <span style="font-size: smaller;font-weight: 500;">Bank Manager</span> <br>
+                <span style="font-size: smaller;font-weight: 500;">Last Login :{{currentUserDetails.lastLoginDate}}</span>
               </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="Preview"
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview"
               x-placement="bottom-end"
               style="position: absolute; transform: translate3d(35px, 64px, 0px); top:10px; left: 0px; will-change: transform;">
               <div class="dropdown-item noti-title">
-                <h6 class="text-overflow">
+                <h6 class="text-overflow prof1">
                   <small style="color:#fff">{{currentUserDetails.firstName}}&nbsp;{{currentUserDetails.lastName}}</small>
                 </h6>
               </div>
@@ -63,7 +64,7 @@
           </li>
           <li class="" routerLinkActive="active" routerLink="/dashboard/e-deposit">
             <a href="javascript:void(0);">
-              <h6 >E-Deposite</h6>
+              <h6 >Documents</h6>
             </a>
           </li>
           <li class="" routerLinkActive="active" routerLink="/dashboard/billpayment">
