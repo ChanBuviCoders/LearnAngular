@@ -63,13 +63,13 @@
     padding-left: 1cm;
     width: 86%;
 }
-:host>>>.tabset>ul {
+:host::ng-deep.tabset>ul {
     float: left;
     width: 25%;
     animation: bounce 1s ease 0s 1 normal forwards;
 }
 
-:host>>>.tabset>.tab-content {
+:host::ng-deep.tabset>.tab-content {
     float: right;
     width: 75%;
     padding-left: 25px;
@@ -92,7 +92,7 @@
 }
 
 
-:host>>>.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+:host::ng-deep.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
     color: #fff !important;
     background-color: #28293a !important;
 }

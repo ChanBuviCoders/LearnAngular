@@ -1,5 +1,5 @@
-<div class="row col-12 p-2" >
-    <div id="navigation" class="col-2 d-flex justify-content-center designOne" style="overflow-x: auto;">
+<div class="row col-12 p-2"  >
+    <div id="navigation" class="col-2 d-flex justify-content-center designOne" [ngClass]="gedgetType==0 ? 'col-2':'col-12' " style="overflow-x: auto;">
       <!-- Navigation Menu-->
       <ul class="navigation-menu " style="list-style-type: none;">
         <li class="" style="cursor: pointer;" routerLinkActive="active" routerLink="account-summary" >
@@ -35,7 +35,7 @@
       </ul>
       <!-- End navigation menu  -->
     </div>
-    <div class="col-10">
+    <div class="col-10" [ngClass]="gedgetType==0 ? 'col-10':'col-12' ">
        <router-outlet></router-outlet>
     </div>
   </div>

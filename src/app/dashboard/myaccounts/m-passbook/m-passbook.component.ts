@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { userAccount } from 'src/app/models/getsession.model';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-m-passbook',
@@ -15,7 +15,7 @@ export class MPassbookComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
-    this.getChartDetails(this.currentUserDetails.userAccountId)
+    this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
   }
 
   /* **************** charts data********************** */
@@ -55,12 +55,12 @@ newDataPoint(dataArr = [100, 100, 100], label) {
 
   this.chartLabels = [...this.chartLabels, label];
 }
-
-getChartDetails(clientId)
-{ 
-  this.userService.getChartDetails(clientId,1).subscribe(data=>{
-    this.chartData=data.data.chartData
-    this.chartLabels=data.data.chartLabels
+dataType:number=0;
+getChartDetails(clientId, dataType) {
+  this.dataType = dataType == 1 ? 2 : 1
+  this.userService.getChartDetails(clientId, dataType).subscribe(data => {
+    this.chartData = data.data.chartData
+    this.chartLabels = data.data.chartLabels
   })
 }
 

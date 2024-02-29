@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-billpayment',
@@ -8,16 +8,56 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class BillpaymentComponent implements OnInit {
 
-  constructor(private userService:UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
   }
-  hexValue:any={}
-  onSubmit(value)
-  {
-      var rgbValue=[Number(value.red),Number(value.green),Number(value.blue)]
-      this.userService.rgbToHexColor(rgbValue).subscribe(data=>{this.hexValue=data})
+
+
+  hexValue: any = {}
+  onSubmit(value) {
+    var rgbValue = [Number(value.red), Number(value.green), Number(value.blue)]
+    this.userService.rgbToHexColor(rgbValue).subscribe(data => { this.hexValue = data })
 
   }
 
+  monthlyData = [
+    [
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      },
+      {
+        "name": "chandran",
+        "date": "15-02-2024",
+        "amount": 1000
+      }
+    ]
+  ]
 }

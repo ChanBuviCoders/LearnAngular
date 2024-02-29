@@ -1,23 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { UserService } from 'src/app/shared/services/user.service';
+import { responsiveService } from '../shared/responsive.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-myaccounts',
   templateUrl: './myaccounts.component.html',
   styleUrls: ['./myaccounts.component.css']
 })
-export class MyaccountsComponent implements OnInit {
+export class MyaccountsComponent {
 
   coloumn1:any
   coloumn2:any
   actDetails:boolean=true
   accountSummary:boolean=false
-  constructor(private userService:UserService) { }
+  constructor(private responsiveService:responsiveService) { }
   readonly  now = new Date();
 
   ngOnInit(): void {
   }
   
+  gedgetType:number=0
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log("hostlistener",event);
+    this.gedgetType=this.responsiveService.getGadgets()
+  }
   actSummary()
   {
     this.accountSummary=!this.accountSummary

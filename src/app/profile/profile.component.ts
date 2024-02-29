@@ -2,11 +2,11 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { JwtService } from '../services/jwt.service';
-import { UserService } from '../services/user.service';
 import * as $ from "jquery";
+import { ToastrService } from 'ngx-toastr';
 import { userAccount } from '../models/getsession.model';
+import { JwtService } from '../shared/services/jwt.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   mode: any;
   date: any;
   currentUserDetails: userAccount;
-  defaultImg: any = "./assets/images/user.webp";
+  defaultImg: any = "./assets/imgs/profile.png";
   currentDate:any
   minDate:any
   ngOnInit(): void { 

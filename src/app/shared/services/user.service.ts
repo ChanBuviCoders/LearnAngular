@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Getsession } from '../models/getsession.model';
+import { Getsession } from 'src/app/models/getsession.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,19 +24,27 @@ export class UserService {
     private http: HttpClient,
     private jwtService: JwtService,
     private router: Router,
+    private activateRoute: ActivatedRoute,
   ) {
 
   }
 
   refreshFunction() {
+
+    console.log('------router url--------', this.activateRoute);
     if (this.jwtService.getToken() != null && this.jwtService.getToken() != 'undefined' && this.jwtService.getToken() != undefined) {
       return this.getSession().subscribe()
     }
+    // else if () {
+    //   this.clearLocalStorage()
+    //   return this.router.navigate(['/login'])
+    // }
     else {
       this.clearLocalStorage()
       return this.router.navigate(['/login'])
     }
   }
+
 
   setAuth(user) {
     this.isAuthenticatedSubject.next(true);
@@ -139,6 +147,13 @@ export class UserService {
 
   getChartDetails(clientId, type) {
     return this.httpService.post('/api/getChartDetails/' + clientId + '/' + type);
+  }
+
+  getNavigationMenu(userGroupId) {
+    return this.httpService.post('/api/getNavigationMenu/'+userGroupId)
+  }
+  getUsergroupList(){
+    return this.httpService.post('/api/getUsergroupList')
   }
 
   logout(payload) {

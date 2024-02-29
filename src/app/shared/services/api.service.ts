@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from "../../environments/environment";
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { JwtService } from './jwt.service';
 import { catchError } from 'rxjs/operators/catchError';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +70,7 @@ export class httpService {
   }
   private formatErrors(error: any) {
     //  console.log("err",error)
-     return Observable.throw(error.json());
+     return Observable.throwError(error.json());
   }
 
   testpost(path: string, body: Object = {}): Observable<any> {

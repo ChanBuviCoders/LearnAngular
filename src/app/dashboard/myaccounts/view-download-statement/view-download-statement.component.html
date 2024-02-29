@@ -1,16 +1,12 @@
 <div class="p-4 row d-flex justify-content-center designOne">
   <div style="width: 80%;">
-    <canvas baseChart
-    [chartType]="'pie'"
-    [legend]="true"
-    [datasets]="chartData"
-    [labels]="chartLabels"
-    [options]="chartOptions"
-    (chartHover)="onChartHover($event)"
-    (chartClick)="onChartClick($event)"
-    >
+    <canvas baseChart [chartType]="'pie'" [legend]="true" [datasets]="chartData" [labels]="chartLabels"
+      [options]="chartOptions" (chartHover)="onChartHover($event)" (chartClick)="onChartClick($event)">
     </canvas>
-    <button class="btn btn-primary" style="margin-left: 45%;" (click)="getChartDetails(currentUserDetails.userAccountId,dataType)">{{dataType==1? "Change to Fund":"Change to Customer"}}</button>
+    <div class="d-flex justify-content-center ">
+      <button class="btn btn-primary btn-sm"
+        (click)="getChartDetails(currentUserDetails.userAccountId,dataType)">{{dataType==1? "Change to Fund":"Change to
+        Customer"}}</button>
+    </div>
   </div>
-  
 </div>

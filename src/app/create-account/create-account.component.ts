@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
-import { UserService } from "../services/user.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
+import { UserService } from "../shared/services/user.service";
 
 @Component({
   selector: 'app-create-account',
@@ -55,16 +55,18 @@ export class CreateAccountComponent implements OnInit {
       address: ["", Validators.required],
       userName: ["", Validators.required],
       password: ["", Validators.required],
+      userGroupId: [null, Validators.required],
     });
-    this.loginCredForm = this.fb.group({
-      userName: ["", Validators.required],
-      password: ["", Validators.required],
-    });
+    this.getUsergroupList();
+  }
+  userGroupList: any = null;
+  getUsergroupList() {
+    this.userservice.getUsergroupList().subscribe(response => {
+      this.userGroupList = response.data;
+    })
   }
 
   date: any;
-
-
   genderValue(data) { }
   resetForm() {
     this.createActForm.reset();
@@ -82,12 +84,13 @@ export class CreateAccountComponent implements OnInit {
   }
   createActFunction(createActForm) {
 
-    createActForm.annualIncome= Number(createActForm.annualIncome);
-    createActForm.mobileNumber= Number(createActForm.mobileNumber);
-    createActForm.altMobileNumber= Number(createActForm.altMobileNumber);
-    createActForm.panImagePath=this.panfilejson.fileEncode;
-    createActForm.adharImagePath=this.adharfilejson.fileEncode;
-    createActForm.isActive=0;
+    createActForm.annualIncome = Number(createActForm.annualIncome);
+    createActForm.mobileNumber = Number(createActForm.mobileNumber);
+    createActForm.userGroupId = Number(createActForm.userGroupId);
+    createActForm.altMobileNumber = Number(createActForm.altMobileNumber);
+    createActForm.panImagePath = this.panfilejson.fileEncode;
+    createActForm.adharImagePath = this.adharfilejson.fileEncode;
+    createActForm.isActive = 0;
     this.userservice.createUser(createActForm).subscribe((response) => {
       if (response.status == true) {
         this.toaster.success(response.message);

@@ -1,9 +1,8 @@
 import { Component, HostListener, OnDestroy } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { UserService } from './services/user.service';
 import { Location } from '@angular/common';
-import { filter } from 'rxjs/operators';
-import { JwtService } from './services/jwt.service';
+import { UserService } from './shared/services/user.service';
+import { JwtService } from './shared/services/jwt.service';
 
 @Component({
   selector: 'app-root',

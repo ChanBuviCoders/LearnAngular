@@ -1,6 +1,7 @@
 <div style="position: fixed;width: 100%;z-index: 111;">
   <!-- end container -->
   <div class="topbar-main">
+    <!--  #add5df-->
     <div class="container-fluid" style="background-color: gold;">
       <!-- LOGO -->
       <div class="topbar-left">
@@ -51,8 +52,16 @@
 
   <div  style="background-color: #086496;" >
         <!-- Navigation Menu-->
-        <ul class="d-flex justify-content-around" style="list-style-type: none;" >
-          <li class="" routerLinkActive="active" routerLink="/dashboard/myAct">
+        <ul class="d-flex justify-content-center flex-wrap px-4" style="list-style-type: none;padding: 0px;" >
+          <ng-container *ngFor="let menu of navigationMenuDetails">
+            <li *ngIf="menu?.view" class="px-3" routerLinkActive="active" [routerLink]="getRouter(menu,0)">
+              <a href="javascript:void(0);" class="d-flex justify-content-center align-items-center">
+                <i class="fa fa-bar-chart p-1" style="color: #c3ff0d;" [ngClass]="getRouter(menu,1)" aria-hidden="true"></i>
+                <h6 > {{menu.menuName}}</h6>
+              </a>
+            </li>
+          </ng-container>
+          <!-- <li class="" routerLinkActive="active" routerLink="/dashboard/myAct">
             <a href="javascript:void(0);"      >
               <h6 > My Accounts</h6>
             </a>
@@ -91,7 +100,7 @@
             <a href="javascript:void(0);">
               <h6 > Requests</h6>
             </a>
-          </li>
+          </li> -->
         </ul>
         <!-- End navigation menu  -->
       </div>

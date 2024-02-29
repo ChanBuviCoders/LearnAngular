@@ -1,21 +1,22 @@
-<!-- <div [ngStyle]="{'background-color':hexValue.hexValue}"> 
-    <form #hexForm="ngForm" (ngSubmit)="onSubmit(hexForm.value)" >
-        <div class="d-flex justify-content-center p-4">
-            <div class="p-2 d-contents">
-                <label for="red">Red</label>
-                <input class="ml-2" type="number" ngModel  (ngModelChange)="onSubmit(hexForm.value)" name="red" id="red" maxlength="3" required OnlyNumber>
-            </div>
-            <div class="p-2 d-contents">
-                <label for="green">Green</label>
-                <input class="ml-2" type="number" ngModel (ngModelChange)="onSubmit(hexForm.value)"  name="green" id="green" maxlength="3" required OnlyNumber>
-            </div>
-            <div class="p-2">
-                <label for="blue">Blue</label>
-                <input class="ml-2"type="number" ngModel (ngModelChange)="onSubmit(hexForm.value)" name="blue" id="blue" maxlength="3" required OnlyNumber >
-            </div>
-        </div>
-        <div class="d-flex justify-content-center p-4">
-            <input class="ml-2" type="submit" value="Get Hex Color Code" [disabled]="hexForm.invalid" name="blue" maxlength="3" OnlyNumber >
-        </div>
-    </form>
-</div> -->
+<div class="d-flex align-items-center justify-content-center py-3">
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+            <th>MM/DD/YYYY</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of monthlyData;let i=index;">
+                <ng-container *ngFor="let value of data;let j=index;">
+                    <td *ngIf="j==0">{{value.name}}</td>
+                    <td>{{value.amount}}</td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+</div>

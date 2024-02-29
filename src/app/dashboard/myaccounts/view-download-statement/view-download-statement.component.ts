@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { userAccount } from 'src/app/models/getsession.model';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-view-download-statement',
