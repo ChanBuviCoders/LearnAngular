@@ -37,7 +37,7 @@ export class CreateAccountComponent implements OnInit {
       lastName: ["", Validators.required],
       dob: ["", Validators.required],
       gender: ["", Validators.required],
-      fatherName: ["", Validators.required],
+      fathersName: ["", Validators.required],
       marriedStatus: [null, Validators.required],
       annualIncome: ["", Validators.required],
       qualification: [null, Validators.required],

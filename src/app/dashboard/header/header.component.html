@@ -54,7 +54,8 @@
         <!-- Navigation Menu-->
         <ul class="d-flex justify-content-center flex-wrap px-4" style="list-style-type: none;padding: 0px;" >
           <ng-container *ngFor="let menu of navigationMenuDetails">
-            <li *ngIf="menu?.view" class="px-3" routerLinkActive="active" [routerLink]="getRouter(menu,0)">
+            <!-- *ngIf="menu?.view" -->
+            <li  class="px-3" routerLinkActive="active" [routerLink]="getRouter(menu,0)">
               <a href="javascript:void(0);" class="d-flex justify-content-center align-items-center">
                 <i class="fa fa-bar-chart p-1" style="color: #c3ff0d;" [ngClass]="getRouter(menu,1)" aria-hidden="true"></i>
                 <h6 > {{menu.menuName}}</h6>

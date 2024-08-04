@@ -150,10 +150,10 @@ export class UserService {
   }
 
   getNavigationMenu(userGroupId) {
-    return this.httpService.post('/api/getNavigationMenu/'+userGroupId)
+    return this.httpService.get(`/api/getNavigationMenu/${userGroupId}`)
   }
   getUsergroupList(){
-    return this.httpService.post('/api/getUsergroupList')
+    return this.httpService.get('/api/getUsergroupList')
   }
 
   logout(payload) {
