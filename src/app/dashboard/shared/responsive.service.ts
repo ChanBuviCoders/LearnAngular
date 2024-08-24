@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { HostListener, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({providedIn:"root"})
 export class responsiveService {

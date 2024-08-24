@@ -1,44 +1,30 @@
-import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { httpService } from './api.service'
-import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { httpService } from './api.service';
 import { JwtService } from './jwt.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Getsession } from 'src/app/models/getsession.model';
+import { SubjectService } from './subjectService';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  // Getsession:Getsession;
-  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
-  private currentUserDetails = new BehaviorSubject<Getsession>({} as Getsession);
-  public currentuserSubject = this.currentUserDetails.asObservable();
-
   constructor(
     private httpService: httpService,
     private http: HttpClient,
     private jwtService: JwtService,
     private router: Router,
     private activateRoute: ActivatedRoute,
+    private SubjectService: SubjectService,
   ) {
 
   }
 
   refreshFunction() {
-
-    console.log('------router url--------', this.activateRoute);
     if (this.jwtService.getToken() != null && this.jwtService.getToken() != 'undefined' && this.jwtService.getToken() != undefined) {
       return this.getSession().subscribe()
     }
-    // else if () {
-    //   this.clearLocalStorage()
-    //   return this.router.navigate(['/login'])
-    // }
     else {
       this.clearLocalStorage()
       return this.router.navigate(['/login'])
@@ -47,13 +33,13 @@ export class UserService {
 
 
   setAuth(user) {
-    this.isAuthenticatedSubject.next(true);
-    this.currentUserDetails.next(user)
+    this.SubjectService.setIsAuthenticated(true);
+    this.SubjectService.setCurrentUser(user)
     this.jwtService.saveToken(user.token)
   }
 
   clearLocalStorage() {
-    this.isAuthenticatedSubject.next(false);
+    this.SubjectService.setIsAuthenticated(false);
     this.jwtService.destroyToken()
     this.router.navigate(['/login'])
   }
@@ -68,7 +54,6 @@ export class UserService {
   }
 
   getSession() {
-
     return this.httpService.testpost('/api/getSession', this.jwtService.getToken()).pipe(map(
       responce => {
         if (responce.status == true) {

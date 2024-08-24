@@ -50,22 +50,4 @@ export class OnlynumberDirective {
     }
   }
 
-  // @HostListener('paste', ['$event'])
-  // onPaste(event: ClipboardEvent) {
-  //   event.preventDefault();
-  //   const pastedInput: string = event.clipboardData
-  //     .getData('text/plain')
-  //     .replace(/\D/g, ''); // get a digit-only string
-  //   document.execCommand('insertText', false, pastedInput);
-  // }
-
-  // @HostListener('drop', ['$event'])
-  // onDrop(event: DragEvent) {
-  //   event.preventDefault();
-  //   const textData = event.dataTransfer.getData('text').replace(/\D/g, '');
-  //   this.inputElement.focus();
-  //   document.execCommand('insertText', false, textData);
-  // }
-
-
 }

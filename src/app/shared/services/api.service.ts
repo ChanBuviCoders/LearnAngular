@@ -17,19 +17,19 @@ export class httpService {
    normalPost(path: string, params: HttpParams = new HttpParams())
   { 
     return this.http.post(`${environment.api_url}${path}`, { headers: this.setHeaders() })
-    .pipe(catchError(this.formatErrors)); 
+    ; 
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.api_url}${path}`, { headers: this.setHeaders() })
-      .pipe(catchError(this.formatErrors));
+      ;
   }
   post(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
       `${environment.api_url}${path}`,
       JSON.stringify(body),
       { headers: this.setHeaders() }
-    ).pipe(catchError(this.formatErrors));
+    );
   }
 
   uploadpost(path: string, body: any): Observable<any> {
@@ -37,7 +37,7 @@ export class httpService {
       `${environment.api_url}${path}`,
       body,
       { headers: this.setSHeaders() }
-    ).pipe(catchError(this.formatErrors));
+    );
   }
  
   getpost(path: string, body: Object = {}): Observable<any> {
@@ -45,7 +45,7 @@ export class httpService {
       `${environment.api_url}${path}`,
       body,
       { headers: this.setHeaders() }
-    ).pipe(catchError(this.formatErrors));
+    );
   }
 
 
@@ -68,22 +68,18 @@ export class httpService {
     }
     return new HttpHeaders(headersConfig);
   }
-  private formatErrors(error: any) {
-    //  console.log("err",error)
-     return Observable.throwError(error.json());
-  }
 
   testpost(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
     `${environment.api_url}${path}`,body,
-    { headers: this.setHeaders() }).pipe(catchError(this.formatErrors))
+    { headers: this.setHeaders() })
     
 }
 
 
 postMultipartWithForm(path: string, body: any ): Observable<any> {
   return this.http.post(`${environment.api_url}${path}`,body,this.getFileDataHeader())
-   .pipe(catchError(this.formatErrors))
+   
 }
 
   getFileDataHeader() {

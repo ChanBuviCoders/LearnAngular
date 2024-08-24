@@ -1,8 +1,8 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { UserService } from './shared/services/user.service';
+import { Component } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { JwtService } from './shared/services/jwt.service';
+import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +11,13 @@ import { JwtService } from './shared/services/jwt.service';
 })
 export class AppComponent {
 
-  @HostListener('window:beforeunload', ['$event'])
-  browserCloseFunction(event) {
-    console.log('---enne event----',event);
-    event.preventDefault();
-    event.returnValue = 'Your data will be lost!';
-    return false;
-  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // browserCloseFunction(event) {
+  //   console.log('---enne event----',event);
+  //   event.preventDefault();
+  //   event.returnValue = 'Your data will be lost!';
+  //   return false;
+  // }
 
   title = 'learning';
   previousUrl: String
@@ -48,12 +48,6 @@ export class AppComponent {
           this.location.replaceState(this.currentUrl)
       };
     });
-  }
-
-  @HostListener("window:onbeforeunload", ["$event"])
-  clearLocalStorage() {
-    console.log("--------------------called ----------------")
-    // localStorage.clear()
   }
 
 }

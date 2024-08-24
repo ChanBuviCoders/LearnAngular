@@ -87,9 +87,8 @@
         <div class="row">
           <div class="col-md-6 form-group">
             <label for="exampleInputEmail1">Permanant Account Number <span style="color: red;">*</span></label>
-            <input id="income" formControlName="panNumber" name="pan" type="text" [ngModel]="pan"
-              (ngModelChange)="pan= $event.toUpperCase()" minlength="10" maxlength="10" size="6" autocomplete="off"
-              class="required form-control" required>
+            <input id="income" formControlName="panNumber" name="pan" type="text" minlength="10" maxlength="10" size="6"
+              [value]="createActForm.value.panNumber.toUpperCase()" autocomplete="off" class="required form-control" required>
           </div>
           <div class="col-md-6 form-group">
             <label for="Occupation">Occupation<span style="color: red;">*</span></label>

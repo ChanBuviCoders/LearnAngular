@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { userAccount } from 'src/app/models/getsession.model';
+import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -9,12 +10,12 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class MPassbookComponent implements OnInit {
 
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService,private subjectService:SubjectService,) { }
 
   currentUserDetails:userAccount;
   ngOnInit(): void {
 
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
+    this.subjectService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
     this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
   }
 

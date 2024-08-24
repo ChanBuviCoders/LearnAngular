@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/services/authguard.service';
 import { NoAuthGuard } from './shared/services/no-auth-guard.service';
+import { canDeactivateGuard } from './shared/services/canDeactivate/CanDeactivateGuard';
 
 const routes: 
 Routes = [ 
           { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule),canActivate:[NoAuthGuard] }, 
           { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate:[AuthGuard] },
-          { path: 'create-account', loadChildren: () => import('./create-account/create-account.module').then(m => m.CreateAccountModule) },
+          { path: 'create-account', loadChildren: () => import('./create-account/create-account.module').then(m => m.CreateAccountModule) ,
+
+          },
           { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) }
          ];
 

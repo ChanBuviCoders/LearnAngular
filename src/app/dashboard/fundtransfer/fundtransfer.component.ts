@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { userAccount } from 'src/app/models/getsession.model';
+import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class FundtransferComponent implements OnInit {
   modalRef: BsModalRef;
   testForm: FormGroup;
   addCustomerForm: FormGroup;
-  constructor(private fb: FormBuilder, private modalService: BsModalService, private datePipe: DatePipe, private userService: UserService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder,private subjectService:SubjectService,  private modalService: BsModalService, private datePipe: DatePipe, private userService: UserService, private toastr: ToastrService) {
     this.testForm = this.fb.group({
       date: ["", Validators.required],
       time: this.fb.group({
@@ -37,7 +38,7 @@ export class FundtransferComponent implements OnInit {
   }
   currentUserDetails: userAccount;
   ngOnInit(): void {
-    this.userService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
+    this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
     this.getallCustomerList()
   }
 

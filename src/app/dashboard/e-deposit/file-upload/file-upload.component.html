@@ -35,3 +35,18 @@
         </table>
     </div>
 </div>
+
+<ng-template #viewDocument>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">View Document</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body d-flex justify-content-center">
+         <img [src]="DocumentUrl" alt="NOt Found" width="400" height="300">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>
+    </div>
+</ng-template>

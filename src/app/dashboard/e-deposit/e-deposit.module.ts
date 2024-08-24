@@ -6,6 +6,7 @@ import { EDepositComponent } from './e-deposit.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { RgbToHexComponent } from './rgb-to-hex/rgb-to-hex.component';
 import { FormsModule } from '@angular/forms';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     EDepositRoutingModule,
-    FormsModule
-  ]
+    FormsModule,
+    ModalModule
+  ],
+  providers:[BsModalService],
 })
 export class EDepositModule { }

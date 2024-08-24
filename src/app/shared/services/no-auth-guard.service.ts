@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { UserService } from './user.service';
-import { map ,  take } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
+import { SubjectService } from './subjectService';
 
-@Injectable({providedIn:'root'})
-export class NoAuthGuard implements CanActivate {
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot  
-  ): Observable<boolean> {
-    return this.userService.isAuthenticated.pipe(take(1), map((bool:any) => !bool));
-  }
-}
+export const NoAuthGuard: CanActivateFn = (route, state) => {
+  const router = inject(Router);
+  const userService = inject(SubjectService);
+
+  return userService.isAuthenticated.pipe(
+    take(1),
+    map((isAuthenticated: boolean) => {
+      if (!isAuthenticated) {
+        return true; // Allow activation if the user is not authenticated
+      } else {
+        return false; // Prevent activation
+      }
+    })
+  );
+};

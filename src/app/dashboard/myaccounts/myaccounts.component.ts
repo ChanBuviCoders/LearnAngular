@@ -21,11 +21,11 @@ export class MyaccountsComponent {
   }
   
   gedgetType:number=0
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log("hostlistener",event);
-    this.gedgetType=this.responsiveService.getGadgets()
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event) {
+  //   console.log("hostlistener",event);
+  //   this.gedgetType=this.responsiveService.getGadgets()
+  // }
   actSummary()
   {
     this.accountSummary=!this.accountSummary

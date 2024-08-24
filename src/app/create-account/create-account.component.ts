@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
-import { ToastrService } from "ngx-toastr";
+import { Component, HostListener } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { CanComponentDeactivate } from "../shared/services/canDeactivate/canDeactivateInterface";
 import { UserService } from "../shared/services/user.service";
 
 @Component({
@@ -10,18 +11,33 @@ import { UserService } from "../shared/services/user.service";
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css']
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAccountComponent implements CanComponentDeactivate {
 
   createActForm: FormGroup;
   loginCredForm: FormGroup;
-  pan = "";
   constructor(
     private userservice: UserService,
     private fb: FormBuilder,
     private toaster: ToastrService,
     private router: Router,
     private datepipe: DatePipe
-  ) { }
+  ) {
+
+  }
+  hasUnsavedChanges = false;
+  @HostListener('window:beforeunload', ['$event'])
+  validateForm(event): boolean {
+    if (this.createActForm.dirty) {
+      return confirm('You have unsaved changes. Do you really want to leave?');
+    }
+    return true;
+  }
+  canDeactivate(): boolean {
+    if (this.createActForm.dirty) {
+      return confirm('You have unsaved changes. Do you really want to leave?');
+    }
+    return true;
+  }
 
   createAccount: boolean = true;
   currentDate: any
@@ -71,10 +87,6 @@ export class CreateAccountComponent implements OnInit {
   resetForm() {
     this.createActForm.reset();
   }
-  setmask: any;
-  onchange() {
-    this.setmask = "(000) 000-0000";
-  }
 
   variable1: any = "will";
   variable2: any = "validate";
@@ -95,7 +107,6 @@ export class CreateAccountComponent implements OnInit {
       if (response.status == true) {
         this.toaster.success(response.message);
         this.createActForm.reset();
-        // this.createAccount = false;
         this.router.navigateByUrl("login");
         this.variable1 = "will";
         this.variable2 = "validate";
@@ -115,7 +126,6 @@ export class CreateAccountComponent implements OnInit {
       }
     });
   }
-  //single file uploader
 
   panfilejson: any;
   adharfilejson: any;
@@ -132,7 +142,6 @@ export class CreateAccountComponent implements OnInit {
     let self = this;
     if (e.target.files) {
       var filesdata: any = e.target.files;
-
       for (let k = 0; k < e.target.files.length; k++) {
         if (this.edata.target.id == "adhar") {
           base64 = "";
@@ -140,11 +149,9 @@ export class CreateAccountComponent implements OnInit {
           reader.readAsDataURL(filesdata[k]);
           reader.onload = function () {
             setTimeout(() => {
-              // console.log(reader.result)
               base64 = reader.result;
               self.adharfilejson = {
                 filename: filesdata[k].name,
-                // "filesize":filesdata[k].size,
                 filetype: filesdata[k].type,
                 fileEncode: base64.split(",")[1],
               };
@@ -157,11 +164,9 @@ export class CreateAccountComponent implements OnInit {
           reader.readAsDataURL(filesdata[k]);
           reader.onload = function () {
             setTimeout(() => {
-              // console.log(reader.result)
               base64 = reader.result;
               self.panfilejson = {
                 filename: filesdata[k].name,
-                // "filesize":filesdata[k].size,
                 filetype: filesdata[k].type,
                 fileEncode: base64.split(",")[1],
               };

@@ -1,9 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import * as sql from 'mssql';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { JwtService } from '../shared/services/jwt.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -17,11 +15,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup
   constructor(private fb: FormBuilder,
     private jwtService: JwtService,
-    private toastr: ToastrService,
     private router: Router,
     private userService: UserService,
     private responsive: BreakpointObserver) {
-    // window.history.forward(); 
   }
 
   ngOnInit(): void {
@@ -37,10 +33,10 @@ export class LoginComponent implements OnInit {
     this.getCapcha();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log("hostlistener",event);
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event) {
+  //   console.log("hostlistener",event);
+  // }
   consoleFunction() {
     console.log('Web ' + Breakpoints.Web);
     console.log('WebLandscape ' + Breakpoints.WebLandscape);

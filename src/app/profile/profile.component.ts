@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { userAccount } from '../models/getsession.model';
 import { JwtService } from '../shared/services/jwt.service';
 import { UserService } from '../shared/services/user.service';
+import { SubjectService } from '../shared/services/subjectService';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private jwtService: JwtService,
+    private SubjectService: SubjectService,
     private datepipe :DatePipe,
     private router:Router
   ) {}
@@ -41,7 +42,7 @@ export class ProfileComponent implements OnInit {
       gender: ["", Validators.required],
       email: ["",Validators.required]
     });
-    this.userService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
+    this.SubjectService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
   } 
 
   createDate(days, months, years) {

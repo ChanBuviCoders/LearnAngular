@@ -1,1 +1,108 @@
-<p>manage-cards works!</p>
+<div class="p-4">
+    <h1>Table creation Query</h1>
+    use springBoot
+    create database springBoot;
+    
+    create table userAccount(
+    userAccountId bigint primary key identity ,
+    userName varchar(255) not null,
+    password varchar(255) not null,
+    firstName varchar(255) not null,
+    lastName varchar(255) not null,
+    gender varchar(255) not null,
+    fathersName varchar(255) not null,
+    email varchar(255) not null,
+    marriedStatus varchar(255),
+    occupation varchar(255),
+    qualification varchar(255),
+    panNumber varchar(255),
+    address varchar(255),
+    adharImagePath varchar(255),
+    panImagePath varchar(255),
+    zipcode varchar(255),
+    city varchar(255),
+    state varchar(255),
+    dob Date ,
+    lastLoginDate Date ,
+    currentLoginDate Date ,
+    mobileNumber bigint not null,
+    altMobileNumber bigint,
+    annualIncome	bigint,
+    adharNumber bigint,
+    isActive bit,
+    userGroupId bigint not null,
+    foreign key (userGroupId) references userGroup(userGroupId) 
+    )
+    select * from userAccount;
+    --drop table userAccount
+    
+    CREATE TABLE clientDocuments (
+        fileId BIGINT IDENTITY (1,1),
+        fileName VARCHAR(max),
+        fileSize VARCHAR(50),
+        fileType VARCHAR(50),
+        filePath VARCHAR(MAX),
+        uploadedBy VARCHAR(255),
+        uploadedDate DATE,
+        userAccountId BIGINT
+        foreign key (userAccountId) references userAccount(userAccountId)
+    ); 
+    
+    create table customerList (
+        customerId bigint primary key identity,
+        firstName varchar(255) not null,
+        lastName varchar(255)  not null,
+        gender varchar(25) ,
+        loanAmount bigint,
+        loanType varchar (25),
+        mobileNumber bigint,
+        startDate Date ,
+        endDate Date ,
+        userAccountId bigint,
+        foreign key (userAccountId) references userAccount(userAccountId)
+    )
+    --userGroup Table
+    create table userGroup(
+    userGroupId bigint primary key identity,
+    userGroupName varchar(255)
+    )
+    select * from userGroup;
+    alter table userGroup add userGroupName varchar(255) not null;
+    insert into userGroup values('Admin'),('Office User')
+    --drop table userGroup;
+    
+        create table navigationMenu(
+        menuId bigint primary key identity,
+        menuName varchar(255)
+        )
+        insert into navigationMenu values('My Accounts'),('Fund Transfer'),('Documents'),('Bill payments'),('Top Up & Recharge'),('Manage Cards'),('Service'),('Requests')
+        select * from navigationMenu;
+        --**************userPrivilege**********
+        create table userPrivilege(
+         privilegeId bigint primary key identity,
+         isView bit not null,
+         isEdit bit not null,
+         isDelete bit not null
+        )
+        insert into userPrivilege values(1,1,1),(1,1,0),(1,0,0),(0,0,0);
+        select * from userPrivilege;
+        --drop table userPrivilege
+        --************userPrivilegeMapping*************
+        create table userPrivilegeMapping(
+        privilegeMappingId bigint primary key identity,
+        menuId bigInt not null,
+        userGroupId bigint not null,
+        privilegeId bigint not null,
+        foreign key (menuId) references navigationMenu (menuId),
+        foreign key (userGroupId) references userGroup (userGroupId),
+        foreign key (privilegeId) references userPrivilege (privilegeId)
+        )
+        insert into userPrivilegeMapping values(1,1,1),(2,1,1),(3,1,1),(4,1,1),(5,1,1),(6,1,1),(7,1,1),(8,1,1)
+        insert into userPrivilegeMapping values(1,2,2),(2,2,2),(3,2,2),(4,2,2),(5,2,2),(6,2,2),(7,2,2),(8,2,2)
+        select * from userPrivilegeMapping where userGroupId=1;
+    
+        select nm.menuId,nm.menuName,up.isView,up.isEdit,up.isDelete from navigationMenu as nm 
+               join userPrivilegeMapping as upm on upm.menuId=nm.menuId
+               join userPrivilege as up on up.privilegeId=upm.privilegeId
+               where upm.userGroupId=2
+    </div>

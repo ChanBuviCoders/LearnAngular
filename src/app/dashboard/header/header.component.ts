@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userAccount } from 'src/app/models/getsession.model';
+import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -10,11 +11,11 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private userService: UserService) { }
+  constructor(private router: Router,private subjectService:SubjectService, private userService: UserService) { }
 
   currentUserDetails: userAccount;
   ngOnInit(): void {
-    this.userService.currentuserSubject.subscribe(data => {
+    this.subjectService.currentuserSubject.subscribe(data => {
       this.currentUserDetails = data.data
     })
     this.getNavigationMenu()
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   getNavigationMenu() {
     
     this.userService.getNavigationMenu(this.currentUserDetails.userGroupId).subscribe(response => {
-      if (response.status) {
+      if (response.status) { 
         this.navigationMenuDetails = response.data;
       }
     })
