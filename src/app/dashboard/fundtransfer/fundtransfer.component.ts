@@ -17,7 +17,7 @@ export class FundtransferComponent implements OnInit {
   modalRef: BsModalRef;
   testForm: FormGroup;
   addCustomerForm: FormGroup;
-  constructor(private fb: FormBuilder,private subjectService:SubjectService,  private modalService: BsModalService, private datePipe: DatePipe, private userService: UserService, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private subjectService: SubjectService, private modalService: BsModalService, private datePipe: DatePipe, private userService: UserService, private toastr: ToastrService) {
     this.testForm = this.fb.group({
       date: ["", Validators.required],
       time: this.fb.group({
@@ -28,10 +28,10 @@ export class FundtransferComponent implements OnInit {
     });
 
     this.addCustomerForm = this.fb.group({
-      firstName: ['', Validators.required],
+      firstName: ['', Validators.required,],
       lastName: ['', Validators.required],
       loanAmount: ['', Validators.required],
-      mobileNumber: ['', Validators.required],
+      mobileNumber: ['', [Validators.required,Validators.minLength(10)]],
       loanType: [null, Validators.required],
       gender: [null, Validators.required]
     })
@@ -41,10 +41,9 @@ export class FundtransferComponent implements OnInit {
     this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
     this.getallCustomerList()
   }
-
   customerList: any = []
-  getCutomerList() {
-
+  get controls() {
+    return this.addCustomerForm.controls;
   }
 
   contentReady(event) {
@@ -58,37 +57,40 @@ export class FundtransferComponent implements OnInit {
     // this.sendMail()
   }
   addCustomerFunction(formValue) {
-    let startDate = new Date()
-    formValue.startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
-    formValue.userAccountId = this.currentUserDetails.userAccountId
-    formValue.endDate = this.datePipe.transform(new Date(new Date().setDate(startDate.getDate() + 100)), 'yyyy-MM-dd')
-    formValue.loanAmount=Number(formValue.loanAmount);
-    formValue.mobileNumber=Number(formValue.mobileNumber);
-    if (this.type == "Add") {
-      this.userService.addCustomer(formValue).subscribe(res => {
-        if (res.status == true) {
-          this.toastr.success(res.message)
-          this.modalRef.hide()
-          this.getallCustomerList()
-        }
-        else {
-          this.toastr.error(res.message)
-        }
-      })
+    if (this.addCustomerForm.valid) {
+      let startDate = new Date()
+      formValue.startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd')
+      formValue.userAccountId = this.currentUserDetails.userAccountId
+      formValue.endDate = this.datePipe.transform(new Date(new Date().setDate(startDate.getDate() + 100)), 'yyyy-MM-dd')
+      formValue.loanAmount = Number(formValue.loanAmount);
+      formValue.mobileNumber = Number(formValue.mobileNumber);
+      if (this.type == "Add") {
+        this.userService.addCustomer(formValue).subscribe(res => {
+          if (res.status == true) {
+            this.toastr.success(res.message)
+            this.modalRef.hide()
+            this.getallCustomerList()
+          }
+          else {
+            this.toastr.error(res.message)
+          }
+        })
+      }
+      else {
+        formValue.customerId = this.editCustomerDetails.customerId
+        this.userService.updateCustomer(formValue).subscribe(res => {
+          if (res.status == true) {
+            this.toastr.success(res.message)
+            this.modalRef.hide()
+            this.getallCustomerList()
+          }
+          else {
+            this.toastr.error(res.message)
+          }
+        })
+      }
     }
-    else {
-      formValue.customerId = this.editCustomerDetails.customerId
-      this.userService.updateCustomer(formValue).subscribe(res => {
-        if (res.status == true) {
-          this.toastr.success(res.message)
-          this.modalRef.hide()
-          this.getallCustomerList()
-        }
-        else {
-          this.toastr.error(res.message)
-        }
-      })
-    }
+
   }
   editCustomerDetails: any = {}
   editFunction(values, popUpName) {
@@ -129,8 +131,7 @@ export class FundtransferComponent implements OnInit {
       }
     })
   }
-  viewDetails(data)
-  {
+  viewDetails(data) {
 
   }
   sendSms(data) {

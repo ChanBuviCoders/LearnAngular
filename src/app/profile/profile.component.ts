@@ -20,38 +20,38 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private SubjectService: SubjectService,
-    private datepipe :DatePipe,
-    private router:Router
-  ) {}
+    private datepipe: DatePipe,
+    private router: Router
+  ) { }
   editForm: FormGroup;
   filter: FormGroup;
   mode: any;
   date: any;
   currentUserDetails: userAccount;
   defaultImg: any = "./assets/imgs/profile.png";
-  currentDate:any
-  minDate:any
-  ngOnInit(): void { 
-    this.date=new Date();
-    this.currentDate =this.datepipe.transform(this.date, 'yyyy-MM-dd');
-    this.minDate =this.datepipe.transform(this.createDate(0,0,100), 'yyyy-MM-dd');
+  currentDate: any
+  minDate: any
+  ngOnInit(): void {
+    this.date = new Date();
+    this.currentDate = this.datepipe.transform(this.date, 'yyyy-MM-dd');
+    this.minDate = this.datepipe.transform(this.createDate(0, 0, 100), 'yyyy-MM-dd');
     this.editForm = this.fb.group({
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       dob: ["", Validators.required],
       gender: ["", Validators.required],
-      email: ["",Validators.required]
+      email: ["", Validators.required]
     });
-    this.SubjectService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
-  } 
+    this.SubjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
+  }
 
   createDate(days, months, years) {
-    var date = new Date(); 
+    var date = new Date();
     date.setDate(date.getDate() - days);
-    date.setMonth(date.getMonth() -months);
-    date.setFullYear(date.getFullYear() -years);
-    return date;    
-}
+    date.setMonth(date.getMonth() - months);
+    date.setFullYear(date.getFullYear() - years);
+    return date;
+  }
 
   editFunction(data: any) {
     var editObj = {
@@ -60,18 +60,16 @@ export class ProfileComponent implements OnInit {
       gender: data.gender,
       firstName: data.firstName,
       lastName: data.lastName,
-      userAccountId:this.currentUserDetails.userAccountId
+      userAccountId: this.currentUserDetails.userAccountId
     };
 
-    this.userService.updateUserProfile(editObj).subscribe(data=>{
-        if(data.status==true)
-        {
-          this.toastr.success(data.message)
-        }
-        else
-        {
-          this.toastr.error(data.message)
-        }
+    this.userService.updateUserProfile(editObj).subscribe(data => {
+      if (data.status == true) {
+        this.toastr.success(data.message)
+      }
+      else {
+        this.toastr.error(data.message)
+      }
     })
   }
   imgMaxSize: any;
@@ -79,17 +77,17 @@ export class ProfileComponent implements OnInit {
   dataimg: any;
   fileUpload(event: any) {
     let acceptFormat = ["image/png", "image/x-png", "image/jpeg", "image/jpg"];
-    let formDetails={firstName:"chandran",lastname:"subramani"}
+    let formDetails = { firstName: "chandran", lastname: "subramani" }
     const formData = new FormData();
-    formData.append("file",event.target.files[0])
-    formData.append("formDetails",JSON.stringify(formDetails))
+    formData.append("file", event.target.files[0])
+    formData.append("formDetails", JSON.stringify(formDetails))
     setTimeout(() => {
-      this.userService.uploadImage(formData).subscribe(data=>{console.log('-----------',data);})
+      this.userService.uploadImage(formData).subscribe(data => { console.log('-----------', data); })
     }, 10);
     // console.log('------------formdata---------',formData);
-  return;
+    return;
     let reader = new FileReader();
-    console.log('-----event------',event);
+    console.log('-----event------', event);
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (events: any) => {
       // console.log('-------onloadEvent---0',events);
@@ -112,50 +110,44 @@ export class ProfileComponent implements OnInit {
   changePassword: any = {};
   newConfirm: boolean = false;
 
-  changePasswordFunction(value,form) {
+  changePasswordFunction(value, form) {
     if (this.changePassword.newPwd === this.changePassword.confirmPwd) {
       this.newConfirm = false;
-      let payLoad={
-                  "userAccountId":this.currentUserDetails.userAccountId,
-                  "password":value.newPwd
-                  }
-      this.userService.changePassword(payLoad).subscribe(data=>{
-        if(data.status==true)
-        {
-           this.toastr.info(data.message)
-           form.resetForm();
-          //  this.userService.clearLocalStorage()
-          //  this.router.navigateByUrl('/login')
+      let payLoad = {
+        "userAccountId": this.currentUserDetails.userAccountId,
+        "password": value.newPwd
+      }
+      this.userService.changePassword(payLoad).subscribe(data => {
+        if (data.status == true) {
+          this.toastr.info(data.message)
+          form.resetForm();
         }
-        else{
-           this.toastr.error(data.message)
+        else {
+          this.toastr.error(data.message)
         }
 
       })
     } else {
       this.newConfirm = true;
     }
-  } 
-  currentPwdStatus:string='';
-  checkCurrentPwt(currentPassword)
-  { 
-    this.currentPwdStatus=''
-   
-    if(currentPassword!='')
-    {
-      let payLoad={
-        "userAccountId":this.currentUserDetails.userAccountId,
-        "password":currentPassword
+  }
+  currentPwdStatus: string = '';
+  checkCurrentPwt(currentPassword) {
+    this.currentPwdStatus = ''
+
+    if (currentPassword != '') {
+      let payLoad = {
+        "userAccountId": this.currentUserDetails.userAccountId,
+        "password": currentPassword
       }
-      this.userService.checkCurrentPassword(payLoad).subscribe(data=>{
-          if(data.status==true)
-          {
-             this.currentPwdStatus=data.message
-          }
-          else{
-             this.currentPwdStatus=data.message
-             this.changePassword.currentPwd=''
-          }
+      this.userService.checkCurrentPassword(payLoad).subscribe(data => {
+        if (data.status == true) {
+          this.currentPwdStatus = data.message
+        }
+        else {
+          this.currentPwdStatus = data.message
+          this.changePassword.currentPwd = ''
+        }
       })
     }
 
@@ -194,21 +186,19 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  showInput:boolean=true
-  toggleShowFunction(inputId,eyeId)
-  { 
-     var input=document.getElementById(inputId)
-     var icon=document.getElementById(eyeId)
-     if(this.showInput)
-     { 
-      input?.setAttribute("type",'text')
-      icon?.setAttribute("class",'fa fa-eye-slash')
-     }
-     else{
-      input?.setAttribute("type",'password')
-      icon?.setAttribute("class",'fa fa-eye')
-     }
-     this.showInput=!this.showInput
+  showInput: boolean = true
+  toggleShowFunction(inputId, eyeId) {
+    var input = document.getElementById(inputId)
+    var icon = document.getElementById(eyeId)
+    if (this.showInput) {
+      input?.setAttribute("type", 'text')
+      icon?.setAttribute("class", 'fa fa-eye-slash')
+    }
+    else {
+      input?.setAttribute("type", 'password')
+      icon?.setAttribute("class", 'fa fa-eye')
+    }
+    this.showInput = !this.showInput
   }
 
   //password validation

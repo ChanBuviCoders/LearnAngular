@@ -10,6 +10,7 @@ import { SubjectService } from './subjectService';
   providedIn: 'root'
 })
 export class UserService {
+
   constructor(
     private httpService: httpService,
     private http: HttpClient,
@@ -45,10 +46,6 @@ export class UserService {
   }
 
 
-  springCreateUser(obj: any) {
-    return this.httpService.get('/api/getAllUser').pipe(map(data => { return data; }));
-  }
-
   authSession(obj) {
     return this.httpService.post('/api/authSession', obj)
   }
@@ -76,9 +73,6 @@ export class UserService {
     return this.httpService.post('/api/saveLoginCred', obj).pipe(map(data => { return data; }));
   }
 
-  getUserProfile() {
-    return this.httpService.post('/api/getUserProfile').pipe(map(data => { return data; }));
-  }
   updateUserProfile(editDetails) {
     return this.httpService.post('/api/updateUserProfile', editDetails).pipe(map(data => { return data; }));
   }
@@ -137,13 +131,28 @@ export class UserService {
   getNavigationMenu(userGroupId) {
     return this.httpService.get(`/api/getNavigationMenu/${userGroupId}`)
   }
-  getUsergroupList(){
+  getUsergroupList() {
     return this.httpService.get('/api/getUsergroupList')
   }
-
   logout(payload) {
     return this.httpService.post('/api/logout', payload);
   }
+  fileUpload(formData) {
+    return this.httpService.postMultipartWithForm('/api/uploadImage', formData);
+  }
+  getUploadedFileDetails(formData) {
+    return this.httpService.post('/api/getUploadedFileDetails', formData);
+  }
+  deleteFileDetails(formData) {
+    return this.httpService.post('/api/deleteFileDetails', formData);
+  }
+  getPaymentList(formData) {
+    return this.httpService.post('/api/getPaymentList', formData);
+  }
+  changePaymentStatus(formData) {
+    return this.httpService.post('/api/changePaymentStatus', formData);
+  }
+  
   // =========================================================================================>
   post(obj: any) {
     return this.http.post("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
@@ -156,23 +165,5 @@ export class UserService {
   }
   delete(obj: any) {
     return this.http.delete("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
-  }
-
-  processedLogAudit(data) {
-    return this.httpService.postMultipartWithForm('/api/crctrl/generateCaseReview', data);
-  }
-
-
-  fileUpload(formData) {
-    return this.httpService.postMultipartWithForm('/api/uploadImage', formData);
-  }
-
-
-  getUploadedFileDetails(formData) {
-    return this.httpService.post('/api/getUploadedFileDetails', formData);
-  }
-
-  deleteFileDetails(formData) {
-    return this.httpService.post('/api/deleteFileDetails', formData);
   }
 }

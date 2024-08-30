@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { OnlynumberDirective } from '../directives/onlynumber.directive';
-import { directivesModules } from '../directives/directives.modules';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { directivesModules } from '../directives/directives.modules';
 
 @NgModule({
   declarations: [
