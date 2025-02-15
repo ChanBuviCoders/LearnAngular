@@ -1,9 +1,9 @@
 
 ::ng-deep.dx-datagrid-headers {
-    background-color: rgb(67, 150, 150) !important;
+    /* background-color: rgb(67, 150, 150) !important; */
     font-size: 18px;
     font-weight: 500;
-    color :white 
+    color :slategray
 }
 
 .addButton{

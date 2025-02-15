@@ -10,14 +10,12 @@ import { environment } from 'src/environments/environment';
 })
 export class httpService {
 
-  constructor(  private http: HttpClient,private jwtService: JwtService ) {
-    
-   }
-   
-   normalPost(path: string, params: HttpParams = new HttpParams())
-  { 
-    return this.http.post(`${environment.api_url}${path}`, { headers: this.setHeaders() })
-    ; 
+  constructor(private http: HttpClient, private jwtService: JwtService) {
+
+  }
+
+  normalPost(path: string, params: HttpParams = new HttpParams()) {
+    return this.http.post(`${environment.api_url}${path}`, { headers: this.setHeaders() });
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -39,7 +37,7 @@ export class httpService {
       { headers: this.setSHeaders() }
     );
   }
- 
+
   getpost(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
       `${environment.api_url}${path}`,
@@ -51,45 +49,45 @@ export class httpService {
 
 
   ///set header
-  private setHeaders(): HttpHeaders  {
-    const headersConfig:any = {
+  private setHeaders(): HttpHeaders {
+    const headersConfig: any = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
     if (this.jwtService.getToken()) {
-      headersConfig['Authorization'] =this.jwtService.getToken();
+      headersConfig['Authorization'] = this.jwtService.getToken();
     }
     return new HttpHeaders(headersConfig);
   }
-  private setSHeaders(): HttpHeaders  {
-    const headersConfig:any = {};
+  private setSHeaders(): HttpHeaders {
+    const headersConfig: any = {};
     if (this.jwtService.getToken()) {
-      headersConfig['Authorization'] =this.jwtService.getToken();
+      headersConfig['Authorization'] = this.jwtService.getToken();
     }
     return new HttpHeaders(headersConfig);
   }
 
   testpost(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
-    `${environment.api_url}${path}`,body,
-    { headers: this.setHeaders() })
-    
-}
+      `${environment.api_url}${path}`, body,
+      { headers: this.setHeaders() })
+
+  }
 
 
-postMultipartWithForm(path: string, body: any ): Observable<any> {
-  return this.http.post(`${environment.api_url}${path}`,body,this.getFileDataHeader())
-   
-}
+  postMultipartWithForm(path: string, body: any): Observable<any> {
+    return this.http.post(`${environment.api_url}${path}`, body, this.getFileDataHeader())
+
+  }
 
   getFileDataHeader() {
-   
+
     const _gettoken = new HttpHeaders()
       //.set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
-      .set('Accept','application/json')
+      .set('Accept', 'application/json')
       .set('Authorization', `${this.jwtService.getToken()}`);
 
     return { headers: _gettoken };
-   }
+  }
 }

@@ -149,10 +149,13 @@ export class UserService {
   getPaymentList(formData) {
     return this.httpService.post('/api/getPaymentList', formData);
   }
+  getPaymentListByCustomerId(customerId: number) {
+    return this.httpService.get('/api/getPaymentListByCustomerId/' + customerId);
+  }
   changePaymentStatus(formData) {
     return this.httpService.post('/api/changePaymentStatus', formData);
   }
-  
+
   // =========================================================================================>
   post(obj: any) {
     return this.http.post("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))

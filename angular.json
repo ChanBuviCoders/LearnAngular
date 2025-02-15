@@ -2,7 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": "892766bf-8bed-467c-a8c7-60f3e2285065",
-    "cache":{
+    "cache": {
       "enabled": false
     }
   },
@@ -10,6 +10,15 @@
   "newProjectRoot": "projects",
   "projects": {
     "learnAngular": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "ar-AE": {
+            "translation": "src/locale/messages.ar.xlf",
+            "baseHref": "ar-AE/"
+          }
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -23,7 +32,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "G:/chandran/java/springCrud/src/main/webapp",
+            "localize": [
+              "en-US"
+            ],
+            "outputPath": "BuildOutput",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -39,8 +51,12 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.css"
             ],
-            "scripts": ["node_modules/chart.js/dist/Chart.min.js"],
-            "allowedCommonJsDependencies": ["chart.js"]
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -76,6 +92,10 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "host": "localhost",
+            "port": 4200
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
@@ -112,6 +132,5 @@
         }
       }
     }
-  },
-  "defaultProject": "learnAngular"
+  }
 }

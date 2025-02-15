@@ -1,53 +1,59 @@
 <div class="bg-img">
-    <form class="container loginCard" [formGroup]="loginForm" (ngSubmit)="loginFunction(loginForm.value)">
-      <div class="proImage">
-        <img  class="m-1" src="../../assets/imgs/profile.png" alt="#" style="border-radius: 50%;width: 50%;height: 50%; ">
-      </div>
+  <form class="container loginCard" [formGroup]="loginForm" (ngSubmit)="loginFunction(loginForm.value)">
+    <div class="proImage">
+      <img class="m-1" src="../../assets/imgs/profile.png" alt="#" style="border-radius: 50%;width: 50%;height: 50%; ">
+    </div>
 
-      <div class="form-group mt-2 p-2" >
-        <!-- <label for="userId">Login Id</label> -->
-        <input type="userId" formControlName="userId" class="form-control" id="userId" placeholder="Enter userid ..." required>
-      </div>
-      <div class="form-group mt-2 p-2">
-        <!-- <label for="password">Password </label> -->
-        <input type="password" formControlName="password" class="form-control" id="password" required placeholder="Enter password ...">
-         <span class="eyeIconCss"><i class="fa fa-eye" id="eye" aria-hidden="true" (click)="toggleShow($event,'password','eye')"></i></span>
-      </div>
-      <div *ngIf="capchaDeatils?.image" class="d-flex justify-content-center ml-5">
-         <img [src]="capchaDeatils?.image" alt="No Capcha" width="240" height="50">
-         <a href="javascript:void(0)" (click)="getCapcha()"><i class="fa fa-refresh fs-16 m-3" ></i> </a>
-      </div>
-      <div class="form-group d-flex justify-content-center m-3 " >
-        <input type="text" formControlName="capcha" maxlength="5" class="form-control w-50" id="capcha" required placeholder="Enter Capcha  ...">
-         <!-- <span class="eyeIconCss"><i class="fa fa-eye" id="eye" aria-hidden="true" (click)="toggleShow($event,'password','eye')"></i></span> -->
-      </div>
-      <p *ngIf="errorMsg!=''" class="text-center" style="color: red;">{{errorMsg}} </p>
-      <div class="d-flex justify-content-center">
-        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary w-50 m-2">Login</button>
-      </div>
+    <div class="form-group mt-2 p-2">
+      <!-- <label for="userId">Login Id</label> -->
+      <input type="userId" formControlName="userId" class="form-control" id="userId" required 
+      i18n-placeholder placeholder="Enter userid ..." >
+    </div>
+    <div class="form-group mt-2 p-2">
+      <!-- <label for="password">Password </label> -->
+      <input type="password" formControlName="password" class="form-control" id="password" required
+        placeholder="Enter password ..." i18n-placeholder>
+      <span class="eyeIconCss"><i class="fa fa-eye" id="eye" aria-hidden="true"
+          (click)="toggleShow($event,'password','eye')"></i></span>
+    </div>
+    <div *ngIf="capchaDeatils?.image" class="d-flex justify-content-center ml-5">
+      <img [src]="capchaDeatils?.image" alt="No Capcha" width="240" height="50">
+      <a href="javascript:void(0)" (click)="getCapcha()"><i class="fa fa-refresh fs-16 m-3"></i> </a>
+    </div>
+    <div class="form-group d-flex justify-content-center m-3 ">
+      <input type="text" formControlName="capcha" maxlength="5" class="form-control w-50" id="capcha" required
+        placeholder="Enter Capcha  ..." i18n-placeholder>
+      <!-- <span class="eyeIconCss"><i class="fa fa-eye" id="eye" aria-hidden="true" (click)="toggleShow($event,'password','eye')"></i></span> -->
+    </div>
+    <p *ngIf="errorMsg!=''" class="text-center" style="color: red;" >{{errorMsg}} </p>
+    <div class="d-flex justify-content-center">
+      <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary w-50 m-2" i18n>Login</button>
+    </div>
 
-      <div class="d-flex justify-content-between" style="margin-bottom:10px">
-        <a class="text-success font-weight-bold" href="javascript:void(0)" routerLink="/create-account" >Create Account</a> <br>
-        <a class="text-success font-weight-bold" href="javascript:void(0)" data-toggle="modal" data-target="#staticBackdrop">Forgot Password</a>
+    <div class="d-flex justify-content-between" style="margin-bottom:10px">
+      <a class="text-success font-weight-bold" href="javascript:void(0)" routerLink="/create-account">Create Account</a>
+      <br>
+      <a class="text-success font-weight-bold" href="javascript:void(0)" data-toggle="modal"
+        data-target="#staticBackdrop">Forgot Password</a>
+    </div>
+  </form>
+</div>
+
+
+<!-- forgot-Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Forgot Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </form>
-  </div>
-
-
-  <!-- forgot-Modal -->
-  <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Forgot Password</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- <app-forgot-password></app-forgot-password> -->
-        </div>
+      <div class="modal-body">
+        <!-- <app-forgot-password></app-forgot-password> -->
       </div>
     </div>
   </div>
+</div>

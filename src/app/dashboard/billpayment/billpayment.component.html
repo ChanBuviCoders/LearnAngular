@@ -1,5 +1,5 @@
-<div>
-    <div class="px-3 col-9 addButton">
+<div class="mt-2 px-3">
+    <div class="px-3 col-9 addButton ">
         <form [formGroup]="form" class="d-flex align-items-center justify-content-start">
 
             <label for="ltype"> Loan Type <span class="text-danger">*</span> </label>
@@ -9,17 +9,15 @@
                 <option value="weekly">weekly</option>
                 <option value="Monthly">Monthly</option>
             </select>
-            <!-- <span *ngIf="controls['loanType'].invalid && controls['loanType'].touched ">
-                <span *ngIf="controls['loanType'].hasError('required')" class="text-danger">Required</span>
-            </span> -->
             <label for="ltype" class="ml-1"> Select Date <span class="text-danger">*</span> </label>
             <input type="date" class="form-control w-25 ml-1" [max]="CurrentDate" name="date" id="date"
                 formControlName="date">
-            <button type="button" class="btn btn-primary ml-1" (click)="getPaymentList()">Generate List</button>
+            <button type="button" [disabled]="form.pristine || form.invalid" class="btn btn-primary ml-1"
+                (click)="getPaymentList()">Generate List</button>
             <label for="ltype" class="ml-1"> Today Credit:{{todayCredit}} </label>
         </form>
     </div>
-    <div class="px-3" style="overflow-x: auto;">
+    <div class="px-3 mt-2" style="overflow-x: auto;">
         <dx-data-grid id="gridContainer" [dataSource]="customerList" [remoteOperations]="false"
             [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true">
             <dxo-paging [pageSize]="10"></dxo-paging>
@@ -33,24 +31,42 @@
                 [allowGrouping]="false" cssClass="bullet"></dxi-column>
             <dxi-column dataField="loanAmount" dataType="string" alignment="center" caption="Loan Amount"
                 format="currency"></dxi-column>
-            <dxi-column dataField="loanType" dataType="string" alignment="center" caption="Loan Type"></dxi-column>
-            <dxi-column dataField="date" dataType="string" alignment="center" caption="Date"></dxi-column>
+            <dxi-column dataField="totalPayable" dataType="string" alignment="center"
+                caption="Total Payable"></dxi-column>
+            <dxi-column dataField="totalPaid" dataType="string" alignment="center" caption="Total Paid"></dxi-column>
+            <dxi-column dataField="balanceAmount" dataType="string" alignment="center" caption="Balance"></dxi-column>
+            <dxi-column cellTemplate="paymentMode" dataType="string" alignment="center"
+                caption="Payment Mode"></dxi-column>
             <dxi-column cellTemplate="payableAmount" dataField="amount" dataType="string" alignment="center"
                 caption="Payable Amount"></dxi-column>
             <dxi-column cellTemplate="action" alignment="center" caption="Action"></dxi-column>
             <div *dxTemplate="let data of 'action';let Z =index">
-                <a href="javascript:void(0)" class="ml-2" title="Edit" style="font-size: x-large;color: dimgrey;"
-                    (click)="data.data.editStatus=!data.data.editStatus"><i class="fa fa-pencil"
-                        aria-hidden="true"></i></a>
-                <button *ngIf="!data.data.paymentStatus" class="btn btn-warning ml-2"
-                    (click)="payAmount(data.data)">Pay</button>
-                <button *ngIf="data.data.paymentStatus" class="btn btn-info ml-2"
-                    (click)="payAmount(data.data)">Paid</button>
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="javascript:void(0)" class="ml-2" title="Edit" style="font-size: x-large;color: dimgrey;"
+                        (click)="data.data.editStatus=!data.data.editStatus"><i class="fa fa-pencil"
+                            aria-hidden="true"></i></a>
+                    <button *ngIf="!data.data.paymentStatus" class="btn btn-warning ml-2"
+                        (click)="payAmount(data.data)">Pay</button>
+                    <button *ngIf="data.data.paymentStatus" class="btn btn-info ml-2"
+                        (click)="payAmount(data.data)">Paid</button>
+                </div>
             </div>
             <div *dxTemplate="let data of 'payableAmount';let pi = index">
                 <input [disabled]="!data.data.editStatus" class="form-control" type="text" OnlyNumber
-                    [name]="'amount'+pi" [id]="'amount'+pi" [value]="data.data.amount"
+                    [name]="'amount'+data.rowIndex" [id]="'amount'+data.rowIndex" [value]="data.data.amount"
                     (focusout)="onPayableAmountChange(data.rowIndex, $event)">
+            </div>
+            <div *dxTemplate="let data of 'paymentMode';let pmi = index">
+                <div class="d-flex justify-content-center align-items-center">
+                    <label class="switch">
+                        <input type="checkbox" [checked]="data.data.paymentMode.toLowerCase()=='online'"
+                            (click)="onPaymentModeChange(data.rowIndex,$event)" [name]="'paymentMode'+data.rowIndex"
+                            [id]="'paymentMode'+data.rowIndex">
+                        <span class="slider round"></span>
+                    </label>
+                    <label [for]="'paymentMode'+data.rowIndex" class="ml-2"
+                        style="cursor: pointer;">{{data.data.paymentMode}}</label>
+                </div>
             </div>
         </dx-data-grid>
     </div>

@@ -11,7 +11,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router,private subjectService:SubjectService, private userService: UserService) { }
+  constructor(private router: Router, private subjectService: SubjectService, private userService: UserService) { }
 
   currentUserDetails: userAccount;
   ngOnInit(): void {
@@ -23,9 +23,9 @@ export class HeaderComponent implements OnInit {
 
   navigationMenuDetails: any = []
   getNavigationMenu() {
-    
+
     this.userService.getNavigationMenu(this.currentUserDetails.userGroupId).subscribe(response => {
-      if (response.status) { 
+      if (response.status) {
         this.navigationMenuDetails = response.data;
       }
     })
@@ -79,13 +79,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    let payload = { "userAccountId": this.currentUserDetails.userAccountId };
+    const payload = { "userAccountId": this.currentUserDetails.userAccountId };
     this.userService.logout(payload).subscribe(data => {
       if (data.status) {
         this.router.navigate(['/login'])
-        this.userService.clearLocalStorage()
       }
     })
+    this.userService.clearLocalStorage()
   }
 
 

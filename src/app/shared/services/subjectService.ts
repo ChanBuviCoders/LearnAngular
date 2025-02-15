@@ -1,10 +1,13 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, ReplaySubject } from "rxjs";
-import { Getsession } from "src/app/models/getsession.model";
+import { BehaviorSubject } from "rxjs";
+import { Getsession, userAccount } from "src/app/models/getsession.model";
 
 @Injectable({ providedIn: "root" })
 export class SubjectService {
-    constructor() { }
+    userAccount: userAccount;
+    constructor() {
+        this.currentuserSubject.subscribe((value: Getsession) => { this.userAccount = value.data })
+    }
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
     public isAuthenticated = this.isAuthenticatedSubject.asObservable();
     private currentUserDetails = new BehaviorSubject<Getsession>({} as Getsession);
@@ -15,5 +18,8 @@ export class SubjectService {
     }
     setCurrentUser(value) {
         this.currentUserDetails.next(value);
+    }
+    get currentUser(): userAccount {
+        return this.userAccount;
     }
 }

@@ -50,17 +50,26 @@ export class BillpaymentComponent implements OnInit {
 
   payAmount(value) {
     value.paymentStatus = !value.paymentStatus;
+    this.changePaymentStatus(value)
+  }
+  changePaymentStatus(value) {
     this.userService.changePaymentStatus(value).subscribe({
       next: (value) => {
         if (value.status) {
-          this.getPaymentList();
+          this.todayCredit = value.data.todayCredit;
         }
-      }, error: (err) => {
+      },
+      error: (err) => {
 
       },
     })
+
   }
-  onPayableAmountChange(i,data){
-    this.customerList[i].amount=data.target.value;
+  onPayableAmountChange(i, data) {
+    this.customerList[i].amount = data.target.value;
+  }
+  onPaymentModeChange(i, data) {
+    this.customerList[i].paymentMode = data.target.checked ? 'Online' : 'Offline';
+    this.changePaymentStatus(this.customerList[i])
   }
 }

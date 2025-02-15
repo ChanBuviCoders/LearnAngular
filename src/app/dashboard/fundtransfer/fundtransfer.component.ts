@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -31,12 +31,13 @@ export class FundtransferComponent implements OnInit {
       firstName: ['', Validators.required,],
       lastName: ['', Validators.required],
       loanAmount: ['', Validators.required],
-      mobileNumber: ['', [Validators.required,Validators.minLength(10)]],
+      mobileNumber: ['', [Validators.required, Validators.minLength(10)]],
       loanType: [null, Validators.required],
       gender: [null, Validators.required]
     })
   }
   currentUserDetails: userAccount;
+  loanType:string="All"
   ngOnInit(): void {
     this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
     this.getallCustomerList()
@@ -54,7 +55,6 @@ export class FundtransferComponent implements OnInit {
     this.type = "Add"
     this.addCustomerForm.reset()
     this.modalRef = this.modalService.show(modalName)
-    // this.sendMail()
   }
   addCustomerFunction(formValue) {
     if (this.addCustomerForm.valid) {
@@ -109,7 +109,7 @@ export class FundtransferComponent implements OnInit {
   }
 
   getallCustomerList() {
-    let payLoad = { userAccountId: this.currentUserDetails.userAccountId }
+    let payLoad = { userAccountId: this.currentUserDetails.userAccountId,loanType: this.loanType}
     this.userService.getAllCustomerList(payLoad).subscribe(data => {
       this.customerList = data.data
       var count = 0;
@@ -118,8 +118,13 @@ export class FundtransferComponent implements OnInit {
       })
     })
   }
-
-  deleteCustomer(values) {
+  @ViewChild('deleteConfirmationAlert') deleteTemp: TemplateRef<any>;
+  selectedCustomer: Customer;
+  openDeleteAlert(customer: Customer) {
+    this.selectedCustomer = customer
+    this.modalRef = this.modalService.show(this.deleteTemp);
+  }
+  deleteCustomer(values: Customer) {
     let payLoad = { customerId: values.customerId }
     this.userService.deleteCustomer(payLoad).subscribe(res => {
       if (res.status == true) {
@@ -131,8 +136,17 @@ export class FundtransferComponent implements OnInit {
       }
     })
   }
-  viewDetails(data) {
-
+  @ViewChild('viewPaymentInfo') viewPaymentInfo: TemplateRef<any>;
+  paymentList: any = []
+  viewDetails(customer: Customer) {
+    this.userService.getPaymentListByCustomerId(customer.customerId).subscribe(response => {
+      if (response.status) {
+        this.modalRef = this.modalService.show(this.viewPaymentInfo, { class: "col-8" })
+        this.paymentList = response.data;
+        let count = 0;
+        this.paymentList.forEach(data => { data.SerialNumber = ++count; })
+      }
+    });
   }
   sendSms(data) {
     this.userService.sendSmsToMobileNumber().subscribe(data => { console.log('--------status--------', data); })
@@ -142,4 +156,17 @@ export class FundtransferComponent implements OnInit {
     this.userService.sendMail().subscribe(data => { console.log('--------status--------', data); })
   }
 
+}
+export interface Customer {
+  customerId: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  loanAmount: number;
+  loanType: string;
+  mobileNumber: number;
+  startDate: string;
+  endDate: string;
+  userAccountId: number;
+  payments: string;
 }
