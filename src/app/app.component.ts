@@ -5,6 +5,7 @@ import { JwtService } from './shared/services/jwt.service';
 import { UserService } from './shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

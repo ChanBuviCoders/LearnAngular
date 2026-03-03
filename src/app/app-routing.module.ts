@@ -9,7 +9,7 @@ const routes:
     { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
     { path: 'create-account', loadChildren: () => import('./create-account/create-account.module').then(m => m.CreateAccountModule), },
     { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
-    { path: '***', redirectTo:'login',pathMatch:'full' }
+    { path: '**', redirectTo: 'login', pathMatch: 'full' }
   ]; 
 
 @NgModule({

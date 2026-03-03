@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-rgb-to-hex',
   templateUrl: './rgb-to-hex.component.html',
   styleUrls: ['./rgb-to-hex.component.css']

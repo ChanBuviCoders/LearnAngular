@@ -7,6 +7,7 @@ import { CanComponentDeactivate } from "../shared/services/canDeactivate/canDeac
 import { UserService } from "../shared/services/user.service";
 
 @Component({
+  standalone: false,
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css']

@@ -8,11 +8,7 @@ import { MiniStatementComponent } from './mini-statement/mini-statement.componen
 import { MPassbookComponent } from './m-passbook/m-passbook.component';
 import { ViewDownloadStatementComponent } from './view-download-statement/view-download-statement.component';
 import { EStatementSubscriptionComponent } from './e-statement-subscription/e-statement-subscription.component';
-import { ChartsModule } from 'ng2-charts';
-
-// import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
-
-
+// ng2-charts ChartsModule not compatible with Angular 19 - charts replaced with placeholder. Use ng2-charts v6+ or another chart lib.
 @NgModule({
   declarations: [
     MyaccountsComponent,
@@ -24,8 +20,7 @@ import { ChartsModule } from 'ng2-charts';
   ],
   imports: [
     CommonModule,
-    MyaccountsRoutingModule,
-    ChartsModule
+    MyaccountsRoutingModule
   ],
   providers:[]
 })

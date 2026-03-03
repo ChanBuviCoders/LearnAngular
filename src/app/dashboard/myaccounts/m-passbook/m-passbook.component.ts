@@ -4,6 +4,7 @@ import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-m-passbook',
   templateUrl: './m-passbook.component.html',
   styleUrls: ['./m-passbook.component.css']

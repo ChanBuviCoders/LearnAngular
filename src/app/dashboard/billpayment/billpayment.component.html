@@ -18,57 +18,70 @@
         </form>
     </div>
     <div class="px-3 mt-2" style="overflow-x: auto;">
-        <dx-data-grid id="gridContainer" [dataSource]="customerList" [remoteOperations]="false"
-            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true">
-            <dxo-paging [pageSize]="10"></dxo-paging>
-            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
-            <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
-            <dxi-column dataField="SerialNumber" dataType="string" alignment="center" caption="#">
-            </dxi-column>
-            <dxi-column dataField="firstName" dataType="number" alignment="center" caption="First Name"
-                format="currency"></dxi-column>
-            <dxi-column dataField="lastName" dataType="number" alignment="center" caption="Last Name" format="percent"
-                [allowGrouping]="false" cssClass="bullet"></dxi-column>
-            <dxi-column dataField="loanAmount" dataType="string" alignment="center" caption="Loan Amount"
-                format="currency"></dxi-column>
-            <dxi-column dataField="totalPayable" dataType="string" alignment="center"
-                caption="Total Payable"></dxi-column>
-            <dxi-column dataField="totalPaid" dataType="string" alignment="center" caption="Total Paid"></dxi-column>
-            <dxi-column dataField="balanceAmount" dataType="string" alignment="center" caption="Balance"></dxi-column>
-            <dxi-column cellTemplate="paymentMode" dataType="string" alignment="center"
-                caption="Payment Mode"></dxi-column>
-            <dxi-column cellTemplate="payableAmount" dataField="amount" dataType="string" alignment="center"
-                caption="Payable Amount"></dxi-column>
-            <dxi-column cellTemplate="action" alignment="center" caption="Action"></dxi-column>
-            <div *dxTemplate="let data of 'action';let Z =index">
-                <div class="d-flex justify-content-center align-items-center">
-                    <a href="javascript:void(0)" class="ml-2" title="Edit" style="font-size: x-large;color: dimgrey;"
-                        (click)="data.data.editStatus=!data.data.editStatus"><i class="fa fa-pencil"
-                            aria-hidden="true"></i></a>
-                    <button *ngIf="!data.data.paymentStatus" class="btn btn-warning ml-2"
-                        (click)="payAmount(data.data)">Pay</button>
-                    <button *ngIf="data.data.paymentStatus" class="btn btn-info ml-2"
-                        (click)="payAmount(data.data)">Paid</button>
-                </div>
-            </div>
-            <div *dxTemplate="let data of 'payableAmount';let pi = index">
-                <input [disabled]="!data.data.editStatus" class="form-control" type="text" OnlyNumber
-                    [name]="'amount'+data.rowIndex" [id]="'amount'+data.rowIndex" [value]="data.data.amount"
-                    (focusout)="onPayableAmountChange(data.rowIndex, $event)">
-            </div>
-            <div *dxTemplate="let data of 'paymentMode';let pmi = index">
-                <div class="d-flex justify-content-center align-items-center">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="customerDataSource" class="mat-elevation-z2">
+            <ng-container matColumnDef="SerialNumber">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let row">{{ row.SerialNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef>First Name</th>
+                <td mat-cell *matCellDef="let row">{{ row.firstName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                <td mat-cell *matCellDef="let row">{{ row.lastName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="loanAmount">
+                <th mat-header-cell *matHeaderCellDef>Loan Amount</th>
+                <td mat-cell *matCellDef="let row">{{ row.loanAmount }}</td>
+            </ng-container>
+            <ng-container matColumnDef="totalPayable">
+                <th mat-header-cell *matHeaderCellDef>Total Payable</th>
+                <td mat-cell *matCellDef="let row">{{ row.totalPayable }}</td>
+            </ng-container>
+            <ng-container matColumnDef="totalPaid">
+                <th mat-header-cell *matHeaderCellDef>Total Paid</th>
+                <td mat-cell *matCellDef="let row">{{ row.totalPaid }}</td>
+            </ng-container>
+            <ng-container matColumnDef="balanceAmount">
+                <th mat-header-cell *matHeaderCellDef>Balance</th>
+                <td mat-cell *matCellDef="let row">{{ row.balanceAmount }}</td>
+            </ng-container>
+            <ng-container matColumnDef="paymentMode">
+                <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
+                <td mat-cell *matCellDef="let row">
                     <label class="switch">
-                        <input type="checkbox" [checked]="data.data.paymentMode.toLowerCase()=='online'"
-                            (click)="onPaymentModeChange(data.rowIndex,$event)" [name]="'paymentMode'+data.rowIndex"
-                            [id]="'paymentMode'+data.rowIndex">
+                        <input type="checkbox" [checked]="row.paymentMode?.toLowerCase() === 'online'"
+                            (click)="onPaymentModeChange(row, $event)">
                         <span class="slider round"></span>
                     </label>
-                    <label [for]="'paymentMode'+data.rowIndex" class="ml-2"
-                        style="cursor: pointer;">{{data.data.paymentMode}}</label>
-                </div>
-            </div>
-        </dx-data-grid>
+                    <span class="ml-2">{{ row.paymentMode }}</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="payableAmount">
+                <th mat-header-cell *matHeaderCellDef>Payable Amount</th>
+                <td mat-cell *matCellDef="let row">
+                    <input [disabled]="!row.editStatus" class="form-control" type="text" OnlyNumber
+                        [value]="row.amount"
+                        (focusout)="onPayableAmountChange(row, $event)">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button (click)="row.editStatus=!row.editStatus"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button *ngIf="!row.paymentStatus" mat-raised-button color="accent" class="ml-2" (click)="payAmount(row)">Pay</button>
+                    <button *ngIf="row.paymentStatus" mat-raised-button class="ml-2" (click)="payAmount(row)">Paid</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10" showFirstLastButtons></mat-paginator>
     </div>
 </div>
 
