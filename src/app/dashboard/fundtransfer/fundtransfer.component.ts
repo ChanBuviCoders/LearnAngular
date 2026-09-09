@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { userAccount } from 'src/app/models/getsession.model';
@@ -8,15 +10,23 @@ import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-fundtransfer',
   templateUrl: './fundtransfer.component.html',
   styleUrls: ['./fundtransfer.component.css']
 })
-export class FundtransferComponent implements OnInit {
+export class FundtransferComponent implements OnInit, AfterViewInit {
 
   modalRef: BsModalRef;
   testForm: FormGroup;
   addCustomerForm: FormGroup;
+  customerDataSource = new MatTableDataSource<any>([]);
+  paymentDataSource = new MatTableDataSource<any>([]);
+  customerDisplayedColumns: string[] = ['SerialNumber', 'firstName', 'lastName', 'loanAmount', 'loanType', 'startDate', 'endDate', 'action'];
+  paymentDisplayedColumns: string[] = ['SerialNumber', 'paymentId', 'date', 'paymentMode', 'amount'];
+  @ViewChild('customerPaginator') customerPaginator: MatPaginator;
+  @ViewChild('paymentPaginator') paymentPaginator: MatPaginator;
+
   constructor(private fb: FormBuilder, private subjectService: SubjectService, private modalService: BsModalService, private datePipe: DatePipe, private userService: UserService, private toastr: ToastrService) {
     this.testForm = this.fb.group({
       date: ["", Validators.required],
@@ -42,14 +52,27 @@ export class FundtransferComponent implements OnInit {
     this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
     this.getallCustomerList()
   }
-  customerList: any = []
+  customerList: any = [];
   get controls() {
     return this.addCustomerForm.controls;
   }
 
-  contentReady(event) {
-
+  ngAfterViewInit() {
+    this.customerDataSource.paginator = this.customerPaginator;
+    this.paymentDataSource.paginator = this.paymentPaginator;
   }
+
+  applyCustomerFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.customerDataSource.filter = value.trim().toLowerCase();
+  }
+
+  applyPaymentFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.paymentDataSource.filter = value.trim().toLowerCase();
+  }
+
+  contentReady(_event: unknown) {}
   type: string = "Add"
   openPopUp(modalName) {
     this.type = "Add"
@@ -109,14 +132,15 @@ export class FundtransferComponent implements OnInit {
   }
 
   getallCustomerList() {
-    let payLoad = { userAccountId: this.currentUserDetails.userAccountId,loanType: this.loanType}
+    const payLoad = { userAccountId: this.currentUserDetails.userAccountId, loanType: this.loanType };
     this.userService.getAllCustomerList(payLoad).subscribe(data => {
-      this.customerList = data.data
-      var count = 0;
-      this.customerList.forEach(data => {
-        data.SerialNumber = ++count;
-      })
-    })
+      this.customerList = data.data;
+      let count = 0;
+      this.customerList.forEach((row: any) => {
+        row.SerialNumber = ++count;
+      });
+      this.customerDataSource.data = this.customerList;
+    });
   }
   @ViewChild('deleteConfirmationAlert') deleteTemp: TemplateRef<any>;
   selectedCustomer: Customer;
@@ -141,10 +165,11 @@ export class FundtransferComponent implements OnInit {
   viewDetails(customer: Customer) {
     this.userService.getPaymentListByCustomerId(customer.customerId).subscribe(response => {
       if (response.status) {
-        this.modalRef = this.modalService.show(this.viewPaymentInfo, { class: "col-8" })
+        this.modalRef = this.modalService.show(this.viewPaymentInfo, { class: "col-8" });
         this.paymentList = response.data;
         let count = 0;
-        this.paymentList.forEach(data => { data.SerialNumber = ++count; })
+        this.paymentList.forEach((row: any) => { row.SerialNumber = ++count; });
+        this.paymentDataSource.data = this.paymentList;
       }
     });
   }

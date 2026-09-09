@@ -7,14 +7,15 @@ import { AppComponent } from './app.component';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DxDataGridModule, DxTemplateModule } from 'devextreme-angular';
 import { jwtInterceptorsRequest, jwtInterceptorsResponce } from './shared/interceptors/jwtInterceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot(),
@@ -22,12 +23,10 @@ import { jwtInterceptorsRequest, jwtInterceptorsResponce } from './shared/interc
     TabsModule,
     ModalModule,
     TooltipModule,
-    DxTemplateModule,
-    DxDataGridModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: jwtInterceptorsRequest, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: jwtInterceptorsResponce, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: jwtInterceptorsResponce, multi: true },
   ],
   bootstrap: [AppComponent]
 })

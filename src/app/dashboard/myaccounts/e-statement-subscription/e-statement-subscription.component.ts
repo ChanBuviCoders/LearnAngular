@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-e-statement-subscription',
   templateUrl: './e-statement-subscription.component.html',
   styleUrls: ['./e-statement-subscription.component.css']

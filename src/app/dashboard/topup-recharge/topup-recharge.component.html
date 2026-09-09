@@ -1,1 +1,10 @@
-<p>topup-recharge works!</p>
+
+    <h2>Live Price: ₹{{ price() }}</h2>
+
+    <p [style.color]="isUp() ? 'green' : 'red'">
+      {{ isUp() ? 'Price increased' : 'Price decreased' }}
+    </p>
+
+    <p>Last updated: {{ lastUpdated() }}</p>
+
+    <button (click)="stop()">Stop updates</button>

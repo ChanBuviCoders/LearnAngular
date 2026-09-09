@@ -1,1 +1,303 @@
-<p>service works!</p>
+<div class="px-3">
+    <div class="px-3 col-9 addButton d-flex align-items-center justify-content-end">
+        <!-- <label for="ltype"> Loan Type <span class="text-danger">*</span> </label>
+        <select class="form-control w-25 ml-2" [(ngModel)]="loanType" name="ltype" id="ltype"
+            (change)="getallCustomerList()">
+            <option value="null" hidden>Select</option>
+            <option value="All">All</option>
+            <option value="Daily">Daily</option>
+            <option value="weekly">weekly</option>
+            <option value="Monthly">Monthly</option>
+        </select> -->
+        <button type="button" class="btn btn-primary ml-2" (click)="openPopUp(addEmployee)">AddCustomer</button>
+    </div>
+    <div class="p-3" style="overflow-x: auto;">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyCustomerFilter($event)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="employeeDataSource" class="mat-elevation-z2">
+            <ng-container matColumnDef="SerialNumber">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                    {{ i + 1 }}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="empFirstName">
+                <th mat-header-cell *matHeaderCellDef>First Name</th>
+                <td mat-cell *matCellDef="let row">{{ row.empFirstName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empLastName">
+                <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                <td mat-cell *matCellDef="let row">{{ row.empLastName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empEmail">
+                <th mat-header-cell *matHeaderCellDef>Email</th>
+                <td mat-cell *matCellDef="let row">{{ row.empEmail }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empPhone">
+                <th mat-header-cell *matHeaderCellDef>Phone No</th>
+                <td mat-cell *matCellDef="let row">{{ row.empPhone }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empGender">
+                <th mat-header-cell *matHeaderCellDef>Gender</th>
+                <td mat-cell *matCellDef="let row">{{ row.empGender }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empDOB">
+                <th mat-header-cell *matHeaderCellDef>DOB</th>
+                <td mat-cell *matCellDef="let row">{{ row.empDOB }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empDepartment">
+                <th mat-header-cell *matHeaderCellDef>Department</th>
+                <td mat-cell *matCellDef="let row">{{ row.empDepartment }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empDesignation">
+                <th mat-header-cell *matHeaderCellDef>Designation</th>
+                <td mat-cell *matCellDef="let row">{{ row.empDesignation }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empSalary">
+                <th mat-header-cell *matHeaderCellDef>Salary</th>
+                <td mat-cell *matCellDef="let row">{{ row.empSalary }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empExperience">
+                <th mat-header-cell *matHeaderCellDef>Experience</th>
+                <td mat-cell *matCellDef="let row">{{ row.empExperience }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empCountry">
+                <th mat-header-cell *matHeaderCellDef>Country</th>
+                <td mat-cell *matCellDef="let row">{{ row.empCountry }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empState">
+                <th mat-header-cell *matHeaderCellDef>State</th>
+                <td mat-cell *matCellDef="let row">{{ row.empState }}</td>
+            </ng-container>
+            <ng-container matColumnDef="empCity">
+                <th mat-header-cell *matHeaderCellDef>City</th>
+                <td mat-cell *matCellDef="let row">{{ row.empCity }}</td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <!-- <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button matTooltip="View" (click)="viewDetails(row)"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Send SMS" (click)="sendSms(row)" class="text-danger"><i class="fa fa-comment" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Edit" (click)="editFunction(row, addCustomer)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Delete" (click)="openDeleteAlert(row)" class="text-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </td> -->
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="employeeDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: employeeDisplayedColumns;"></tr>
+        </table>
+        <mat-paginator #customerPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10"
+            showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>
+<ng-template #addEmployee>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Add Employee</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <form action="" [formGroup]="addEmployeeForm" (ngSubmit)="addEmployeeFunction(addEmployeeForm.value)">
+        <div class="modal-body d-flex justify-content-center">
+            <div class="p-3 w-100">
+                <div class="row ">
+                    <label for="fName"> First Name <span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" formControlName="empFirstName" id="fName"
+                        (cut)="$event.preventDefault()" (copy)="$event.preventDefault()"
+                        (paste)="$event.preventDefault()">
+                    <span *ngIf="controls['empFirstName'].invalid && controls['empFirstName'].touched ">
+                        <span *ngIf="controls['empFirstName'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="lName"> Last Name <span class="text-danger">*</span> </label>
+                    <input class="form-control" type="text" formControlName="empLastName" id="lName">
+                    <span *ngIf="controls['empLastName'].invalid && controls['empLastName'].touched ">
+                        <span *ngIf="controls['empLastName'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eemail"> Email <span class="text-danger">*</span> </label>
+                    <input class="form-control" type="email" formControlName="empEmail" id=eemail>
+                    <span *ngIf="controls['empEmail'].invalid && controls['empEmail'].touched ">
+                        <span *ngIf="controls['empEmail'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="ePhone"> Phone No <span class="text-danger">*</span> </label>
+                    <input class="form-control" minlength="10" maxlength="10" OnlyNumber="true" type="text"
+                        formControlName="empPhone" id=ePhone>
+                    <span *ngIf="controls['empPhone'].invalid && controls['empPhone'].touched ">
+                        <span *ngIf="controls['empPhone'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="egender"> Gender <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empGender" name="gender" id="egender">
+                        <option value="null" hidden>Select</option>
+                        <option value="Male">Male</option>
+                        <option value="FeMale">FeMale</option>
+                    </select>
+                    <span *ngIf="controls['empGender'].invalid && controls['empGender'].touched ">
+                        <span *ngIf="controls['empGender'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eDOB"> Date of Birth <span class="text-danger">*</span> </label>
+                    <input class="form-control" type="date" formControlName="empDOB" id=eDOB>
+                    <span *ngIf="controls['empDOB'].invalid && controls['empDOB'].touched ">
+                        <span *ngIf="controls['empDOB'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eDepartment"> Department <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empDepartment" name="eDepartment" id="eDepartment">
+                        <option value="null" hidden>Select</option>
+                        <option value="Daily">IT</option>
+                        <option value="weekly">Finance</option>
+                        <option value="Monthly">HR</option>
+                    </select>
+                    <span *ngIf="controls['empDepartment'].invalid && controls['empDepartment'].touched ">
+                        <span *ngIf="controls['empDepartment'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eDesignation"> Designation <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empDesignation" name="eDesignation" id="eDesignation">
+                        <option value="null" hidden>Select</option>
+                        <option value="Daily">Developer</option>
+                        <option value="weekly">Tester</option>
+                        <option value="Monthly">Analyst</option>
+                    </select>
+                    <span *ngIf="controls['empDesignation'].invalid && controls['empDesignation'].touched ">
+                        <span *ngIf="controls['empDesignation'].hasError('required')"
+                            class="text-danger">Required</span>
+                    </span>
+                </div>
+
+                <div class="row mt-2">
+                    <label for="eSalary"> Salary <span class="text-danger">*</span></label>
+                    <input class="form-control" OnlyNumber="true" type="text" formControlName="empSalary" id="eSalary">
+                    <span *ngIf="controls['empSalary'].invalid && controls['empSalary'].touched">
+                        <span *ngIf="controls['empSalary'].hasError('required')" class="text-danger">required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eExperience"> Experience <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empExperience" name="eExperience" id="eExperience">
+                        <option value="null" hidden>Select</option>
+                        <option value="Fresher">Fresher</option>
+                        <option value="2+years">2+ years</option>
+                        <option value="5+years">5+ years</option>
+                        <option value="10+years">10+ years</option>
+                    </select>
+                    <span *ngIf="controls['empExperience'].invalid && controls['empExperience'].touched ">
+                        <span *ngIf="controls['empExperience'].hasError('required')" class="text-danger">Required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eCountry"> Country <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empCountry" name="eCountry" id="eCountry">
+                        <option value="null" hidden>Select</option>
+                        @for(country of countryList;track country){
+                        <option [value]="country.iso2">{{country?.name}}</option>
+                        }
+                    </select>
+                    <span *ngIf="controls['empCountry'].invalid && controls['empCountry'].touched">
+                        <span *ngIf="controls['empCountry'].hasError('required')" class="text-danger">required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eState"> Satate <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empState" name="eState" id="eState">
+                        <option value="null" hidden>Select</option>
+                        @for(state of stateList;track state){
+                        <option [value]="state.state_code">{{state?.name}}</option>
+                        }
+                    </select>
+                    <span *ngIf="controls['empState'].invalid && controls['empState'].touched">
+                        <span *ngIf="controls['empState'].hasError('required')" class="text-danger">required</span>
+                    </span>
+                </div>
+                <div class="row mt-2">
+                    <label for="eCity"> City <span class="text-danger">*</span> </label>
+                    <select class="form-control" formControlName="empCity" name="eCity" id="eCity">
+                        <option value="null" hidden>Select</option>
+                        @for(city of cityList;track city){
+                        <option [value]="city">{{city}}</option>
+                        }
+                    </select>
+                    <span *ngIf="controls['empCity'].invalid && controls['empCity'].touched">
+                        <span *ngIf="controls['empCity'].hasError('required')" class="text-danger">required</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info" type="submit" [disabled]="addEmployeeForm.invalid || addEmployeeForm.pristine"
+                (click)="modalRef.hide()">{{type}}
+                Employee</button>
+            <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>
+        </div>
+    </form>
+
+</ng-template>
+<!-- <ng-template #deleteConfirmationAlert>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete Customer</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to delete {{selectedCustomer.firstName}} {{selectedCustomer.lastName}}?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" type="submit" (click)="deleteCustomer(selectedCustomer)">Yes</button>
+        <button class="btn btn-light" type="button" (click)="modalRef.hide()">No</button>
+    </div>
+</ng-template>
+<ng-template #viewPaymentInfo>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Payment Information</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyPaymentFilter($event)" placeholder="Filter">
+        </mat-form-field>
+        <table mat-table [dataSource]="paymentDataSource" class="mat-elevation-z2">
+            <ng-container matColumnDef="SerialNumber">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let row">{{ row.SerialNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="paymentId">
+                <th mat-header-cell *matHeaderCellDef>Payment Id</th>
+                <td mat-cell *matCellDef="let row">{{ row.paymentId }}</td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Paid Date</th>
+                <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+            </ng-container>
+            <ng-container matColumnDef="paymentMode">
+                <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
+                <td mat-cell *matCellDef="let row">{{ row.paymentMode }}</td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="paymentDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: paymentDisplayedColumns;"></tr>
+        </table>
+        <mat-paginator #paymentPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10" showFirstLastButtons></mat-paginator>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>
+    </div>
+</ng-template> -->

@@ -4,6 +4,7 @@ import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-mini-statement',
   templateUrl: './mini-statement.component.html',
   styleUrls: ['./mini-statement.component.css']

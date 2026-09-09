@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { JwtService } from './jwt.service';
-import { catchError } from 'rxjs/operators/catchError';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

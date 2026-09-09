@@ -5,8 +5,8 @@
     color :slategray
 }
 form {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    /* display: grid;
+    grid-template-columns: auto 1fr; */
 
     input {
         margin-top: 5px;

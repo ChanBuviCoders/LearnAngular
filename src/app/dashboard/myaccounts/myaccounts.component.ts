@@ -4,6 +4,7 @@ import { responsiveService } from '../shared/responsive.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
+  standalone: false,
   selector: 'app-myaccounts',
   templateUrl: './myaccounts.component.html',
   styleUrls: ['./myaccounts.component.css']

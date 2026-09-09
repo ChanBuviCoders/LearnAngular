@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { httpService } from './api.service';
 import { JwtService } from './jwt.service';
 import { SubjectService } from './subjectService';
+import { APIData, APIData1, APIData2 } from 'src/app/dashboard/service/service.component';
 
 @Injectable({
   providedIn: 'root'
@@ -168,5 +169,15 @@ export class UserService {
   }
   delete(obj: any) {
     return this.http.delete("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
+  }
+
+  getCountrys(){
+    return this.http.get<APIData>("https://countriesnow.space/api/v0.1/countries/positions");
+  }
+  getStates(){
+    return this.http.get<APIData1>("https://countriesnow.space/api/v0.1/countries/states/q?country=India");
+  }
+  getCities(o:object){
+    return this.http.post<APIData2>("https://countriesnow.space/api/v0.1/countries/state/cities",o);
   }
 }

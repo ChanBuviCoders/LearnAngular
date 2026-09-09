@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-manage-cards',
   templateUrl: './manage-cards.component.html',
   styleUrls: ['./manage-cards.component.css']

@@ -247,7 +247,7 @@ a {
 .active{
     padding: 0 14px;
     /* background-color: #ff1cd1; */
-    border: 2px solid white;
+    border: 0.5px solid white;
     box-shadow: 0px 0px 16px 0px white;
     border-radius: 8px;
 }

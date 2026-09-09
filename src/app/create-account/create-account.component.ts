@@ -7,6 +7,7 @@ import { CanComponentDeactivate } from "../shared/services/canDeactivate/canDeac
 import { UserService } from "../shared/services/user.service";
 
 @Component({
+  standalone: false,
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css']
@@ -48,7 +49,8 @@ export class CreateAccountComponent implements CanComponentDeactivate {
 
   }
   formBuildFunction() {
-    this.createActForm = this.fb.group({
+    this.createActForm = this.fb.group(
+      {
       firstName: ["", Validators.required],
       lastName: ["", Validators.required],
       dob: ["", Validators.required],
@@ -72,7 +74,8 @@ export class CreateAccountComponent implements CanComponentDeactivate {
       userName: ["", Validators.required],
       password: ["", Validators.required],
       userGroupId: [null, Validators.required],
-    });
+    }
+  );
     this.getUsergroupList();
   }
   userGroupList: any = null;

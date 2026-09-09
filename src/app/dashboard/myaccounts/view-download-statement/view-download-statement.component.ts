@@ -4,6 +4,7 @@ import { SubjectService } from 'src/app/shared/services/subjectService';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
+  standalone: false,
   selector: 'app-view-download-statement',
   templateUrl: './view-download-statement.component.html',
   styleUrls: ['./view-download-statement.component.css']
