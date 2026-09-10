@@ -68,7 +68,7 @@ export class UserService {
   }
 
   createUser(obj: any) {
-    return this.httpService.post('/api/createUser', obj).pipe(map(data => { return data; }));
+    return this.httpService.postMultipartParams('/api/createUser', obj).pipe(map(data => { return data; }));
   }
   saveLoginCred(obj: any) {
     return this.httpService.post('/api/saveLoginCred', obj).pipe(map(data => { return data; }));

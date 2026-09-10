@@ -51,31 +51,31 @@ export class CreateAccountComponent implements CanComponentDeactivate {
   formBuildFunction() {
     this.createActForm = this.fb.group(
       {
-      firstName: ["", Validators.required],
-      lastName: ["", Validators.required],
-      dob: ["", Validators.required],
-      gender: ["", Validators.required],
-      fathersName: ["", Validators.required],
-      marriedStatus: [null, Validators.required],
-      annualIncome: ["", Validators.required],
-      qualification: [null, Validators.required],
-      panNumber: ["", Validators.required],
-      occupation: [null, Validators.required],
-      mobileNumber: ["", Validators.required],
-      altMobileNumber: ["", Validators.required],
-      email: ["", Validators.required],
-      adharNumber: ["", Validators.required],
-      adharfile: ["", Validators.required],
-      panfile: ["", Validators.required],
-      state: ["", Validators.required],
-      city: ["", Validators.required],
-      zipcode: ["", Validators.required],
-      address: ["", Validators.required],
-      userName: ["", Validators.required],
-      password: ["", Validators.required],
-      userGroupId: [null, Validators.required],
-    }
-  );
+        firstName: ["", Validators.required],
+        lastName: ["", Validators.required],
+        dob: ["", Validators.required],
+        gender: ["", Validators.required],
+        fathersName: ["", Validators.required],
+        marriedStatus: [null, Validators.required],
+        annualIncome: ["", Validators.required],
+        qualification: [null, Validators.required],
+        panNumber: ["", Validators.required],
+        occupation: [null, Validators.required],
+        mobileNumber: ["", Validators.required],
+        altMobileNumber: ["", Validators.required],
+        email: ["", Validators.required],
+        adharNumber: ["", Validators.required],
+        adharfile: ["", Validators.required],
+        panfile: ["", Validators.required],
+        state: ["", Validators.required],
+        city: ["", Validators.required],
+        zipcode: ["", Validators.required],
+        address: ["", Validators.required],
+        userName: ["", Validators.required],
+        password: ["", Validators.required],
+        userGroupId: [null, Validators.required],
+      }
+    );
     this.getUsergroupList();
   }
   userGroupList: any = null;
@@ -103,10 +103,25 @@ export class CreateAccountComponent implements CanComponentDeactivate {
     createActForm.mobileNumber = Number(createActForm.mobileNumber);
     createActForm.userGroupId = Number(createActForm.userGroupId);
     createActForm.altMobileNumber = Number(createActForm.altMobileNumber);
-    createActForm.panImagePath = this.panfilejson.fileEncode;
-    createActForm.adharImagePath = this.adharfilejson.fileEncode;
+    // createActForm.panImagePath = this.panfilejson.fileEncode;
+    // createActForm.adharImagePath = this.adharfilejson.fileEncode;
     createActForm.isActive = 0;
-    this.userservice.createUser(createActForm).subscribe((response) => {
+
+    const formData = new FormData();
+
+    // 1. Append primary file matching @RequestPart("primaryFile")
+    formData.append('panFile', this.panfilejson, this.panfilejson?.name);
+
+    // 2. Append secondary file matching @RequestPart("secondaryFile")
+    formData.append('adharFile', this.adharfilejson, this.adharfilejson?.name);
+
+    // 3. Append JSON payload matching @RequestPart("data")
+    const jsonBlob = new Blob([JSON.stringify(createActForm)], {
+      type: 'application/json'
+    });
+    formData.append('data', jsonBlob);
+    
+    this.userservice.createUser(formData).subscribe((response) => {
       if (response.status == true) {
         this.toaster.success(response.message);
         this.createActForm.reset();
@@ -147,34 +162,36 @@ export class CreateAccountComponent implements CanComponentDeactivate {
       var filesdata: any = e.target.files;
       for (let k = 0; k < e.target.files.length; k++) {
         if (this.edata.target.id == "adhar") {
-          base64 = "";
-          var reader = new FileReader();
-          reader.readAsDataURL(filesdata[k]);
-          reader.onload = function () {
-            setTimeout(() => {
-              base64 = reader.result;
-              self.adharfilejson = {
-                filename: filesdata[k].name,
-                filetype: filesdata[k].type,
-                fileEncode: base64.split(",")[1],
-              };
-            }, 1000);
-          };
+          this.adharfilejson = filesdata[0];
+          // base64 = "";
+          // var reader = new FileReader();
+          // reader.readAsDataURL(filesdata[k]);
+          // reader.onload = function () {
+          //   setTimeout(() => {
+          //     base64 = reader.result;
+          //     self.adharfilejson = {
+          //       filename: filesdata[k].name,
+          //       filetype: filesdata[k].type,
+          //       fileEncode: base64.split(",")[1],
+          //     };
+          //   }, 1000);
+          // };
         }
         if (this.edata.target.id == "pan") {
-          base64 = "";
-          var reader = new FileReader();
-          reader.readAsDataURL(filesdata[k]);
-          reader.onload = function () {
-            setTimeout(() => {
-              base64 = reader.result;
-              self.panfilejson = {
-                filename: filesdata[k].name,
-                filetype: filesdata[k].type,
-                fileEncode: base64.split(",")[1],
-              };
-            }, 1000);
-          };
+          this.panfilejson = filesdata[0];
+          // base64 = "";
+          // var reader = new FileReader();
+          // reader.readAsDataURL(filesdata[k]);
+          // reader.onload = function () {
+          //   setTimeout(() => {
+          //     base64 = reader.result;
+          //     self.panfilejson = {
+          //       filename: filesdata[k].name,
+          //       filetype: filesdata[k].type,
+          //       fileEncode: base64.split(",")[1],
+          //     };
+          //   }, 1000);
+          // };
         }
       }
     }

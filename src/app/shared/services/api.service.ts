@@ -30,6 +30,13 @@ export class httpService {
     );
   }
 
+  postMultipartParams(path: string, body: FormData): Observable<any> {
+    return this.http.post(
+      `${environment.api_url}${path}`,
+      body
+    );
+  }
+
   uploadpost(path: string, body: any): Observable<any> {
     return this.http.post(
       `${environment.api_url}${path}`,
@@ -59,6 +66,7 @@ export class httpService {
     }
     return new HttpHeaders(headersConfig);
   }
+
   private setSHeaders(): HttpHeaders {
     const headersConfig: any = {};
     if (this.jwtService.getToken()) {
@@ -87,6 +95,16 @@ export class httpService {
       .set('Access-Control-Allow-Origin', '*')
       .set('Accept', 'application/json')
       .set('Authorization', `${this.jwtService.getToken()}`);
+
+    return { headers: _gettoken };
+  }
+
+  getMultipartHeader() {
+
+    const _gettoken = new HttpHeaders()
+      .set('content-type', 'multipart/form-data')
+      .set('Access-Control-Allow-Origin', '*')
+      .set('Accept', 'application/json')
 
     return { headers: _gettoken };
   }
