@@ -133,16 +133,10 @@ export class CreateAccountComponent implements CanComponentDeactivate {
       }
     });
   }
-  saveLoginCred(value) {
-    this.userservice.saveLoginCred(value).subscribe((data) => {
-      if (data.status == true) {
-        this.toaster.success(data.message);
-        this.router.navigateByUrl("login");
-      } else {
-        this.toaster.error(data.message);
-        this.loginCredForm.reset()
-      }
-    });
+  saveLoginCred(_value) {
+    // Credentials are already persisted by /api/createUser — no separate backend endpoint.
+    this.toaster.info('Please sign in with the username and password you created.');
+    this.router.navigateByUrl('login');
   }
 
   panfilejson: any;

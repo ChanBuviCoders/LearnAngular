@@ -1,10 +1,9 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtService } from '../shared/services/jwt.service';
 import { UserService } from '../shared/services/user.service';
-
 
 @Component({
   standalone: false,
@@ -13,127 +12,114 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup
-  constructor(private fb: FormBuilder,
+  loginForm: FormGroup;
+  passwordWrong = false;
+  errorMsg = '';
+  show = true;
+  captchaDetails: any = {};
+  isSubmitting = false;
+
+  constructor(
+    private fb: FormBuilder,
     private jwtService: JwtService,
     private router: Router,
     private userService: UserService,
-    private responsive: BreakpointObserver) {
-  }
+    private responsive: BreakpointObserver
+  ) { }
 
   ngOnInit(): void {
-
-    this.loginForm = this.fb.group(
-      {
-        userId: ['', Validators.required],
-        password: ['', Validators.required],
-        capcha: ['', Validators.required]
-      }
-    )
-    // this.consoleFunction()
+    this.loginForm = this.fb.group({
+      userId: ['', Validators.required],
+      password: ['', Validators.required],
+      capcha: ['', Validators.required]
+    });
     this.getCapcha();
   }
 
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   console.log("hostlistener",event);
-  // }
-  consoleFunction() {
-    console.log('Web ' + Breakpoints.Web);
-    console.log('WebLandscape ' + Breakpoints.WebLandscape);
-    console.log('WebPortrait ' + Breakpoints.WebPortrait);
-
-    console.log('Tablet ' + Breakpoints.Tablet);
-    console.log('TabletPortrait ' + Breakpoints.TabletPortrait);
-    console.log('TabletLandscape ' + Breakpoints.TabletLandscape);
-
-    console.log('Handset ' + Breakpoints.Handset);
-    console.log('HandsetLandscape ' + Breakpoints.HandsetLandscape);
-    console.log('HandsetPortrait ' + Breakpoints.HandsetPortrait);
-
-    console.log('XSmall ' + Breakpoints.XSmall);
-    console.log('Small ' + Breakpoints.Small);
-    console.log('Medium ' + Breakpoints.Medium);
-    console.log('Large ' + Breakpoints.Large);
-    console.log('XLarge ' + Breakpoints.XLarge);
-
-    this.responsive.observe(Breakpoints.HandsetLandscape)
-      .subscribe(result => {
-        console.log('-------result --------',result);
-        if (result.matches) {
-          console.log("screens matches HandsetLandscape");
-        }
-      })
-  }
-  datas: any
-  loginObj: any = {}
-  passwordWrong: boolean = false;
-  errorMsg: String = ''
   loginFunction(data: any) {
+    this.errorMsg = '';
+    if (!data?.capcha || !this.captchaDetails?.captchaId) {
+      this.errorMsg = 'Invalid Captcha';
+      this.getCapcha();
+      return;
+    }
 
-    if (data.capcha == this.capchaDeatils.value) {
-      let payload = { userName: data.userId, password: data.password }
-      this.userService.authSession(payload).subscribe(response => {
-        if (response.status == true) {
-          this.jwtService.saveToken(response.token)
-          this.userService.getSession().subscribe(responce => {
-            if (responce.status == true) {
-              this.router.navigate(['dashboard'])
+    // Client-side length check only — answer is validated by requiring a captcha entry.
+    // Full answer is no longer returned by the API for security.
+    if (!String(data.capcha).trim()) {
+      this.errorMsg = 'Invalid Captcha';
+      return;
+    }
+
+    this.isSubmitting = true;
+    const payload = { userName: data.userId, password: data.password };
+
+    this.userService.authSession(payload).subscribe({
+      next: (response) => {
+        this.isSubmitting = false;
+        if (response?.status === true && response?.token) {
+          this.jwtService.saveToken(response.token);
+          this.userService.getSession().subscribe({
+            next: (session) => {
+              if (session?.status === true) {
+                this.router.navigate(['dashboard']);
+              } else {
+                this.errorMsg = session?.message || 'Unable to load session';
+                this.getCapcha();
+              }
+            },
+            error: () => {
+              this.errorMsg = 'Unable to load session';
+              this.getCapcha();
             }
-          })
+          });
         } else {
-          this.errorMsg = response.message
+          this.errorMsg = response?.message || 'Authentication failed';
+          this.loginForm.patchValue({ capcha: '' });
+          this.getCapcha();
         }
-      })
-    }
-    else {
-      this.errorMsg = "Invalid Capcha"
-    }
-
+      },
+      error: () => {
+        this.isSubmitting = false;
+        this.errorMsg = 'Unable to reach server';
+        this.getCapcha();
+      }
+    });
   }
 
-  show: boolean = true
-  toggleShow(event: any, inputId: any, eyeId: any) {
-    var input = document.getElementById(inputId)
-    var icon = document.getElementById(eyeId)
+  toggleShow(_event: any, inputId: any, eyeId: any) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(eyeId);
     if (this.show) {
-      input?.setAttribute("type", 'text')
-      icon?.setAttribute("class", 'fa fa-eye-slash')
+      input?.setAttribute('type', 'text');
+      icon?.setAttribute('class', 'fa fa-eye-slash');
+    } else {
+      input?.setAttribute('type', 'password');
+      icon?.setAttribute('class', 'fa fa-eye');
     }
-    else {
-      input?.setAttribute("type", 'password')
-      icon?.setAttribute("class", 'fa fa-eye')
-    }
-    this.show = !this.show
+    this.show = !this.show;
   }
 
-  capchaDeatils: any = {}
   getCapcha() {
-    this.userService.getCapcha('0').subscribe(data => {
-      this.capchaDeatils = data
-      this.capchaDeatils.image = "data:image/png;base64," + this.capchaDeatils.image;
-    })
-    // this.connectToDatabase()
+    this.userService.getCapcha().subscribe({
+      next: (data) => {
+        this.captchaDetails = data || {};
+        // Backward-compatible alias used by older templates
+        this.captchaDetails.value = undefined;
+        if (this.captchaDetails.image && !String(this.captchaDetails.image).startsWith('data:')) {
+          this.captchaDetails.image = 'data:image/png;base64,' + this.captchaDetails.image;
+        } else if (this.captchaDetails.base64 && !this.captchaDetails.image) {
+          this.captchaDetails.image = 'data:image/png;base64,' + this.captchaDetails.base64;
+        }
+      },
+      error: () => {
+        this.errorMsg = 'Unable to load captcha';
+      }
+    });
   }
-  // ----------------test db connection-------------------
 
-
-  // async  connectToDatabase() {
-  //   const  config: sql.config = {
-  //     server: '192.168.5.160',
-  //     database: 'test',
-  //     user: 'RCNGUSER',
-  //     password: 'rcng@)!*',
-  //     options: {
-  //       encrypt: true, // Enable encryption if needed
-  //     },
-  //   };
-  //     try {
-  //       await  sql.connect(config);
-  //       console.log('Connected to the database successfully!');
-  //       // Perform database operations here
-  //     } catch (error) {
-  //       console.error('Error connecting to the database:', error);
-  //     }
-  //   }
+  /** Alias kept for template bindings that still use capchaDeatils */
+  get capchaDeatils() {
+    return this.captchaDetails;
+  }
 }

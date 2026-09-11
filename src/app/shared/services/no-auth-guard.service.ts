@@ -3,19 +3,18 @@ import { CanActivateFn, Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { SubjectService } from './subjectService';
 
-
-export const NoAuthGuard: CanActivateFn = (route, state) => {
+export const NoAuthGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const userService = inject(SubjectService);
+  const subjectService = inject(SubjectService);
 
-  return userService.isAuthenticated.pipe(
+  return subjectService.isAuthenticated.pipe(
     take(1),
     map((isAuthenticated: boolean) => {
       if (!isAuthenticated) {
-        return true; // Allow activation if the user is not authenticated
-      } else {
-        return false; // Prevent activation
+        return true;
       }
+      router.navigate(['/dashboard']);
+      return false;
     })
   );
 };

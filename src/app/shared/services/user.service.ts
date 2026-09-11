@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { httpService } from './api.service';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { HttpApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { SubjectService } from './subjectService';
 import { APIData, APIData1, APIData2 } from 'src/app/dashboard/service/service.component';
@@ -13,171 +14,219 @@ import { APIData, APIData1, APIData2 } from 'src/app/dashboard/service/service.c
 export class UserService {
 
   constructor(
-    private httpService: httpService,
+    private httpApi: HttpApiService,
     private http: HttpClient,
     private jwtService: JwtService,
     private router: Router,
-    private activateRoute: ActivatedRoute,
-    private SubjectService: SubjectService,
-  ) {
-
-  }
+    private subjectService: SubjectService,
+  ) { }
 
   refreshFunction() {
-    if (this.jwtService.getToken() != null && this.jwtService.getToken() != 'undefined' && this.jwtService.getToken() != undefined) {
-      return this.getSession().subscribe()
+    const token = this.jwtService.getToken();
+    if (token && token !== 'undefined') {
+      return this.getSession().subscribe({
+        error: () => this.clearLocalStorage()
+      });
     }
-    else {
-      this.clearLocalStorage()
-      return this.router.navigate(['/login'])
-    }
+    this.clearLocalStorage();
+    return this.router.navigate(['/login']);
   }
 
-
-  setAuth(user) {
-    this.SubjectService.setIsAuthenticated(true);
-    this.SubjectService.setCurrentUser(user)
-    this.jwtService.saveToken(user.token)
+  setAuth(user: any) {
+    this.subjectService.setIsAuthenticated(true);
+    this.subjectService.setCurrentUser(user);
+    if (user?.token) {
+      this.jwtService.saveToken(user.token);
+    }
   }
 
   clearLocalStorage() {
-    this.SubjectService.setIsAuthenticated(false);
-    this.jwtService.destroyToken()
-    this.router.navigate(['/login'])
+    this.subjectService.setIsAuthenticated(false);
+    this.jwtService.destroyToken();
+    this.router.navigate(['/login']);
   }
 
-
-  authSession(obj) {
-    return this.httpService.post('/api/authSession', obj)
+  authSession(obj: { userName: string; password: string }) {
+    return this.httpApi.post('/api/authSession', obj);
   }
 
-  getSession() {
-    return this.httpService.testpost('/api/getSession', this.jwtService.getToken()).pipe(map(
-      responce => {
-        if (responce.status == true) {
-          this.setAuth(responce)
+  getSession(): Observable<any> {
+    const token = this.jwtService.getToken();
+    return this.httpApi.post('/api/getSession', token).pipe(
+      tap(response => {
+        if (response?.status === true) {
+          this.setAuth(response);
+        } else {
+          this.clearLocalStorage();
         }
-        return responce;
-      },
-      err => {
+      }),
+      catchError(err => {
         this.clearLocalStorage();
-        this.router.navigateByUrl("/login");
-      }
-    ));
-
+        return of({ status: false, message: 'Session expired' });
+      })
+    );
   }
 
-  createUser(obj: any) {
-    return this.httpService.postMultipartParams('/api/createUser', obj).pipe(map(data => { return data; }));
-  }
-  saveLoginCred(obj: any) {
-    return this.httpService.post('/api/saveLoginCred', obj).pipe(map(data => { return data; }));
+  createUser(formData: FormData) {
+    return this.httpApi.postMultipart('/api/createUser', formData);
   }
 
-  updateUserProfile(editDetails) {
-    return this.httpService.post('/api/updateUserProfile', editDetails).pipe(map(data => { return data; }));
+  updateUserProfile(editDetails: any) {
+    return this.httpApi.post('/api/updateUserProfile', editDetails);
   }
 
-  checkCurrentPassword(CurrentPwd) {
-    return this.httpService.post('/api/checkCurrentPassword', CurrentPwd).pipe(map(data => { return data; }));
+  checkCurrentPassword(currentPwd: any) {
+    return this.httpApi.post('/api/checkCurrentPassword', currentPwd);
   }
 
-  changePassword(changePwd) {
-    return this.httpService.post('/api/changePassword', changePwd).pipe(map(data => { return data; }));
+  changePassword(changePwd: any) {
+    return this.httpApi.post('/api/changePassword', changePwd);
   }
 
-  addCustomer(payload) {
-    return this.httpService.post('/api/addCustomer', payload).pipe(map(data => { return data; }));
+  addCustomer(payload: any) {
+    return this.httpApi.post('/api/addCustomer', payload);
   }
 
-  getCustomerDetailsById(payload) {
-    return this.httpService.post('/api/getCustomerDetailsById', payload).pipe(map(data => { return data; }));
+  getCustomerDetailsById(payload: any) {
+    return this.httpApi.post('/api/getCustomerDetailsById', payload);
   }
 
-  updateCustomer(payload) {
-    return this.httpService.post('/api/updateCustomer', payload).pipe(map(data => { return data; }));
+  updateCustomer(payload: any) {
+    return this.httpApi.post('/api/updateCustomer', payload);
   }
 
-  deleteCustomer(payload) {
-    return this.httpService.post('/api/deleteCustomer', payload).pipe(map(data => { return data; }));
+  deleteCustomer(payload: any) {
+    return this.httpApi.post('/api/deleteCustomer', payload);
   }
 
-  getAllCustomerList(payload) {
-    return this.httpService.post('/api/getAllCustomerList', payload).pipe(map(data => { return data; }));
+  getAllCustomerList(payload: any) {
+    return this.httpApi.post('/api/getAllCustomerList', payload);
   }
 
   sendSmsToMobileNumber() {
-    return this.httpService.post('/api/sendSmsToMobileNumber').pipe(map(data => { return data; }));
+    return this.httpApi.post('/api/sendSmsToMobileNumber');
   }
 
-  sendMail() {
-    return this.httpService.post('/api/sendMail').pipe(map(data => { return data; }));
+  sendMail(to?: string, subject?: string, text?: string) {
+    let params = new HttpParams();
+    if (to) {
+      params = params.set('to', to);
+    }
+    if (subject) {
+      params = params.set('subject', subject);
+    }
+    if (text) {
+      params = params.set('text', text);
+    }
+    return this.httpApi.post('/api/sendMail?' + params.toString());
   }
 
-  uploadImage(formData) {
-    return this.httpService.postMultipartWithForm('/api/uploadImage', formData);
-  }
-  rgbToHexColor(formData) {
-    return this.httpService.post('/api/rgbToHexColor', formData);
+  uploadImage(formData: FormData) {
+    return this.httpApi.postMultipart('/api/uploadImage', formData);
   }
 
-  getCapcha(formData) {
-    return this.httpService.post('/api/getCapcha');
+  getCapcha() {
+    return this.httpApi.post('/api/getCapcha');
   }
 
-  getChartDetails(clientId, type) {
-    return this.httpService.post('/api/getChartDetails/' + clientId + '/' + type);
+  /** Client-side converter (backend demo endpoint removed). */
+  rgbToHexColor(rgbValue: number[]) {
+    const hex = '#' + (rgbValue || []).map(value => {
+      const clamped = Math.max(0, Math.min(255, Number(value) || 0));
+      return clamped.toString(16).padStart(2, '0').toUpperCase();
+    }).join('');
+    return of(hex);
   }
 
-  getNavigationMenu(userGroupId) {
-    return this.httpService.get(`/api/getNavigationMenu/${userGroupId}`)
+  getChartDetails(clientId: number | string, type: number | string) {
+    return this.httpApi.post(`/api/getChartDetails/${clientId}/${type}`);
   }
+
+  getNavigationMenu(userGroupId: number | string) {
+    return this.httpApi.get(`/api/getNavigationMenu/${userGroupId}`);
+  }
+
   getUsergroupList() {
-    return this.httpService.get('/api/getUsergroupList')
+    return this.httpApi.get('/api/getUsergroupList');
   }
-  logout(payload) {
-    return this.httpService.post('/api/logout', payload);
+
+  logout(payload: any) {
+    return this.httpApi.post('/api/logout', payload);
   }
-  fileUpload(formData) {
-    return this.httpService.postMultipartWithForm('/api/uploadImage', formData);
+
+  fileUpload(formData: FormData) {
+    return this.httpApi.postMultipart('/api/uploadImage', formData);
   }
-  getUploadedFileDetails(formData) {
-    return this.httpService.post('/api/getUploadedFileDetails', formData);
+
+  getUploadedFileDetails(userAccountId: number) {
+    return this.httpApi.post('/api/getUploadedFileDetails', userAccountId);
   }
-  deleteFileDetails(formData) {
-    return this.httpService.post('/api/deleteFileDetails', formData);
+
+  deleteFileDetails(payload: any) {
+    return this.httpApi.post('/api/deleteFileDetails', payload);
   }
-  getPaymentList(formData) {
-    return this.httpService.post('/api/getPaymentList', formData);
+
+  getPaymentList(payload: any) {
+    return this.httpApi.post('/api/getPaymentList', payload);
   }
+
   getPaymentListByCustomerId(customerId: number) {
-    return this.httpService.get('/api/getPaymentListByCustomerId/' + customerId);
-  }
-  changePaymentStatus(formData) {
-    return this.httpService.post('/api/changePaymentStatus', formData);
+    return this.httpApi.get(`/api/getPaymentListByCustomerId/${customerId}`);
   }
 
-  // =========================================================================================>
-  post(obj: any) {
-    return this.http.post("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
-  }
-  get() {
-    return this.http.get("http://localhost:3000/signupDetails").pipe(map(data => { return data }))
-  }
-  update(obj: any) {
-    return this.http.put("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
-  }
-  delete(obj: any) {
-    return this.http.delete("http://localhost:3000/signupDetails", obj).pipe(map(result => { return result }))
+  changePaymentStatus(payload: any) {
+    return this.httpApi.post('/api/changePaymentStatus', payload);
   }
 
-  getCountrys(){
-    return this.http.get<APIData>("https://countriesnow.space/api/v0.1/countries/positions");
+  getUserById(userAccountId: number) {
+    return this.httpApi.get(`/api/users/${userAccountId}`);
   }
-  getStates(){
-    return this.http.get<APIData1>("https://countriesnow.space/api/v0.1/countries/states/q?country=India");
+
+  updateUser(payload: any) {
+    return this.httpApi.post('/api/updateUser', payload);
   }
-  getCities(o:object){
-    return this.http.post<APIData2>("https://countriesnow.space/api/v0.1/countries/state/cities",o);
+
+  deleteUser(payload: any) {
+    return this.httpApi.post('/api/deleteUser', payload);
+  }
+
+  getPaymentById(paymentId: number) {
+    return this.httpApi.get(`/api/payments/${paymentId}`);
+  }
+
+  updatePayment(payload: any) {
+    return this.httpApi.post('/api/updatePayment', payload);
+  }
+
+  deletePayment(payload: any) {
+    return this.httpApi.post('/api/deletePayment', payload);
+  }
+
+  createUserGroup(payload: any) {
+    return this.httpApi.post('/api/createUserGroup', payload);
+  }
+
+  updateUserGroup(payload: any) {
+    return this.httpApi.post('/api/updateUserGroup', payload);
+  }
+
+  deleteUserGroup(payload: any) {
+    return this.httpApi.post('/api/deleteUserGroup', payload);
+  }
+
+  getUserGroupById(userGroupId: number) {
+    return this.httpApi.get(`/api/userGroups/${userGroupId}`);
+  }
+
+  getCountrys() {
+    return this.http.get<APIData>('https://countriesnow.space/api/v0.1/countries/positions');
+  }
+
+  getStates() {
+    return this.http.get<APIData1>('https://countriesnow.space/api/v0.1/countries/states/q?country=India');
+  }
+
+  getCities(o: object) {
+    return this.http.post<APIData2>('https://countriesnow.space/api/v0.1/countries/state/cities', o);
   }
 }
