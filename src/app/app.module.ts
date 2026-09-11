@@ -9,6 +9,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { jwtInterceptorsRequest, jwtInterceptorsResponce } from './shared/interceptors/jwtInterceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SafeUrlPipe } from './pipes/SafeUrlPipe';
 @NgModule({
   declarations: [
     AppComponent,

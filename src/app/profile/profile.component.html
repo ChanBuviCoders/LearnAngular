@@ -1,25 +1,26 @@
 <!-- <app-header></app-header> -->
 <!-- class="container box-shadow container-fluid" -->
-<div class="p-3" > 
-  <div   class="d-flex justify-content-center">
-      <button class="btn btn-primary "  routerLink="/dashboard"> <i class="fa fa-arrow-circle-o-left mt-1 fs-25" aria-hidden="true"></i>  Back to Home </button>
+<div class="p-3">
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-primary " routerLink="/dashboard"> <i class="fa fa-arrow-circle-o-left mt-1 fs-25"
+        aria-hidden="true"></i> Back to Home </button>
   </div>
   <!-- style="background-image: linear-gradient(45deg,rgb(0, 255, 55),rgb(255, 255, 255),rgb(0, 238, 255));" -->
-  <div class="wrapper " >
+  <div class="wrapper ">
     <!-- Page-Container -->
     <div class="container ">
       <div class="row " style="overflow-x:hidden">
         <div class="col-12" style="padding: 1cm 2cm;">
           <div class="card-box">
             <div class="row m-t-20">
-              <div class="col-12" >
+              <div class="col-12">
                 <tabset class="tabset tapAlignment " [vertical]="true" type="pills">
                   <tab customClass="nav-purplelink" heading="My Profile">
                     <div class="col-md-8 mb-4 ">
                       <div class="card p-3">
                         <div class="d-flex flex-column align-items-center text-center">
-                          <img [src]="defaultImg"
-                            alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="100">
+                          <img [src]="defaultImg" alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2"
+                            width="100">
                           <div class="mt-3">
                             <h4>{{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}</h4>
                             <p class="text-info mb-1">Manager</p>
@@ -60,7 +61,7 @@
                             </div>
                             <div class="col-sm-6 text-primary">
                               {{currentUserDetails.dob}}
-  
+
                             </div>
                           </div>
                           <hr>
@@ -84,12 +85,12 @@
                       <form [formGroup]="editForm" (ngSubmit)="editFunction(editForm.value)">
                         <div class="card p-3">
                           <div class="d-flex flex-column align-items-center text-center">
-                            <img [src]="defaultImg"
-                              alt="Admin" class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="100">
+                            <img [src]="defaultImg" alt="Admin"
+                              class=" ml-1 img-thumbnail rounded-circle avatar-lg me-2" width="100">
                             <input style="display:none" type="file" name="logofile" id="logo" multiple
                               accept="image/x-png, image/gif, image/jpeg" class="required form-control"
                               (change)="fileUpload($event)" required>
-  
+
                             <div class="mt-3">
                               <h4>{{currentUserDetails.firstName}} &nbsp;{{currentUserDetails.lastName}}</h4>
                               <a href=""> <label for="logo" class="badge badge-info">Change photo </label></a>
@@ -136,9 +137,9 @@
                                 <h6 class="mb-0 ">Date of birth</h6>
                               </div>
                               <div class="col-sm-8">
-                                <input type="date" formControlName="dob" class="form-control" id="start" name="trip-start"
-                                  [(ngModel)]="currentUserDetails.dob" value="{{currentUserDetails.dob}" [min]="minDate"
-                                  [max]="currentDate" required>
+                                <input type="date" formControlName="dob" class="form-control" id="start"
+                                  name="trip-start" [(ngModel)]="currentUserDetails.dob"
+                                  value="{{currentUserDetails.dob}" [min]="minDate" [max]="currentDate" required>
                               </div>
                             </div>
                             <div class="row mb-3">
@@ -156,7 +157,8 @@
                               </div>
                             </div>
                             <div class="text-center">
-                              <button class="btn btn-primary" type="submit" [disabled]="editForm.invalid || editForm.pristine"> Save
+                              <button class="btn btn-primary" type="submit"
+                                [disabled]="editForm.invalid || editForm.pristine"> Save
                                 Changes</button>
                             </div>
                           </div>
@@ -177,8 +179,12 @@
                               </div>
                               <div class="position-relative auth-pass-inputgroup mb-1 col-8 ml-5 w-100 mt-2">
                                 <input type="password" class="form-control pe-5" placeholder="Current password" #newPwd
-                                  [(ngModel)]="changePassword.currentPwd" (focusout)="checkCurrentPwt(changePassword.currentPwd)" name="currentPwd" id="input" required>
-                                  <span *ngIf="currentPwdStatus!=''" [ngClass]=" currentPwdStatus=='Success' ? 'text-info' : 'text-danger' " > {{currentPwdStatus}}</span>
+                                  [(ngModel)]="changePassword.currentPwd"
+                                  (focusout)="checkCurrentPwt(changePassword.currentPwd)" name="currentPwd" id="input"
+                                  required>
+                                <span *ngIf="currentPwdStatus!=''"
+                                  [ngClass]=" currentPwdStatus=='Success' ? 'text-info' : 'text-danger' ">
+                                  {{currentPwdStatus}}</span>
                               </div>
                             </div>
                             <div class="mb-3 row">
@@ -189,9 +195,11 @@
                               <div class="position-relative auth-pass-inputgroup tooltip2 mb-1 col-8 ml-5 w-100 mt-2">
                                 <input type="password" class="form-control pe-5" placeholder="New password" #newPwd
                                   [(ngModel)]="changePassword.newPwd" name="newPwd" minlength="8" maxlength="32"
-                                  id="newPwd" required placement="top" (keyup)="onKey1($event)" (focusout)="checkValidation()"
-                                  (focus)="focus($event,'show')" (blur)="outfocus($event,'show')">
-                                  <span class="eyeIconCss"><i class="fa fa-eye" id="eyeOne" aria-hidden="true" (click)="toggleShowFunction('newPwd','eyeOne')"></i></span>
+                                  id="newPwd" required placement="top" (keyup)="onKey1($event)"
+                                  (focusout)="checkValidation()" (focus)="focus($event,'show')"
+                                  (blur)="outfocus($event,'show')">
+                                <span class="eyeIconCss"><i class="fa fa-eye" id="eyeOne" aria-hidden="true"
+                                    (click)="toggleShowFunction('newPwd','eyeOne')"></i></span>
                                 <!-- <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                                   type="button" (click)="toggleShow($event,'showeye1','input1')">
                                   <i class="ri-eye-fill align-middle" id="showeye1"></i>
@@ -222,8 +230,10 @@
                               </div>
                               <div class="position-relative auth-pass-inputgroup  mb-3 col-8 ml-5 w-100 mt-2">
                                 <input type="password" class="form-control pe-5" placeholder="Confirm password"
-                                  #confirmPwd [(ngModel)]="changePassword.confirmPwd" name="ConfirmPwd" id="confirmPwd" required>
-                                  <span class="eyeIconCss"><i class="fa fa-eye" id="eyeTwo" aria-hidden="true" (click)="toggleShowFunction('confirmPwd','eyeTwo')"></i></span>
+                                  #confirmPwd [(ngModel)]="changePassword.confirmPwd" name="ConfirmPwd" id="confirmPwd"
+                                  required>
+                                <span class="eyeIconCss"><i class="fa fa-eye" id="eyeTwo" aria-hidden="true"
+                                    (click)="toggleShowFunction('confirmPwd','eyeTwo')"></i></span>
                                 <!-- <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                                   type="button" (click)="toggleShow($event,'showeye2','input2')"><i
                                     class="ri-eye-fill align-middle" id="showeye2"></i></button> -->
@@ -246,13 +256,15 @@
                       <div class="card p-3">
                         <carousel>
                           <slide>
-                            <img [src]="'data:image/png;base64,'+currentUserDetails.adharImagePath" alt="first slide" style="display: block; width: 100%;">
+                            <img [src]="currentUserDetails.adharImagePath |safeUrl" alt="first slide"
+                              style="display: block; width: 100%;">
                             <div class="carousel-caption d-none d-md-block">
                               <h3 class="text-warning">Adhar Image</h3>
                             </div>
                           </slide>
                           <slide>
-                            <img [src]="'data:image/png;base64,'+currentUserDetails.panImagePath" alt="second slide" style="display: block; width: 100%;">
+                            <img [src]="currentUserDetails.panImagePath |safeUrl" alt="second slide"
+                              style="display: block; width: 100%;">
                             <div class="carousel-caption d-none d-md-block">
                               <h3 class="text-warning">Pan Image</h3>
                             </div>

@@ -7,19 +7,21 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { RgbToHexComponent } from './rgb-to-hex/rgb-to-hex.component';
 import { FormsModule } from '@angular/forms';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { SafeUrlPipe } from 'src/app/pipes/SafeUrlPipe';
 
 
 @NgModule({
   declarations: [
     EDepositComponent,
     FileUploadComponent,
-    RgbToHexComponent
+    RgbToHexComponent,
   ],
   imports: [
     CommonModule,
     EDepositRoutingModule,
     FormsModule,
-    ModalModule
+    ModalModule,
+    SafeUrlPipe
   ],
   providers:[BsModalService],
 })

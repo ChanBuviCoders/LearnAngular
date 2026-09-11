@@ -44,7 +44,12 @@
         </button>
     </div>
     <div class="modal-body d-flex justify-content-center">
-         <img [src]="DocumentUrl" alt="NOt Found" width="400" height="300">
+        @if(fileDetails.fileType == 'application/pdf'){
+        <iframe [src]="fileDetails.filePath |safeUrl" width="400" height="400"></iframe>
+        }
+        @else{
+        <img [src]="fileDetails.filePath |safeUrl" alt="NOt Found" width="400" height="300">
+        }
     </div>
     <div class="modal-footer">
         <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>

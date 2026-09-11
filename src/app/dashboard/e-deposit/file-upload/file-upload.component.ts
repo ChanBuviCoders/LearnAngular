@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FileUploadComponent implements OnInit {
 
-  constructor(private userService: UserService,private bsModelService:BsModalService ,private subjectService: SubjectService, private toaster: ToastrService) { }
+  constructor(private userService: UserService, private bsModelService: BsModalService, private subjectService: SubjectService, private toaster: ToastrService) { }
 
   currentUserDetails: userAccount;
   ngOnInit(): void {
@@ -50,18 +50,29 @@ export class FileUploadComponent implements OnInit {
     })
     event.target.value = ''
   }
-  DocumentUrl: string = '';
-  modalRef:BsModalRef;
-  @ViewChild('viewDocument') documentTem:TemplateRef<any>;
+  fileDetails: any;
+  modalRef: BsModalRef;
+  @ViewChild('viewDocument') documentTem: TemplateRef<any>;
   downloadFile(fileDetails, preview) {
 
+    this.fileDetails = fileDetails;
     if (preview) {
-      this.DocumentUrl=environment.api_url + "/api/file/" + fileDetails.uploadedBy + "/" + fileDetails.fileName + "/" + true
-      this.modalRef=this.bsModelService.show(this.documentTem)
+      // this.DocumentUrl=environment.api_url + "/api/file/" + fileDetails.uploadedBy + "/" + fileDetails.fileName + "/" + true
+      this.modalRef = this.bsModelService.show(this.documentTem)
       // window.open(environment.api_url + "/api/file/" + fileDetails.uploadedBy + "/" + fileDetails.fileName + "/" + true)
     }
-    else
-      window.open(environment.api_url + "/api/file/" + fileDetails.uploadedBy + "/" + fileDetails.fileName + "/" + false)
+    else {
+      const link = document.createElement('a');
+
+      link.href = this.fileDetails.filePath;
+      link.target = '_blank';
+      link.download = fileDetails.fileName;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    // window.open(environment.api_url + "/api/file/" + fileDetails.uploadedBy + "/" + fileDetails.fileName + "/" + false)
   }
 
   deleteFile(fileDetails) {

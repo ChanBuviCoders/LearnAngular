@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { directivesModules } from '../directives/directives.modules';
+import { SafeUrlPipe } from '../pipes/SafeUrlPipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { directivesModules } from '../directives/directives.modules';
     ReactiveFormsModule,
     TabsModule,
     directivesModules,
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    SafeUrlPipe
   ],
   providers:[DatePipe ]
 })
