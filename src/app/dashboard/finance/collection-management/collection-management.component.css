@@ -1,0 +1,12 @@
+.finance-page { padding: 24px; background: #f5f7fb; min-height: calc(100vh - 165px); }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.page-header h2 { margin: 0 0 4px; }
+.page-header p { margin: 0; color: #667085; }
+.editor { margin-bottom: 20px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 16px; padding-top: 16px; }
+.wide, .form-actions { grid-column: 1 / -1; }
+.form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.full-width { width: 100%; }
+.empty { padding: 24px; text-align: center; color: #667085; }
+@media (max-width: 640px) { .finance-page { padding: 12px; } .page-header { align-items: flex-start; gap: 12px; } }

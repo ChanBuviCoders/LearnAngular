@@ -36,5 +36,5 @@ lastLoginDate: string
 currentLoginDate: string
 adharNumber: number
 active: boolean
-userGroupId:number
+  authorities?: string[]
 }

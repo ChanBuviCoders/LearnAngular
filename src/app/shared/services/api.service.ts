@@ -20,8 +20,34 @@ export class HttpApiService {
     });
   }
 
+  getBlob(path: string, params: HttpParams = new HttpParams()): Observable<Blob> {
+    return this.http.get(`${environment.api_url}${path}`, {
+      headers: new HttpHeaders({ Accept: 'text/csv' }),
+      params,
+      responseType: 'blob'
+    });
+  }
+
   post(path: string, body: unknown = {}): Observable<any> {
     return this.http.post(`${environment.api_url}${path}`, body, {
+      headers: this.jsonHeaders()
+    });
+  }
+
+  put(path: string, body: unknown = {}): Observable<any> {
+    return this.http.put(`${environment.api_url}${path}`, body, {
+      headers: this.jsonHeaders()
+    });
+  }
+
+  patch(path: string, body: unknown = {}): Observable<any> {
+    return this.http.patch(`${environment.api_url}${path}`, body, {
+      headers: this.jsonHeaders()
+    });
+  }
+
+  delete(path: string): Observable<any> {
+    return this.http.delete(`${environment.api_url}${path}`, {
       headers: this.jsonHeaders()
     });
   }

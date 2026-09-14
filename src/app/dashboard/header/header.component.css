@@ -254,3 +254,67 @@ a {
 .prof1{
     overflow-x: auto;
 }
+
+.finance-navigation {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    list-style: none;
+    padding: 0 16px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.finance-navigation li {
+    flex: 0 0 auto;
+}
+
+.finance-navigation a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 12px;
+    white-space: nowrap;
+}
+
+.finance-navigation i {
+    color: #c3ff0d;
+}
+
+.finance-navigation .active {
+    padding: 0;
+    border: 0;
+    border-bottom: 3px solid #fff;
+    box-shadow: none;
+    border-radius: 0;
+    background: rgba(255, 255, 255, .12);
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: #06557d;
+    z-index: 20;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+    display: block;
+}
+
+.nav-dropdown-menu a {
+    display: block;
+    padding: 8px 14px;
+    color: #fff;
+}

@@ -60,15 +60,31 @@
 
   <div style="background-color: #086496;">
     <!-- Navigation Menu-->
-    <ul class="d-flex justify-content-center flex-wrap px-4" style="list-style-type: none;padding: 0px;">
-      <ng-container *ngFor="let menu of navigationMenuDetails">
-        <!-- *ngIf="menu?.view" -->
-        <li class="px-3" routerLinkActive="active" [routerLink]="getRouter(menu,0)">
-          <a href="javascript:void(0);" class="d-flex justify-content-center align-items-center">
-            <i class="fa fa-bar-chart p-1" style="color: #c3ff0d;" [ngClass]="getRouter(menu,1)" aria-hidden="true"></i>
-            <h6> {{menu.menuName}}</h6>
-          </a>
-        </li>
+    <ul class="finance-navigation">
+      <ng-container *ngFor="let group of navGroups">
+        <ng-container *ngIf="visibleItems(group) as items">
+          <ng-container *ngIf="items.length">
+            <ng-container *ngIf="!group.label">
+              <li *ngFor="let item of items" routerLinkActive="active">
+                <a [routerLink]="item.route">
+                  <i class="fa" [ngClass]="item.icon" aria-hidden="true"></i>
+                  <span>{{item.label}}</span>
+                </a>
+              </li>
+            </ng-container>
+            <li *ngIf="group.label" class="nav-dropdown" routerLinkActive="active">
+              <a href="javascript:void(0);">
+                <i class="fa" [ngClass]="group.icon" aria-hidden="true"></i>
+                <span>{{group.label}}</span>
+              </a>
+              <ul class="nav-dropdown-menu">
+                <li *ngFor="let item of items">
+                  <a [routerLink]="item.route" routerLinkActive="active">{{item.label}}</a>
+                </li>
+              </ul>
+            </li>
+          </ng-container>
+        </ng-container>
       </ng-container>
     </ul>
     <!-- End navigation menu  -->

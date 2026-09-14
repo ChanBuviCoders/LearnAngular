@@ -8,6 +8,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
+import { FinanceDialogModule } from './shared/dialogs/finance-dialog.module';
 import { AppComponent } from './app.component';
 import { ApiResponseInterceptor, JwtAuthInterceptor } from './shared/interceptors/jwtInterceptor.service';
 
@@ -25,6 +26,7 @@ import { ApiResponseInterceptor, JwtAuthInterceptor } from './shared/interceptor
     TabsModule,
     ModalModule,
     TooltipModule,
+    FinanceDialogModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtAuthInterceptor, multi: true },
