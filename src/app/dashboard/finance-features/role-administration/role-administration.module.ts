@@ -10,4 +10,4 @@ const routes: Routes = [{ path: '', component: RoleAdministrationComponent }];
   declarations: [RoleAdministrationComponent],
   imports: [CommonModule, FinanceMaterialModule, RouterModule.forChild(routes)]
 })
-export class RoleAdministrationModule {}
+export class RoleAdministrationModule { }

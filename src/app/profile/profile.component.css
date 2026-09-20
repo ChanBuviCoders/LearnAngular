@@ -1,5 +1,3 @@
-
-
 .card {
 
     position: relative;
@@ -16,26 +14,28 @@
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 65%), 0 1px 3px 0 rgb(0 0 0 / 54%);
     animation: bounce 1.5s ease 0s 1 normal forwards;
     /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-} 
+}
 
 @keyframes bounce {
     0% {
-    transform: scale(0);
+        transform: scale(0);
     }
-    
-    100% {
-    transform: scale(1);
-    }
-    }
-    
-.badge:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.1); 
-  }
 
-  /* profile from se outReach */
-  .container {
+    100% {
+        transform: scale(1);
+    }
+}
+
+.badge:hover {
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Safari 3-8 */
+    transform: scale(1.1);
+}
+
+/* profile from se outReach */
+.container {
     max-width: 1195px !important;
 }
 
@@ -57,12 +57,14 @@
     background-color: #fff;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 65%), 0 1px 3px 0 rgb(0 0 0 / 54%);
 }
-.box-shadow{
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 65%), 0 1px 3px 0 rgb(0 0 0 / 54%);   
+
+.box-shadow {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 65%), 0 1px 3px 0 rgb(0 0 0 / 54%);
     padding-right: 1cm;
     padding-left: 1cm;
     width: 86%;
 }
+
 :host::ng-deep.tabset>ul {
     float: left;
     width: 25%;
@@ -75,24 +77,27 @@
     padding-left: 25px;
 }
 
-.tapAlignment{
-    margin-top: 14px!important;
-    margin-left: 17px!important;
+.tapAlignment {
+    margin-top: 14px !important;
+    margin-left: 17px !important;
 }
 
-.eyeIconCss{
-   
+.eyeIconCss {
+
     margin-left: 25.5rem;
     position: absolute;
     z-index: 1;
     margin-top: -30px !important;
 }
-.eyeIconCss:hover{
-    cursor:pointer;
+
+.eyeIconCss:hover {
+    cursor: pointer;
 }
 
 
-:host::ng-deep.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+:host::ng-deep.nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
     color: #fff !important;
     background-color: #28293a !important;
 }
@@ -100,16 +105,17 @@
 label {
     font-weight: 500;
 }
-.changepwd{
+
+.changepwd {
     margin-left: 2.1cm;
 }
 
-.eyeIcon{
+.eyeIcon {
     position: relative;
     margin-left: 14cm;
     z-index: 999;
     margin-top: -2cm;
-    
+
 }
 
 
@@ -161,7 +167,7 @@ label {
 .tooltip2 .tooltiptext2 {
     visibility: hidden;
     width: 5cm;
-    background-color:#276faa ;
+    background-color: #276faa;
     /* background-color:#276faa ; */
     color: #fff;
     text-align: left;
@@ -188,7 +194,7 @@ label {
     visibility: visible;
 }
 
-.active{
+.active {
     background-color: white;
-    
+
 }

@@ -25,4 +25,4 @@ const MATERIAL = [
   imports: MATERIAL,
   exports: MATERIAL
 })
-export class FinanceMaterialModule {}
+export class FinanceMaterialModule { }

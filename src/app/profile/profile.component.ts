@@ -5,15 +5,14 @@ import { Router } from '@angular/router';
 import * as $ from "jquery";
 import { ToastrService } from 'ngx-toastr';
 import { userAccount } from '../models/getsession.model';
-import { JwtService } from '../shared/services/jwt.service';
-import { UserService } from '../shared/services/user.service';
 import { SubjectService } from '../shared/services/subjectService';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  standalone:false
+  standalone: false
 })
 export class ProfileComponent implements OnInit {
   constructor(

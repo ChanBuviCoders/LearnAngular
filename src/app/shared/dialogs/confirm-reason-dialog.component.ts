@@ -13,24 +13,8 @@ export interface ConfirmReasonData {
 @Component({
   standalone: false,
   selector: 'app-confirm-reason-dialog',
-  template: `
-    <h2 mat-dialog-title>{{ data.title }}</h2>
-    <mat-dialog-content>
-      <p>{{ data.message }}</p>
-      <mat-form-field *ngIf="data.requireReason" appearance="outline" class="reason">
-        <mat-label>Reason</mat-label>
-        <textarea matInput rows="3" [formControl]="reason"></textarea>
-        <mat-error>Reason is required</mat-error>
-      </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
-      <button mat-flat-button type="button" [color]="data.danger ? 'warn' : 'primary'" (click)="confirm()">
-        {{ data.confirmLabel || 'Confirm' }}
-      </button>
-    </mat-dialog-actions>
-  `,
-  styles: [`p{margin:0 0 12px;color:#445}.reason{width:100%;margin-top:8px}`]
+  templateUrl: './confirm-reason-dialog.component.html',
+  styleUrls: ['./confirm-reason-dialog.component.css']
 })
 export class ConfirmReasonDialogComponent {
   readonly reason = new FormControl('', this.data.requireReason ? Validators.required : []);

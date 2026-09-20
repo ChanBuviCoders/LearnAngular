@@ -58,10 +58,11 @@
   </div>
   <!-- end topbar-main -->
 
-  <div style="background-color: #086496;">
+  <div style="background-color: #086496; display: flex; justify-content: center;">
     <!-- Navigation Menu-->
     <ul class="finance-navigation">
       <ng-container *ngFor="let group of navGroups">
+
         <ng-container *ngIf="visibleItems(group) as items">
           <ng-container *ngIf="items.length">
             <ng-container *ngIf="!group.label">

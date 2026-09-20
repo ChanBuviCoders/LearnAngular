@@ -9,30 +9,27 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class AccountSummaryComponent implements OnInit {
 
-  coloumn1:any
-  coloumn2:any
-  actDetails:boolean=true
-  accountSummary:boolean=false
-  constructor(private userService:UserService) { }
-  readonly  now = new Date();
+  coloumn1: any
+  coloumn2: any
+  actDetails: boolean = true
+  accountSummary: boolean = false
+  constructor(private userService: UserService) { }
+  readonly now = new Date();
 
   ngOnInit(): void {
   }
-  
-  actSummary()
-  {
-    this.accountSummary=!this.accountSummary
-    if(this.accountSummary==false)
-    {
-      this.actDetails=false
+
+  actSummary() {
+    this.accountSummary = !this.accountSummary
+    if (this.accountSummary == false) {
+      this.actDetails = false
     }
     // this.userService.refreshFunction()
   }
-  accountDetails()
-  {
-    this.actDetails=!this.actDetails
+  accountDetails() {
+    this.actDetails = !this.actDetails
     // this.userService.refreshFunction()
   }
-  createAccount:boolean=false
+  createAccount: boolean = false
 
 }

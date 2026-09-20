@@ -14,6 +14,7 @@ import { FinancialApiService } from '../../../shared/services/financial-api.serv
 })
 export class CustomerManagementComponent implements OnInit {
   readonly columns = ['customerCode', 'name', 'mobileNumber', 'city', 'status', 'actions'];
+  private readonly avatarColors = ['#f4b400', '#4285f4', '#ea4335', '#34a853', '#7b1fa2', '#00838f'];
   customers: Customer[] = [];
   editingId?: number;
   loading = false;
@@ -45,10 +46,14 @@ export class CustomerManagementComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly api: FinancialApiService,
     private readonly dialogs: FinanceDialogService,
-    private readonly toast: ToastrService) {}
+    private readonly toast: ToastrService) { }
 
   ngOnInit(): void {
     this.load();
+  }
+
+  avatarColor(index: number): string {
+    return this.avatarColors[index % this.avatarColors.length];
   }
 
   load(search = this.search, page = this.page): void {

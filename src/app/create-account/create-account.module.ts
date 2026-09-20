@@ -18,6 +18,6 @@ import { directivesModules } from '../directives/directives.modules';
     ReactiveFormsModule,
     directivesModules
   ],
-  providers:[DatePipe]
+  providers: [DatePipe]
 })
 export class CreateAccountModule { }

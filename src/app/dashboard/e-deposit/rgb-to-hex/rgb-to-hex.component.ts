@@ -16,7 +16,7 @@ export class RgbToHexComponent implements OnInit {
   }
   hexValue: any = {}
   onSubmit(hexForm) {
-     
+
     var rgbValue: any = null;
     rgbValue = [Number(hexForm.value.red), Number(hexForm.value.green), Number(hexForm.value.blue)]
     this.userService.rgbToHexColor(rgbValue).subscribe(data => { this.hexValue = data })

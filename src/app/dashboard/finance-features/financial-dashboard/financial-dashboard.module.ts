@@ -10,4 +10,4 @@ const routes: Routes = [{ path: '', component: FinancialDashboardComponent }];
   declarations: [FinancialDashboardComponent],
   imports: [CommonModule, FinanceMaterialModule, RouterModule.forChild(routes)]
 })
-export class FinancialDashboardModule {}
+export class FinancialDashboardModule { }

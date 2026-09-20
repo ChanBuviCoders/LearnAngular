@@ -11,4 +11,4 @@ const routes: Routes = [{ path: '', component: ChitsComponent }];
   declarations: [ChitsComponent],
   imports: [CommonModule, ReactiveFormsModule, FinanceMaterialModule, RouterModule.forChild(routes)]
 })
-export class ChitsModule {}
+export class ChitsModule { }

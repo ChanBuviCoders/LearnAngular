@@ -1,0 +1,45 @@
+# Project Instructions
+
+Project:
+Financial Data Maintenance & Collection Management System
+
+Technology:
+- Java 17
+- Spring Boot 3.x
+- Spring Data JPA
+- SQL Server / Azure SQL
+- Angular
+- Angular Material
+- Reactive Forms
+- REST APIs
+- Azure Blob Storage
+
+Architecture:
+Angular
+   ↓
+REST API
+   ↓
+Spring Boot Controller
+   ↓
+Service / Business Logic
+   ↓
+Repository
+   ↓
+SQL Server / Azure SQL
+
+Rules:
+1. Financial calculations must be performed in the backend.
+2. Do not calculate financial values only in Angular.
+3. Do not hard-code interest rates.
+4. Business configuration must be configurable.
+5. Never delete financial transactions without audit tracking.
+6. Maintain createdBy, createdDate, updatedBy, updatedDate.
+7. Use proper database transactions for financial operations.
+8. Follow existing project architecture where possible.
+9. Do not unnecessarily rewrite existing functionality.
+10. Reuse existing customer/user/document functionality when appropriate.
+11. Validate all financial calculations.
+12. Do not expose sensitive customer identification information.
+13. Follow existing naming conventions.
+14. Before making large changes, explain the proposed changes.
+15. Do not modify unrelated files.

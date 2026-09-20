@@ -83,7 +83,8 @@
         </ng-container>
         <ng-container matColumnDef="outstanding">
           <th mat-header-cell *matHeaderCellDef>Outstanding</th>
-          <td mat-cell *matCellDef="let row">{{ (row.outstandingPrincipal + row.outstandingInterest) | currency:'INR' }}</td>
+          <td mat-cell *matCellDef="let row">{{ (row.outstandingPrincipal + row.outstandingInterest) | currency:'INR' }}
+          </td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Status</th>
@@ -92,10 +93,15 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let row" class="row-actions">
-            <button mat-button *ngIf="row.status === 'PENDING' && access.canManageLoans()" (click)="approve(row)">Approve</button>
-            <button mat-button *ngIf="row.status === 'APPROVED' && access.canManageLoans()" (click)="activate(row)">Activate</button>
-            <button mat-button *ngIf="(row.status === 'PENDING' || row.status === 'APPROVED') && access.canManageLoans()" (click)="cancel(row)">Cancel</button>
-            <button mat-button *ngIf="row.status === 'COMPLETED' && access.canManageLoans()" (click)="close(row)">Close</button>
+            <button mat-button *ngIf="row.status === 'PENDING' && access.canManageLoans()"
+              (click)="approve(row)">Approve</button>
+            <button mat-button *ngIf="row.status === 'APPROVED' && access.canManageLoans()"
+              (click)="activate(row)">Activate</button>
+            <button mat-button
+              *ngIf="(row.status === 'PENDING' || row.status === 'APPROVED') && access.canManageLoans()"
+              (click)="cancel(row)">Cancel</button>
+            <button mat-button *ngIf="row.status === 'COMPLETED' && access.canManageLoans()"
+              (click)="close(row)">Close</button>
             <button mat-icon-button aria-label="View schedule" (click)="viewSchedule(row)">
               <mat-icon>calendar_month</mat-icon>
             </button>
@@ -104,7 +110,8 @@
         <tr mat-header-row *matHeaderRowDef="columns"></tr>
         <tr mat-row *matRowDef="let row; columns: columns"></tr>
       </table>
-      <mat-paginator [length]="total" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[10,25,50,100]" (page)="pageChanged($event)"></mat-paginator>
+      <mat-paginator [length]="total" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[10,25,50,100]"
+        (page)="pageChanged($event)"></mat-paginator>
     </mat-card-content>
   </mat-card>
 
@@ -114,13 +121,34 @@
     </mat-card-header>
     <mat-card-content>
       <table mat-table [dataSource]="schedule" class="full-width">
-        <ng-container matColumnDef="installmentNumber"><th mat-header-cell *matHeaderCellDef>#</th><td mat-cell *matCellDef="let row">{{ row.installmentNumber }}</td></ng-container>
-        <ng-container matColumnDef="dueDate"><th mat-header-cell *matHeaderCellDef>Due date</th><td mat-cell *matCellDef="let row">{{ row.dueDate | date }}</td></ng-container>
-        <ng-container matColumnDef="principalDue"><th mat-header-cell *matHeaderCellDef>Principal</th><td mat-cell *matCellDef="let row">{{ row.principalDue | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="interestDue"><th mat-header-cell *matHeaderCellDef>Interest</th><td mat-cell *matCellDef="let row">{{ row.interestDue | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="totalDue"><th mat-header-cell *matHeaderCellDef>Due</th><td mat-cell *matCellDef="let row">{{ row.totalDue | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="paidAmount"><th mat-header-cell *matHeaderCellDef>Paid</th><td mat-cell *matCellDef="let row">{{ row.paidAmount | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let row">{{ row.status }}</td></ng-container>
+        <ng-container matColumnDef="installmentNumber">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let row">{{ row.installmentNumber }}</td>
+        </ng-container>
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef>Due date</th>
+          <td mat-cell *matCellDef="let row">{{ row.dueDate | date }}</td>
+        </ng-container>
+        <ng-container matColumnDef="principalDue">
+          <th mat-header-cell *matHeaderCellDef>Principal</th>
+          <td mat-cell *matCellDef="let row">{{ row.principalDue | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="interestDue">
+          <th mat-header-cell *matHeaderCellDef>Interest</th>
+          <td mat-cell *matCellDef="let row">{{ row.interestDue | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="totalDue">
+          <th mat-header-cell *matHeaderCellDef>Due</th>
+          <td mat-cell *matCellDef="let row">{{ row.totalDue | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="paidAmount">
+          <th mat-header-cell *matHeaderCellDef>Paid</th>
+          <td mat-cell *matCellDef="let row">{{ row.paidAmount | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="scheduleColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: scheduleColumns"></tr>
       </table>

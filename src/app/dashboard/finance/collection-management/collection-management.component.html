@@ -95,18 +95,43 @@
       </form>
 
       <table mat-table [dataSource]="collections" class="full-width">
-        <ng-container matColumnDef="transactionReference"><th mat-header-cell *matHeaderCellDef>Reference</th><td mat-cell *matCellDef="let row">{{ row.transactionReference }}</td></ng-container>
-        <ng-container matColumnDef="collectionDate"><th mat-header-cell *matHeaderCellDef>Date</th><td mat-cell *matCellDef="let row">{{ row.collectionDate | date }}</td></ng-container>
-        <ng-container matColumnDef="loan"><th mat-header-cell *matHeaderCellDef>Loan</th><td mat-cell *matCellDef="let row">{{ row.loanId }}</td></ng-container>
-        <ng-container matColumnDef="paidAmount"><th mat-header-cell *matHeaderCellDef>Paid</th><td mat-cell *matCellDef="let row">{{ row.paidAmount | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="principalAmount"><th mat-header-cell *matHeaderCellDef>Principal</th><td mat-cell *matCellDef="let row">{{ row.principalAmount | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="interestAmount"><th mat-header-cell *matHeaderCellDef>Interest</th><td mat-cell *matCellDef="let row">{{ row.interestAmount | currency:'INR' }}</td></ng-container>
-        <ng-container matColumnDef="paymentMode"><th mat-header-cell *matHeaderCellDef>Mode</th><td mat-cell *matCellDef="let row">{{ row.paymentMode }}</td></ng-container>
-        <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let row">{{ row.status }}</td></ng-container>
+        <ng-container matColumnDef="transactionReference">
+          <th mat-header-cell *matHeaderCellDef>Reference</th>
+          <td mat-cell *matCellDef="let row">{{ row.transactionReference }}</td>
+        </ng-container>
+        <ng-container matColumnDef="collectionDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let row">{{ row.collectionDate | date }}</td>
+        </ng-container>
+        <ng-container matColumnDef="loan">
+          <th mat-header-cell *matHeaderCellDef>Loan</th>
+          <td mat-cell *matCellDef="let row">{{ row.loanId }}</td>
+        </ng-container>
+        <ng-container matColumnDef="paidAmount">
+          <th mat-header-cell *matHeaderCellDef>Paid</th>
+          <td mat-cell *matCellDef="let row">{{ row.paidAmount | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="principalAmount">
+          <th mat-header-cell *matHeaderCellDef>Principal</th>
+          <td mat-cell *matCellDef="let row">{{ row.principalAmount | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="interestAmount">
+          <th mat-header-cell *matHeaderCellDef>Interest</th>
+          <td mat-cell *matCellDef="let row">{{ row.interestAmount | currency:'INR' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="paymentMode">
+          <th mat-header-cell *matHeaderCellDef>Mode</th>
+          <td mat-cell *matCellDef="let row">{{ row.paymentMode }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+        </ng-container>
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let row">
-            <button mat-button color="warn" *ngIf="row.status === 'COMPLETED' && access.canWriteCollections()" (click)="reverse(row)">Reverse</button>
+            <button mat-button color="warn" *ngIf="row.status === 'COMPLETED' && access.canWriteCollections()"
+              (click)="reverse(row)">Reverse</button>
             <button mat-button *ngIf="row.status === 'COMPLETED'" (click)="printReceipt(row)">Receipt</button>
           </td>
         </ng-container>
@@ -114,7 +139,8 @@
         <tr mat-row *matRowDef="let row; columns: columns"></tr>
       </table>
       <p class="empty" *ngIf="collections.length === 0">No collections found for this filter.</p>
-      <mat-paginator [length]="total" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[10,25,50,100]" (page)="pageChanged($event)"></mat-paginator>
+      <mat-paginator [length]="total" [pageIndex]="page" [pageSize]="size" [pageSizeOptions]="[10,25,50,100]"
+        (page)="pageChanged($event)"></mat-paginator>
     </mat-card-content>
   </mat-card>
 </section>

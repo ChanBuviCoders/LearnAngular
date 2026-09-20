@@ -23,6 +23,6 @@ import { SafeUrlPipe } from 'src/app/pipes/SafeUrlPipe';
     ModalModule,
     SafeUrlPipe
   ],
-  providers:[BsModalService],
+  providers: [BsModalService],
 })
 export class EDepositModule { }

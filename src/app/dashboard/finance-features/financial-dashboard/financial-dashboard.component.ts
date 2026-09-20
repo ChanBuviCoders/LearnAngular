@@ -12,39 +12,17 @@ interface KpiCard {
 @Component({
   standalone: false,
   selector: 'app-financial-dashboard',
-  template: `
-    <section class="feature-page">
-      <header><div><h2>Financial Dashboard</h2><p>Current portfolio and collection position.</p></div>
-        <button mat-stroked-button (click)="load()"><mat-icon>refresh</mat-icon> Refresh</button>
-      </header>
-      <div class="loading" *ngIf="loading"><mat-spinner diameter="36"></mat-spinner></div>
-      <div class="kpi-grid" *ngIf="!loading">
-        <mat-card *ngFor="let card of cards">
-          <mat-card-content>
-            <mat-icon>{{ card.icon }}</mat-icon>
-            <div><span>{{ card.label }}</span>
-              <strong *ngIf="card.currency">{{ value(card.key) | currency:'INR':'symbol':'1.0-0' }}</strong>
-              <strong *ngIf="!card.currency">{{ value(card.key) | number }}</strong>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <p class="error" *ngIf="error">{{ error }}</p>
-    </section>`,
-  styles: [`
-    .feature-page{padding:24px;max-width:1400px;margin:auto} header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-    h2{margin:0} header p,.error{color:#666}.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-    mat-card-content{display:flex!important;align-items:center;gap:16px;padding:20px!important}mat-card mat-icon{background:#e8f4fa;color:#086496;border-radius:50%;padding:12px;width:48px;height:48px;font-size:24px}
-    span{display:block;color:#606b75;font-size:13px}strong{display:block;font-size:22px;margin-top:5px}.loading{display:flex;justify-content:center;padding:60px}.error{color:#b3261e;text-align:center}
-  `]
+  templateUrl: './financial-dashboard.component.html',
+  styleUrls: ['./financial-dashboard.component.css']
 })
 export class FinancialDashboardComponent implements OnInit {
   data?: DashboardKpis;
   loading = false;
   error = '';
+  private readonly avatarColors = ['#f4b400', '#4285f4', '#ea4335', '#34a853', '#7b1fa2', '#00838f'];
   readonly cards: KpiCard[] = [
     { label: 'Total customers', key: 'totalCustomers', icon: 'groups', currency: false },
-    { label: 'Active customers', key: 'activeCustomers', icon: 'person_check', currency: false },
+    { label: 'Active customers', key: 'activeCustomers', icon: 'how_to_reg', currency: false },
     { label: 'Active loans', key: 'activeLoans', icon: 'account_balance', currency: false },
     { label: 'Total loan amount', key: 'totalLoanAmount', icon: 'payments', currency: true },
     { label: 'Total collected', key: 'totalAmountCollected', icon: 'savings', currency: true },
@@ -61,9 +39,10 @@ export class FinancialDashboardComponent implements OnInit {
     { label: 'Pending chit payments', key: 'pendingChitPayments', icon: 'warning', currency: true }
   ];
 
-  constructor(private readonly api: DashboardApiService) {}
+  constructor(private readonly api: DashboardApiService) { }
   ngOnInit(): void { this.load(); }
   value(key: keyof DashboardKpis): number { return this.data?.[key] ?? 0; }
+  avatarColor(index: number): string { return this.avatarColors[index % this.avatarColors.length]; }
   load(): void {
     this.loading = true; this.error = '';
     this.api.getKpis().subscribe({

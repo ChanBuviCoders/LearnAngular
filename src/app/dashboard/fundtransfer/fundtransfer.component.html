@@ -1,7 +1,8 @@
 <div class="px-3">
     <div class="px-3 col-9 addButton d-flex align-items-center justify-content-end">
         <label for="ltype"> Loan Type <span class="text-danger">*</span> </label>
-        <select class="form-control w-25 ml-2" [(ngModel)]="loanType" name="ltype" id="ltype" (change)="getallCustomerList()">
+        <select class="form-control w-25 ml-2" [(ngModel)]="loanType" name="ltype" id="ltype"
+            (change)="getallCustomerList()">
             <option value="null" hidden>Select</option>
             <option value="All">All</option>
             <option value="Daily">Daily</option>
@@ -47,16 +48,21 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef>Action</th>
                 <td mat-cell *matCellDef="let row">
-                    <button mat-icon-button matTooltip="View" (click)="viewDetails(row)"><i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button mat-icon-button matTooltip="Send SMS" (click)="sendSms(row)" class="text-danger"><i class="fa fa-comment" aria-hidden="true"></i></button>
-                    <button mat-icon-button matTooltip="Edit" (click)="editFunction(row, addCustomer)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                    <button mat-icon-button matTooltip="Delete" (click)="openDeleteAlert(row)" class="text-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="View" (click)="viewDetails(row)"><i class="fa fa-eye"
+                            aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Send SMS" (click)="sendSms(row)" class="text-danger"><i
+                            class="fa fa-comment" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Edit" (click)="editFunction(row, addCustomer)"><i
+                            class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button mat-icon-button matTooltip="Delete" (click)="openDeleteAlert(row)" class="text-danger"><i
+                            class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="customerDisplayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: customerDisplayedColumns;"></tr>
         </table>
-        <mat-paginator #customerPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10" showFirstLastButtons></mat-paginator>
+        <mat-paginator #customerPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10"
+            showFirstLastButtons></mat-paginator>
     </div>
 </div>
 
@@ -187,7 +193,8 @@
             <tr mat-header-row *matHeaderRowDef="paymentDisplayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: paymentDisplayedColumns;"></tr>
         </table>
-        <mat-paginator #paymentPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10" showFirstLastButtons></mat-paginator>
+        <mat-paginator #paymentPaginator [pageSizeOptions]="[10, 25, 50, 100]" pageSize="10"
+            showFirstLastButtons></mat-paginator>
     </div>
     <div class="modal-footer">
         <button class="btn btn-light" type="button" (click)="modalRef.hide()">Close</button>

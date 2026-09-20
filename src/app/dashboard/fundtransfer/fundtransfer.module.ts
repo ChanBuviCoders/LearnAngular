@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 
 import { FundtransferRoutingModule } from './fundtransfer-routing.module';
 import { FundtransferComponent } from './fundtransfer.component';
-import { ModalModule ,BsModalService} from 'ngx-bootstrap/modal';
+import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,6 +39,6 @@ import { directivesModules } from 'src/app/directives/directives.modules';
     TooltipModule,
     directivesModules
   ],
-  providers:[BsModalService,DatePipe]
+  providers: [BsModalService, DatePipe]
 })
 export class FundtransferModule { }

@@ -47,7 +47,7 @@ export class FundtransferComponent implements OnInit, AfterViewInit {
     })
   }
   currentUserDetails: userAccount;
-  loanType:string="All"
+  loanType: string = "All"
   ngOnInit(): void {
     this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
     this.getallCustomerList()
@@ -72,7 +72,7 @@ export class FundtransferComponent implements OnInit, AfterViewInit {
     this.paymentDataSource.filter = value.trim().toLowerCase();
   }
 
-  contentReady(_event: unknown) {}
+  contentReady(_event: unknown) { }
   type: string = "Add"
   openPopUp(modalName) {
     this.type = "Add"

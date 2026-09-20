@@ -1,0 +1,97 @@
+.feature-page {
+    padding: 24px;
+    max-width: 1400px;
+    margin: auto
+}
+
+h2 {
+    margin: 0
+}
+
+header p,
+.empty {
+    color: #667
+}
+
+.lookup {
+    display: flex;
+    gap: 14px;
+    align-items: center
+}
+
+.lookup mat-form-field {
+    flex: 1
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: 60px
+}
+
+.identity {
+    margin: 18px 0
+}
+
+.identity mat-card-content {
+    display: flex !important;
+    gap: 15px;
+    align-items: center
+}
+
+.identity mat-icon {
+    font-size: 52px;
+    width: 52px;
+    height: 52px;
+    color: #086496
+}
+
+.identity h3,
+.identity p {
+    margin: 3px
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px
+}
+
+.metrics span {
+    display: block;
+    color: #667;
+    font-size: 12px
+}
+
+.metrics strong {
+    font-size: 20px
+}
+
+.table-wrap {
+    overflow: auto;
+    padding: 16px 0
+}
+
+table {
+    width: 100%;
+    min-width: 650px
+}
+
+.docs {
+    padding: 16px 0
+}
+
+.upload {
+    display: inline-flex;
+    margin-bottom: 12px;
+    padding: 8px 14px;
+    background: #086496;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer
+}
+
+.upload input {
+    display: none
+}

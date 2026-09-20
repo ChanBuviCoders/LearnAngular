@@ -42,7 +42,7 @@ export class LoanManagementComponent implements OnInit {
     private readonly api: FinancialApiService,
     readonly access: RoleAccessService,
     private readonly dialogs: FinanceDialogService,
-    private readonly toast: ToastrService) {}
+    private readonly toast: ToastrService) { }
 
   ngOnInit(): void {
     this.load();

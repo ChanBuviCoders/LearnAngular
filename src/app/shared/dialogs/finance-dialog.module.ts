@@ -12,4 +12,4 @@ import { ConfirmReasonDialogComponent } from './confirm-reason-dialog.component'
   imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   exports: [MatDialogModule, ConfirmReasonDialogComponent]
 })
-export class FinanceDialogModule {}
+export class FinanceDialogModule { }

@@ -1,0 +1,33 @@
+.feature-page {
+    padding: 24px;
+    max-width: 1100px;
+    margin: auto
+}
+
+h2 {
+    margin: 0
+}
+
+header p {
+    color: #667
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px
+}
+
+h3 {
+    margin-top: 20px;
+    color: #086496;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px
+}

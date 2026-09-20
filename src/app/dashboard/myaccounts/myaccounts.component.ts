@@ -11,37 +11,34 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class MyaccountsComponent {
 
-  coloumn1:any
-  coloumn2:any
-  actDetails:boolean=true
-  accountSummary:boolean=false
-  constructor(private responsiveService:responsiveService) { }
-  readonly  now = new Date();
+  coloumn1: any
+  coloumn2: any
+  actDetails: boolean = true
+  accountSummary: boolean = false
+  constructor(private responsiveService: responsiveService) { }
+  readonly now = new Date();
 
   ngOnInit(): void {
   }
-  
-  gedgetType:number=0
+
+  gedgetType: number = 0
   // @HostListener('window:resize', ['$event'])
   // onResize(event) {
   //   console.log("hostlistener",event);
   //   this.gedgetType=this.responsiveService.getGadgets()
   // }
-  actSummary()
-  {
-    this.accountSummary=!this.accountSummary
-    if(this.accountSummary==false)
-    {
-      this.actDetails=false
+  actSummary() {
+    this.accountSummary = !this.accountSummary
+    if (this.accountSummary == false) {
+      this.actDetails = false
     }
     // this.userService.refreshFunction()
   }
-  accountDetails()
-  {
-    this.actDetails=!this.actDetails
+  accountDetails() {
+    this.actDetails = !this.actDetails
     // this.userService.refreshFunction()
   }
-  createAccount:boolean=false
+  createAccount: boolean = false
 
 
 }

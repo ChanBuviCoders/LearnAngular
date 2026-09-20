@@ -1,0 +1,23 @@
+<section class="feature-page">
+    <header>
+        <div>
+            <h2>Financial Dashboard</h2>
+            <p>Current portfolio and collection position.</p>
+        </div>
+        <button mat-stroked-button (click)="load()"><mat-icon>refresh</mat-icon> Refresh</button>
+    </header>
+    <div class="loading" *ngIf="loading"><mat-spinner diameter="36"></mat-spinner></div>
+    <div class="kpi-grid" *ngIf="!loading">
+        <mat-card *ngFor="let card of cards; let i = index">
+            <mat-card-content>
+                <div class="avatar" [ngStyle]="{ background: avatarColor(i) }"><mat-icon>{{ card.icon }}</mat-icon>
+                </div>
+                <div><span>{{ card.label }}</span>
+                    <strong *ngIf="card.currency">{{ value(card.key) | currency:'INR':'symbol':'1.0-0' }}</strong>
+                    <strong *ngIf="!card.currency">{{ value(card.key) | number }}</strong>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <p class="error" *ngIf="error">{{ error }}</p>
+</section>

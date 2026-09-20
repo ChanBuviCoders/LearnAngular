@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { NoAuthGuard } from '../shared/services/no-auth-guard.service';
 
-const routes: Routes = [{ path: '', component: LoginComponent,canActivate:[NoAuthGuard] }];
+const routes: Routes = [{ path: '', component: LoginComponent, canActivate: [NoAuthGuard] }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

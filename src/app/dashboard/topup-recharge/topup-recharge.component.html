@@ -1,10 +1,9 @@
+<h2>Live Price: ₹{{ price() }}</h2>
 
-    <h2>Live Price: ₹{{ price() }}</h2>
+<p [style.color]="isUp() ? 'green' : 'red'">
+  {{ isUp() ? 'Price increased' : 'Price decreased' }}
+</p>
 
-    <p [style.color]="isUp() ? 'green' : 'red'">
-      {{ isUp() ? 'Price increased' : 'Price decreased' }}
-    </p>
+<p>Last updated: {{ lastUpdated() }}</p>
 
-    <p>Last updated: {{ lastUpdated() }}</p>
-
-    <button (click)="stop()">Stop updates</button>
+<button (click)="stop()">Stop updates</button>

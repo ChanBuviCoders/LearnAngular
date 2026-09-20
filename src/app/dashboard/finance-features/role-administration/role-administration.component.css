@@ -1,0 +1,58 @@
+.feature-page {
+    padding: 24px;
+    max-width: 1500px;
+    margin: auto
+}
+
+h2 {
+    margin: 0
+}
+
+header p,
+.empty,
+td small {
+    color: #667
+}
+
+table {
+    width: 100%
+}
+
+td strong,
+td small {
+    display: block
+}
+
+td mat-form-field {
+    width: 240px;
+    margin-top: 14px
+}
+
+td button {
+    margin-right: 8px
+}
+
+.role-reference {
+    margin-top: 18px
+}
+
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px
+}
+
+.role-grid div {
+    background: #f6f8fa;
+    padding: 14px;
+    border-radius: 6px
+}
+
+.role-grid p {
+    margin: 5px 0
+}
+
+.empty {
+    text-align: center;
+    padding: 30px
+}

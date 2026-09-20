@@ -23,7 +23,7 @@ import { directivesModules } from 'src/app/directives/directives.modules';
   ],
   imports: [
     CommonModule,
-    FormsModule,ReactiveFormsModule,
+    FormsModule, ReactiveFormsModule,
     ServiceRoutingModule,
     TabsModule,
     ModalModule,
@@ -39,6 +39,6 @@ import { directivesModules } from 'src/app/directives/directives.modules';
     TooltipModule,
     directivesModules
   ],
-  providers:[BsModalService,DatePipe]
+  providers: [BsModalService, DatePipe]
 })
 export class ServiceModule { }

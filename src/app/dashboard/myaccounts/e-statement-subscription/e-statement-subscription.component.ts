@@ -12,14 +12,14 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class EStatementSubscriptionComponent implements OnInit {
 
-  constructor(private userService: UserService,private subjectService:SubjectService) { }
+  constructor(private userService: UserService, private subjectService: SubjectService) { }
 
   currentUserDetails: userAccount;
   dataType: number = 2;
   ngOnInit(): void {
 
     this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
-    this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
+    this.getChartDetails(this.currentUserDetails.userAccountId, this.dataType)
   }
 
   /* **************** charts data********************** */

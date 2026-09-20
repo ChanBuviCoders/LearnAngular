@@ -120,7 +120,7 @@ export class CreateAccountComponent implements CanComponentDeactivate {
       type: 'application/json'
     });
     formData.append('data', jsonBlob);
-    
+
     this.userservice.createUser(formData).subscribe((response) => {
       if (response.status == true) {
         this.toaster.success(response.message);

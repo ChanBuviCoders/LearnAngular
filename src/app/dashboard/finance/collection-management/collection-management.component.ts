@@ -54,7 +54,7 @@ export class CollectionManagementComponent implements OnInit {
     private readonly route: ActivatedRoute,
     readonly access: RoleAccessService,
     private readonly dialogs: FinanceDialogService,
-    private readonly toast: ToastrService) {}
+    private readonly toast: ToastrService) { }
 
   get pageTitle(): string {
     switch (this.lockedFrequency) {
@@ -100,9 +100,11 @@ export class CollectionManagementComponent implements OnInit {
 
   load(page = this.page): void {
     this.page = page;
+    const rawFilters = this.filters.getRawValue();
     const filters = {
-      ...this.filters.getRawValue(),
-      frequency: this.lockedFrequency || this.filters.value.frequency,
+      from: rawFilters.from ?? undefined,
+      to: rawFilters.to ?? undefined,
+      frequency: (this.lockedFrequency || this.filters.value.frequency) ?? undefined,
       page: this.page,
       size: this.size
     };

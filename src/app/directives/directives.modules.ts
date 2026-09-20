@@ -3,9 +3,9 @@ import { OnlynumberDirective } from "./onlynumber.directive";
 
 
 @NgModule({
-    declarations:[OnlynumberDirective],
-    imports:[],
-    exports:[OnlynumberDirective],
-    providers:[]
+    declarations: [OnlynumberDirective],
+    imports: [],
+    exports: [OnlynumberDirective],
+    providers: []
 })
-export class  directivesModules {}
+export class directivesModules { }

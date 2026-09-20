@@ -30,7 +30,7 @@ import { directivesModules } from 'src/app/directives/directives.modules';
     MatButtonModule,
     directivesModules,
   ],
-  providers:[DatePipe]
+  providers: [DatePipe]
 
 })
 export class BillpaymentModule { }

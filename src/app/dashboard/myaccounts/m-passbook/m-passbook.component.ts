@@ -11,13 +11,13 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class MPassbookComponent implements OnInit {
 
-  constructor(private userService:UserService,private subjectService:SubjectService,) { }
+  constructor(private userService: UserService, private subjectService: SubjectService,) { }
 
-  currentUserDetails:userAccount;
+  currentUserDetails: userAccount;
   ngOnInit(): void {
 
-    this.subjectService.currentuserSubject.subscribe((data) => {this.currentUserDetails = data.data;});
-    this.getChartDetails(this.currentUserDetails.userAccountId,this.dataType)
+    this.subjectService.currentuserSubject.subscribe((data) => { this.currentUserDetails = data.data; });
+    this.getChartDetails(this.currentUserDetails.userAccountId, this.dataType)
   }
 
   /* **************** charts data********************** */
@@ -35,36 +35,36 @@ export class MPassbookComponent implements OnInit {
       label: 'Account C'
     }
   ];
-/* **************** charts label********************** */
-  chartLabels = ['January','February','March','April'];
+  /* **************** charts label********************** */
+  chartLabels = ['January', 'February', 'March', 'April'];
   chartOptions = { responsive: true };
-/* **************** charts events********************** */ 
-onChartHover = ($event: any) => {
-  window.console.log('onChartHover', $event);
-};
+  /* **************** charts events********************** */
+  onChartHover = ($event: any) => {
+    window.console.log('onChartHover', $event);
+  };
 
-onChartClick = ($event: any) => {
-  window.console.log('onChartClick', $event);
-};
+  onChartClick = ($event: any) => {
+    window.console.log('onChartClick', $event);
+  };
 
-/* **************** Updating Datasets Dynamically********************** */
-newDataPoint(dataArr = [100, 100, 100], label) {
-  this.chartData.forEach((dataset, index) => {
-    this.chartData[index] = Object.assign({}, this.chartData[index], {
-      data: [...this.chartData[index].data, dataArr[index]]
+  /* **************** Updating Datasets Dynamically********************** */
+  newDataPoint(dataArr = [100, 100, 100], label) {
+    this.chartData.forEach((dataset, index) => {
+      this.chartData[index] = Object.assign({}, this.chartData[index], {
+        data: [...this.chartData[index].data, dataArr[index]]
+      });
     });
-  });
 
-  this.chartLabels = [...this.chartLabels, label];
-}
-dataType:number=0;
-getChartDetails(clientId, dataType) {
-  this.dataType = dataType == 1 ? 2 : 1
-  this.userService.getChartDetails(clientId, dataType).subscribe(data => {
-    this.chartData = data.data.chartData
-    this.chartLabels = data.data.chartLabels
-  })
-}
+    this.chartLabels = [...this.chartLabels, label];
+  }
+  dataType: number = 0;
+  getChartDetails(clientId, dataType) {
+    this.dataType = dataType == 1 ? 2 : 1
+    this.userService.getChartDetails(clientId, dataType).subscribe(data => {
+      this.chartData = data.data.chartData
+      this.chartLabels = data.data.chartLabels
+    })
+  }
 
 
 }

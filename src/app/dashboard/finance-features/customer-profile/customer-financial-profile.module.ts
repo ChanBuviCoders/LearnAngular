@@ -10,4 +10,4 @@ const routes: Routes = [{ path: '', component: CustomerFinancialProfileComponent
   declarations: [CustomerFinancialProfileComponent],
   imports: [CommonModule, ReactiveFormsModule, FinanceMaterialModule, RouterModule.forChild(routes)]
 })
-export class CustomerFinancialProfileModule {}
+export class CustomerFinancialProfileModule { }

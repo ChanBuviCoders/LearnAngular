@@ -21,9 +21,9 @@ import { SafeUrlPipe } from '../pipes/SafeUrlPipe';
     ReactiveFormsModule,
     TabsModule,
     directivesModules,
-    CarouselModule.forRoot(),
+    CarouselModule,
     SafeUrlPipe
   ],
-  providers:[DatePipe ]
+  providers: [DatePipe]
 })
 export class ProfileModule { }

@@ -6,15 +6,17 @@ import { RgbToHexComponent } from './rgb-to-hex/rgb-to-hex.component';
 
 const routes:
   Routes = [
-            { path: '', component: EDepositComponent,
-              children:[
-                { path:'',redirectTo:"file-upload" ,pathMatch:"full"},
-                { path: 'file-upload', component: FileUploadComponent },
-                { path: 'rgbToHex', component: RgbToHexComponent },
-              ] },
-            
+    {
+      path: '', component: EDepositComponent,
+      children: [
+        { path: '', redirectTo: "file-upload", pathMatch: "full" },
+        { path: 'file-upload', component: FileUploadComponent },
+        { path: 'rgbToHex', component: RgbToHexComponent },
+      ]
+    },
 
-          ];
+
+  ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

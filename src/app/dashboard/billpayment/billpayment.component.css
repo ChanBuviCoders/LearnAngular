@@ -2,8 +2,9 @@
     /* background-color: rgb(67, 150, 150) !important; */
     font-size: 18px;
     font-weight: 500;
-    color :slategray
+    color: slategray
 }
+
 form {
     /* display: grid;
     grid-template-columns: auto 1fr; */
@@ -25,6 +26,7 @@ form {
     margin-top: 10px;
     margin-bottom: -54px;
 }
+
 /* ***********toggle button********** */
 .switch {
     position: relative;
@@ -86,4 +88,5 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
 /* ***********toggle button********** */

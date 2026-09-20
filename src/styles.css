@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+    --primary-color: #3498db;
+    --base-spacing: 16px;
+    --font-family-base: 'Inter', sans-serif;
+    --box-shadow: 1px 2px 1px 1px #57b7bf;
+}
+
 .routerActive{
     padding: 0px 14px;
     background-color: #ff1cd1;

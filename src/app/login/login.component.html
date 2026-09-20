@@ -3,11 +3,11 @@
     <div class="proImage">
       <img class="m-1" src="../../assets/imgs/profile.png" alt="#" style="border-radius: 50%;width: 50%;height: 50%; ">
     </div>
- 
+
     <div class="form-group mt-2 p-2">
       <!-- <label for="userId">Login Id</label> -->
-      <input type="userId" formControlName="userId" class="form-control" id="userId" required 
-      i18n-placeholder placeholder="Enter userid ..." >
+      <input type="userId" formControlName="userId" class="form-control" id="userId" required i18n-placeholder
+        placeholder="Enter userid ...">
     </div>
     <div class="form-group mt-2 p-2">
       <!-- <label for="password">Password </label> -->
@@ -25,9 +25,10 @@
         placeholder="Enter Capcha  ..." i18n-placeholder>
       <!-- <span class="eyeIconCss"><i class="fa fa-eye" id="eye" aria-hidden="true" (click)="toggleShow($event,'password','eye')"></i></span> -->
     </div>
-    <p *ngIf="errorMsg!=''" class="text-center" style="color: red;" >{{errorMsg}} </p>
+    <p *ngIf="errorMsg!=''" class="text-center" style="color: red;">{{errorMsg}} </p>
     <div class="d-flex justify-content-center">
-      <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="btn btn-primary w-50 m-2" i18n>Login</button>
+      <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="btn btn-primary w-50 m-2"
+        i18n>Login</button>
     </div>
 
     <div class="d-flex justify-content-between" style="margin-bottom:10px">

@@ -22,6 +22,6 @@ import { EStatementSubscriptionComponent } from './e-statement-subscription/e-st
     CommonModule,
     MyaccountsRoutingModule
   ],
-  providers:[]
+  providers: []
 })
 export class MyaccountsModule { }

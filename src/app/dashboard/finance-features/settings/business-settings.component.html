@@ -1,0 +1,43 @@
+<section class="feature-page">
+    <header>
+        <h2>Business Settings</h2>
+        <p>Configure financial defaults used when creating new products and schedules.</p>
+    </header>
+    <mat-card><mat-card-content>
+            <form [formGroup]="form" (ngSubmit)="save()">
+                <h3>Organisation</h3>
+                <div class="grid">
+                    <mat-form-field appearance="outline"><mat-label>Currency</mat-label><mat-select
+                            formControlName="defaultCurrency"><mat-option value="INR">INR — Indian
+                                Rupee</mat-option></mat-select></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Timezone</mat-label><input matInput
+                            formControlName="timezone"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Receipt prefix</mat-label><input matInput
+                            formControlName="receiptPrefix"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Grace period (days)</mat-label><input matInput
+                            type="number" formControlName="gracePeriodDays"></mat-form-field>
+                </div>
+                <h3>Loan defaults</h3>
+                <div class="grid">
+                    <mat-form-field appearance="outline"><mat-label>Daily interest %</mat-label><input matInput
+                            type="number" step="0.01" formControlName="dailyInterestRate"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Weekly interest %</mat-label><input matInput
+                            type="number" step="0.01" formControlName="weeklyInterestRate"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Monthly interest %</mat-label><input matInput
+                            type="number" step="0.01" formControlName="monthlyInterestRate"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Default duration</mat-label><input matInput
+                            type="number" formControlName="defaultLoanDuration"></mat-form-field>
+                </div>
+                <h3>Chit defaults</h3>
+                <div class="grid">
+                    <mat-form-field appearance="outline"><mat-label>Default amount</mat-label><input matInput
+                            type="number" formControlName="defaultChitAmount"></mat-form-field>
+                    <mat-form-field appearance="outline"><mat-label>Default members</mat-label><input matInput
+                            type="number" formControlName="defaultChitMembers"></mat-form-field>
+                </div>
+                <div class="actions"><button mat-stroked-button type="button" (click)="load()">Discard
+                        changes</button><button mat-flat-button color="primary" type="submit"
+                        [disabled]="saving">{{saving?'Saving…':'Save settings'}}</button></div>
+            </form>
+        </mat-card-content></mat-card>
+</section>
